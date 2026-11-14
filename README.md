@@ -2,14 +2,14 @@
 
 <div align="center">
 
-[![Status do Projeto](https://img.shields.io/badge/Status-Em_Produção-brightgreen?style=for-the-badge)](https://elisantos157h-source.github.io/familia-em-foco/)
-[![PWA Ready](https://img.shields.io/badge/PWA-Instalável_Offline-purple?style=for-the-badge)](https://elisantos157h-source.github.io/familia-em-foco/)
+[![Status do Projeto](https://img.shields.io/badge/Status-Em_Produção-brightgreen?style=for-the-badge)](https://davirian-dev.github.io/familia-em-foco/)
+[![PWA Ready](https://img.shields.io/badge/PWA-Instalável_Offline-purple?style=for-the-badge)](https://davirian-dev.github.io/familia-em-foco/)
 [![Estudante ADS](https://img.shields.io/badge/Desenvolvedor-Estudante_de_ADS-blue?style=for-the-badge)](https://linktr.ee/daviriann)
 [![Licença](https://img.shields.io/badge/Licença-MIT-yellow?style=for-the-badge)](LICENSE)
 
 <br />
 
-### 🚀 **[Acessar Aplicativo Online no GitHub Pages](https://elisantos157h-source.github.io/familia-em-foco/)** 🚀
+### 🚀 **[Acessar Aplicativo Online no GitHub Pages](https://davirian-dev.github.io/familia-em-foco/)** 🚀
 
 *O ecossistema definitivo de crescimento familiar: acompanhe a faculdade dos pais, o estudo escolar das crianças, finanças com metas de amortização e biometria saudável.*
 
@@ -35,7 +35,7 @@ O desenvolvimento deste software colocou em prática pilares fundamentais da for
 
 Você pode acessar e testar o aplicativo diretamente pelo navegador ou instalá-lo no seu celular:
 
-🔗 **Link Oficial**: [https://elisantos157h-source.github.io/familia-em-foco/](https://elisantos157h-source.github.io/familia-em-foco/)
+🔗 **Link Oficial**: [https://davirian-dev.github.io/familia-em-foco/](https://davirian-dev.github.io/familia-em-foco/)
 
 > 💡 **Dica de Instalação no Celular**: Ao abrir no Google Chrome (Android) ou Safari (iOS), toque em **"Adicionar à Tela de Início"** ou **"Instalar Aplicativo"**. O app funciona em tela cheia com ícone próprio e suporte offline!
 
@@ -93,7 +93,7 @@ Você pode acessar e testar o aplicativo diretamente pelo navegador ou instalá-
 
 1. **Clone o repositório:**
    ```bash
-   git clone https://github.com/elisantos157h-source/familia-em-foco.git
+   git clone https://github.com/davirian-dev/familia-em-foco.git
    ```
 
 2. **Acesse a pasta do projeto:**
@@ -115,7 +115,7 @@ Você pode acessar e testar o aplicativo diretamente pelo navegador ou instalá-
 
 * **Estudante**: Davi Rian (Graduando em ADS)
 * **Hub de Contatos & Redes**: [linktr.ee/daviriann](https://linktr.ee/daviriann)
-* **Repositório**: [github.com/elisantos157h-source/familia-em-foco](https://github.com/elisantos157h-source/familia-em-foco)
+* **Repositório**: [github.com/davirian-dev/familia-em-foco](https://github.com/davirian-dev/familia-em-foco)
 
 ---
 
