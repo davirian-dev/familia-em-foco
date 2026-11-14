@@ -1494,7 +1494,7 @@
 
             <div class="flex flex-col sm:flex-row gap-2">
               <div class="flex-1 bg-white dark:bg-slate-900 border-2 border-emerald-400 dark:border-emerald-700 rounded-2xl px-4 py-3 font-mono text-sm sm:text-base font-black text-slate-900 dark:text-white flex items-center justify-between select-all shadow-inner">
-                <span id="devFinancialPixKey">71981223348</span>
+                <span id="devFinancialPixKey" class="truncate max-w-[200px] sm:max-w-none text-xs sm:text-sm font-mono">00020126580014BR.GOV.BCB.PIX01362036b759-ae21-4846-9f88-25256a51823a5204000053039865802BR5925Davi Rian Nascimento Pere6009SAO PAULO62140510yGOUlGxzvX63043796</span>
                 <span class="text-[10px] font-sans font-normal text-slate-400 ml-2 hidden sm:inline">(PIX Copia e Cola)</span>
               </div>
               <button onclick="copyFinancialPixKey()" id="btnCopyFinancialPix" class="px-6 py-3.5 rounded-2xl bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-700 hover:to-teal-700 text-white font-black text-sm shadow-lg shadow-emerald-600/30 transition flex items-center justify-center space-x-2">
@@ -1510,7 +1510,7 @@
             <!-- Card de QR Code Visual Integrado -->
             <div id="integratedPixQrBox" class="p-4 rounded-2xl bg-white dark:bg-slate-900 border border-emerald-200 dark:border-emerald-800 flex flex-col sm:flex-row items-center gap-4 text-center sm:text-left">
               <div class="p-2 bg-white rounded-xl shadow-xs border border-slate-200 flex-shrink-0">
-                <img src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=71981223348" alt="QR Code PIX 71981223348" class="w-28 h-28 object-contain">
+                <img src="https://api.qrserver.com/v1/create-qr-code/?size=250x250&data=00020126580014BR.GOV.BCB.PIX01362036b759-ae21-4846-9f88-25256a51823a5204000053039865802BR5925Davi%20Rian%20Nascimento%20Pere6009SAO%20PAULO62140510yGOUlGxzvX63043796" alt="QR Code PIX Davi Rian" class="w-28 h-28 object-contain">
               </div>
               <div class="space-y-1">
                 <span class="px-2 py-0.5 rounded-full bg-emerald-100 dark:bg-emerald-950 text-emerald-700 dark:text-emerald-300 font-bold text-[10px] uppercase">Escanear com Celular</span>
@@ -1527,9 +1527,10 @@
 
             <!-- Dados Adicionais do Recebedor -->
             <div class="pt-2 flex flex-wrap gap-x-4 gap-y-1 text-slate-500 text-[11px]">
-              <span>👤 <strong>Titular:</strong> Davi & Marina (Desenvolvedores)</span>
-              <span>🏦 <strong>Tipo de Chave:</strong> Telefone / Celular (71 98122-3348)</span>
-              <span>🛡️ <strong>Destino:</strong> Fundo de Manutenção do Aplicativo</span>
+              <span>👤 <strong>Titular:</strong> Davi Rian Nascimento Pere</span>
+              <span>🏦 <strong>Tipo:</strong> PIX Copia e Cola Oficial (Chave Aleatória)</span>
+              <span>🏷️ <strong>Identificador:</strong> Familia em Foco</span>
+              <span>🛡️ <strong>Destino:</strong> Apoio Direto ao Desenvolvimento</span>
             </div>
           </div>
 
@@ -1542,7 +1543,7 @@
               <li>Clique no botão verde acima <strong>"COPIAR CHAVE PIX"</strong>.</li>
               <li>Abra o aplicativo do seu banco (Nubank, Inter, Caixa, Itaú, Bradesco, etc.).</li>
               <li>Vá na área <strong>PIX</strong> e escolha <strong>Transferir</strong> ou <strong>PIX Copia e Cola</strong>.</li>
-              <li>Cole a chave <code class="font-bold text-indigo-600 dark:text-indigo-400">71981223348</code>, digite o valor que quiser e confirme!</li>
+              <li>Cole o código na opção <strong>PIX Copia e Cola</strong>, confira o titular <strong>Davi Rian Nascimento Pere</strong> e confirme!</li>
             </ol>
           </div>
 
@@ -2845,15 +2846,21 @@
           <span id="pixDiscountTag" class="hidden text-[9px] font-black px-2 py-0.5 rounded-md bg-emerald-100 text-emerald-800 dark:bg-emerald-950 dark:text-emerald-300">50% OFF</span>
         </div>
 
-        <!-- Chave PIX e Copiar -->
-        <div class="flex items-center gap-2">
-          <div class="flex-1 bg-white dark:bg-slate-900 border border-slate-300 dark:border-slate-700 rounded-xl px-3 py-2 font-mono text-xs font-bold text-slate-900 dark:text-white select-all overflow-hidden text-ellipsis">
-            <span id="pixCheckoutKeyDisplay">71981223348</span>
+        <!-- Chave PIX Copia e Cola Oficial -->
+        <div class="space-y-2">
+          <div class="flex flex-wrap items-center justify-between text-[11px] text-slate-500 gap-1">
+            <span>👤 <strong>Favorecido:</strong> Davi Rian Nascimento Pere</span>
+            <span>🏷️ <strong>Identificador:</strong> Familia em Foco</span>
           </div>
-          <button onclick="copyPixCheckoutKey()" class="px-3.5 py-2 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-xs shadow-xs transition flex items-center gap-1.5 flex-shrink-0">
-            <span>📋</span>
-            <span id="btnCopyPixCheckoutText">Copiar PIX</span>
-          </button>
+          <div class="flex items-center gap-2">
+            <div class="flex-1 bg-white dark:bg-slate-900 border border-slate-300 dark:border-slate-700 rounded-xl px-3 py-2 font-mono text-[10px] sm:text-xs font-bold text-slate-900 dark:text-white select-all overflow-hidden text-ellipsis whitespace-nowrap" title="Clique para selecionar todo o código">
+              <span id="pixCheckoutKeyDisplay">00020126580014BR.GOV.BCB.PIX01362036b759-ae21-4846-9f88-25256a51823a5204000053039865802BR5925Davi Rian Nascimento Pere6009SAO PAULO62140510yGOUlGxzvX63043796</span>
+            </div>
+            <button onclick="copyPixCheckoutKey()" class="px-3.5 py-2 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-xs shadow-xs transition flex items-center gap-1.5 flex-shrink-0">
+              <span>📋</span>
+              <span id="btnCopyPixCheckoutText">Copiar PIX</span>
+            </button>
+          </div>
         </div>
 
         <!-- Botão WhatsApp para Envio do Comprovante -->
@@ -8210,7 +8217,7 @@
     }
 
     function copyDevPixKey() {
-      const pixKey = document.getElementById('devPixKeyText')?.textContent?.trim() || '71981223348';
+      const pixKey = '00020126580014BR.GOV.BCB.PIX01362036b759-ae21-4846-9f88-25256a51823a5204000053039865802BR5925Davi Rian Nascimento Pere6009SAO PAULO62140510yGOUlGxzvX63043796';
       const msg = document.getElementById('pixCopySuccessMsg');
       const btnText = document.getElementById('btnCopyPixText');
 
@@ -8274,13 +8281,13 @@
     }
 
     function copyFinancialPixKey() {
-      const key = document.getElementById('devFinancialPixKey')?.textContent?.trim() || '71981223348';
+      const key = '00020126580014BR.GOV.BCB.PIX01362036b759-ae21-4846-9f88-25256a51823a5204000053039865802BR5925Davi Rian Nascimento Pere6009SAO PAULO62140510yGOUlGxzvX63043796';
       const alertBox = document.getElementById('financialPixCopiedAlert');
       const btnText = document.getElementById('btnCopyFinancialPixText');
 
       if (navigator.clipboard && navigator.clipboard.writeText) {
         navigator.clipboard.writeText(key).then(() => {
-          showFinancialCopySuccess(btnText, alertBox); showToast('Chave PIX 71981223348 copiada com sucesso!', '💸');
+          showFinancialCopySuccess(btnText, alertBox); showToast('PIX Copia e Cola do Davi copiado!', '💸');
         }).catch(() => {
           fallbackFinancialCopy(key, btnText, alertBox);
         });
@@ -8296,7 +8303,7 @@
       el.select();
       try {
         document.execCommand('copy');
-        showFinancialCopySuccess(btnText, alertBox); showToast('Chave PIX 71981223348 copiada com sucesso!', '💸');
+        showFinancialCopySuccess(btnText, alertBox); showToast('PIX Copia e Cola do Davi copiado!', '💸');
       } catch(e) {
         prompt('Copie a chave PIX abaixo:', key);
       }
@@ -9499,7 +9506,7 @@
     }
 
     function copyPixCheckoutKey() {
-      const key = '71981223348';
+      const key = '00020126580014BR.GOV.BCB.PIX01362036b759-ae21-4846-9f88-25256a51823a5204000053039865802BR5925Davi Rian Nascimento Pere6009SAO PAULO62140510yGOUlGxzvX63043796';
       const btn = document.getElementById('btnCopyPixCheckoutText');
       if (navigator.clipboard && navigator.clipboard.writeText) {
         navigator.clipboard.writeText(key).then(() => {
@@ -9507,7 +9514,7 @@
             btn.textContent = 'Copiado! ✓';
             setTimeout(() => { if (btn) btn.textContent = 'Copiar PIX'; }, 2500);
           }
-          showToast('Chave PIX 71981223348 copiada com sucesso!', '⚡');
+          showToast('Código PIX Copia e Cola copiado com sucesso!', '⚡');
         }).catch(() => {
           fallbackCheckoutCopy(key, btn);
         });
@@ -9527,7 +9534,7 @@
           btn.textContent = 'Copiado! ✓';
           setTimeout(() => { if (btn) btn.textContent = 'Copiar PIX'; }, 2500);
         }
-        showToast('Chave PIX 71981223348 copiada!', '⚡');
+        showToast('Código PIX Copia e Cola copiado!', '⚡');
       } catch(e) {
         prompt('Copie a chave PIX celular abaixo:', key);
       }
@@ -10200,7 +10207,7 @@ Todos os recursos avançados estão disponíveis para você:
     // Registro de Service Worker para PWA Offline e Instalação Nativa
     if ('serviceWorker' in navigator) {
       window.addEventListener('load', () => {
-        navigator.serviceWorker.register('./sw.js?v=3.3', { updateViaCache: 'none' })
+        navigator.serviceWorker.register('./sw.js?v=3.4', { updateViaCache: 'none' })
           .then((reg) => {
             reg.update();
           })
