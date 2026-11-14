@@ -584,26 +584,31 @@
         </div>
 
         <!-- Estatísticas da Família -->
-        <div class="grid grid-cols-2 lg:grid-cols-4 gap-4">
-          <div class="bg-white dark:bg-slate-900 p-4 rounded-3xl border border-slate-200 dark:border-slate-800 shadow-sm cursor-pointer" onclick="navigate('studies')">
+        <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-3.5">
+          <div class="bg-white dark:bg-slate-900 p-4 rounded-3xl border border-slate-200 dark:border-slate-800 shadow-sm cursor-pointer hover:border-indigo-400 transition" onclick="navigate('studies')">
             <span class="text-2xl">🎓</span>
             <p class="text-xs text-slate-400 font-semibold mt-1">Disciplinas & Matérias</p>
-            <h4 class="text-xl font-bold" id="stat-studies-count">6 em curso</h4>
+            <h4 class="text-xl font-bold text-slate-900 dark:text-white" id="stat-studies-count">6 em curso</h4>
           </div>
-          <div class="bg-white dark:bg-slate-900 p-4 rounded-3xl border border-slate-200 dark:border-slate-800 shadow-sm cursor-pointer" onclick="navigate('members')">
+          <div class="bg-white dark:bg-slate-900 p-4 rounded-3xl border border-slate-200 dark:border-slate-800 shadow-sm cursor-pointer hover:border-indigo-400 transition" onclick="navigate('habits-goals')">
+            <span class="text-2xl">🎯</span>
+            <p class="text-xs text-slate-400 font-semibold mt-1">Hábitos & Metas</p>
+            <h4 class="text-xl font-bold text-slate-900 dark:text-white" id="stat-habits-count">0 ativos</h4>
+          </div>
+          <div class="bg-white dark:bg-slate-900 p-4 rounded-3xl border border-slate-200 dark:border-slate-800 shadow-sm cursor-pointer hover:border-indigo-400 transition" onclick="navigate('members')">
             <span class="text-2xl">📏</span>
             <p class="text-xs text-slate-400 font-semibold mt-1">Membros & IMC</p>
-            <h4 class="text-xl font-bold" id="stat-members-count">5 pessoas</h4>
+            <h4 class="text-xl font-bold text-slate-900 dark:text-white" id="stat-members-count">5 pessoas</h4>
           </div>
-          <div class="bg-white dark:bg-slate-900 p-4 rounded-3xl border border-slate-200 dark:border-slate-800 shadow-sm cursor-pointer" onclick="navigate('calendar')">
+          <div class="bg-white dark:bg-slate-900 p-4 rounded-3xl border border-slate-200 dark:border-slate-800 shadow-sm cursor-pointer hover:border-indigo-400 transition" onclick="navigate('calendar')">
             <span class="text-2xl">📅</span>
             <p class="text-xs text-slate-400 font-semibold mt-1">Compromissos</p>
-            <h4 class="text-xl font-bold" id="stat-events-count">4 agendados</h4>
+            <h4 class="text-xl font-bold text-slate-900 dark:text-white" id="stat-events-count">4 agendados</h4>
           </div>
-          <div class="bg-white dark:bg-slate-900 p-4 rounded-3xl border border-slate-200 dark:border-slate-800 shadow-sm cursor-pointer" onclick="navigate('shopping')">
+          <div class="bg-white dark:bg-slate-900 p-4 rounded-3xl border border-slate-200 dark:border-slate-800 shadow-sm cursor-pointer hover:border-indigo-400 transition" onclick="navigate('shopping')">
             <span class="text-2xl">🛒</span>
             <p class="text-xs text-slate-400 font-semibold mt-1">Lista de Compras</p>
-            <h4 class="text-xl font-bold" id="stat-shopping-count">pendentes</h4>
+            <h4 class="text-xl font-bold text-slate-900 dark:text-white" id="stat-shopping-count">pendentes</h4>
           </div>
         </div>
 
@@ -1697,7 +1702,7 @@
           </div>
         </button>
 
-        <button onclick="navigate('kids'); toggleMobileMoreMenu();" class="p-3 rounded-2xl bg-slate-50 dark:bg-slate-800/70 border border-slate-200 dark:border-slate-700 flex items-center space-x-2.5 text-left hover:border-indigo-500 transition">
+        <button id="mobileNavKids" onclick="navigate('kids'); toggleMobileMoreMenu();" class="p-3 rounded-2xl bg-slate-50 dark:bg-slate-800/70 border border-slate-200 dark:border-slate-700 flex items-center space-x-2.5 text-left hover:border-indigo-500 transition">
           <span class="text-xl">⭐</span>
           <div>
             <div>Missões Crianças</div>
@@ -1705,7 +1710,7 @@
           </div>
         </button>
 
-        <button onclick="navigate('rewards'); toggleMobileMoreMenu();" class="p-3 rounded-2xl bg-slate-50 dark:bg-slate-800/70 border border-slate-200 dark:border-slate-700 flex items-center space-x-2.5 text-left hover:border-indigo-500 transition">
+        <button id="mobileNavRewards" onclick="navigate('rewards'); toggleMobileMoreMenu();" class="p-3 rounded-2xl bg-slate-50 dark:bg-slate-800/70 border border-slate-200 dark:border-slate-700 flex items-center space-x-2.5 text-left hover:border-indigo-500 transition">
           <span class="text-xl">🎁</span>
           <div>
             <div>Recompensas</div>
@@ -8226,23 +8231,11 @@
       } else {
         alert(`☕ Que generoso! Agradecemos demais pelo apoio de R$ ${amount}. A chave PIX já está pronta para cópia abaixo.`);
       }
-      copyDevPixKey();
+      copyFinancialPixKey();
     }
 
     function copyDevPixKey() {
-      const pixKey = '00020126580014BR.GOV.BCB.PIX01362036b759-ae21-4846-9f88-25256a51823a5204000053039865802BR5925Davi Rian Nascimento Pere6009SAO PAULO62140510yGOUlGxzvX63043796';
-      const msg = document.getElementById('pixCopySuccessMsg');
-      const btnText = document.getElementById('btnCopyPixText');
-
-      if (navigator.clipboard && navigator.clipboard.writeText) {
-        navigator.clipboard.writeText(pixKey).then(() => {
-          showPixCopySuccess(btnText, msg);
-        }).catch(() => {
-          fallbackCopyText(pixKey, btnText, msg);
-        });
-      } else {
-        fallbackCopyText(pixKey, btnText, msg);
-      }
+      copyFinancialPixKey();
     }
 
     function fallbackCopyText(text, btnText, msg) {
@@ -10308,7 +10301,7 @@ Todos os recursos avançados estão disponíveis para você:
     // Registro de Service Worker para PWA Offline e Instalação Nativa
     if ('serviceWorker' in navigator) {
       window.addEventListener('load', () => {
-        navigator.serviceWorker.register('./sw.js?v=3.6', { updateViaCache: 'none' })
+        navigator.serviceWorker.register('./sw.js?v=3.7', { updateViaCache: 'none' })
           .then((reg) => {
             reg.update();
           })
