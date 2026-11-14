@@ -1467,7 +1467,7 @@
           <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
             <div>
               <label class="block text-xs font-bold text-slate-700 dark:text-slate-300 mb-1">Crie uma Senha *</label>
-              <input type="password" id="regPassword" required minlength="4" placeholder="Mínimo 4 caracteres" class="w-full px-3.5 py-2.5 rounded-xl border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 text-xs sm:text-sm outline-none focus:border-indigo-500">
+              <input type="password" id="regPassword" required placeholder="Mínimo 4 caracteres" class="w-full px-3.5 py-2.5 rounded-xl border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 text-xs sm:text-sm outline-none focus:border-indigo-500">
             </div>
             <div>
               <label class="block text-xs font-bold text-slate-700 dark:text-slate-300 mb-1">Como começar?</label>
@@ -1499,6 +1499,10 @@
 
           <button type="submit" class="w-full py-3 rounded-2xl bg-indigo-600 hover:bg-indigo-700 text-white font-bold text-sm shadow-lg shadow-indigo-600/30 transition flex items-center justify-center space-x-2">
             <span>🔑 Entrar na Minha Família</span>
+          </button>
+
+          <button type="button" onclick="quickLoadDaviFamily()" class="w-full py-2.5 px-3 rounded-2xl bg-gradient-to-r from-amber-500/15 via-orange-500/15 to-yellow-500/15 border border-amber-400/40 hover:border-amber-500 text-amber-800 dark:text-amber-200 text-xs font-bold flex items-center justify-center space-x-2 transition shadow-xs">
+            <span>👑</span><span>Sou o Davi (Entrar na Família Oficial com 1 Clique)</span>
           </button>
         </form>
 
@@ -2719,12 +2723,23 @@
 
 
     function updateCounts() {
-      document.getElementById('stat-members-count').textContent = `${state.members.length} pessoas`;
-      document.getElementById('stat-events-count').textContent = `${state.calendarEvents.length} agendados`;
-      const pendingShopping = state.shoppingItems.filter(i => !i.bought).length;
-      document.getElementById('stat-shopping-count').textContent = `${pendingShopping} pendentes`;
-      document.getElementById('stat-habits-count').textContent = `${state.habits.length} ativos`;
-      document.getElementById('stat-studies-count').textContent = `${state.studies.length} matérias`;
+      const elMembers = document.getElementById('stat-members-count');
+      if (elMembers) elMembers.textContent = `${(state.members || []).length} pessoas`;
+
+      const elEvents = document.getElementById('stat-events-count');
+      if (elEvents) elEvents.textContent = `${(state.calendarEvents || []).length} agendados`;
+
+      const elShopping = document.getElementById('stat-shopping-count');
+      if (elShopping) {
+        const pending = (state.shoppingItems || []).filter(i => !i.bought).length;
+        elShopping.textContent = `${pending} pendentes`;
+      }
+
+      const elHabits = document.getElementById('stat-habits-count');
+      if (elHabits) elHabits.textContent = `${(state.habits || []).length} ativos`;
+
+      const elStudies = document.getElementById('stat-studies-count');
+      if (elStudies) elStudies.textContent = `${(state.studies || []).length} matérias`;
     }
 
     // NAVEGAÇÃO
@@ -5186,10 +5201,17 @@
     // 1. CRIAR CONTA COM EMAIL E SENHA (SEM ALERT, TEMPO REAL)
     function handleUserRegistration(e) {
       if (e) e.preventDefault();
-      const familyName = (document.getElementById('regFamilyName').value || '').trim();
-      const email = (document.getElementById('regEmail').value || '').trim().toLowerCase();
-      const password = document.getElementById('regPassword').value || '';
-      const initialChoice = document.getElementById('regInitialChoice').value || 'empty';
+      const familyNameInput = document.getElementById('regFamilyName');
+      const emailInput = document.getElementById('regEmail');
+      const passwordInput = document.getElementById('regPassword');
+      const choiceInput = document.getElementById('regInitialChoice');
+      const typeInput = document.getElementById('regFamilyType');
+
+      const familyName = (familyNameInput ? familyNameInput.value : '').trim() || 'Minha Família';
+      const email = (emailInput ? emailInput.value : '').trim().toLowerCase();
+      const password = passwordInput ? passwordInput.value : '';
+      const initialChoice = choiceInput ? choiceInput.value : 'empty';
+      const familyType = typeInput ? typeInput.value : 'family';
 
       if (!email || !familyName) {
         showToast('Por favor, preencha o Nome da Família e o E-mail.', '⚠️');
