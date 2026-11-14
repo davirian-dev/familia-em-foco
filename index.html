@@ -832,6 +832,9 @@
             <button onclick="openAdvancedGoalModal()" class="px-3.5 py-2 bg-purple-600 hover:bg-purple-700 text-white font-bold text-xs rounded-xl shadow-md flex items-center space-x-1.5">
               <span>➕</span><span>Nova Meta</span>
             </button>
+            <button onclick="openStreakModal()" class="px-3.5 py-2 bg-rose-600 hover:bg-rose-700 text-white font-bold text-xs rounded-xl shadow-md flex items-center space-x-1.5">
+              <span>🛡️</span><span>X Dias Sem...</span>
+            </button>
           </div>
         </div>
 
@@ -841,6 +844,30 @@
             <div class="flex space-x-2 text-xs" id="habitFiltersContainer"></div>
           </div>
           <div class="space-y-3" id="habitsList"></div>
+        </div>
+
+        <!-- ================= SEÇÃO: CONTADOR DE DIAS LIMPO & SEQUÊNCIA (X DIAS SEM...) ================= -->
+        <div class="bg-gradient-to-r from-rose-500/10 via-amber-500/10 to-indigo-500/10 border-2 border-rose-500/30 rounded-3xl p-5 sm:p-6 shadow-sm space-y-4">
+          <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+            <div class="flex items-center space-x-3">
+              <span class="text-3xl p-2 rounded-2xl bg-white dark:bg-slate-900 shadow-xs border border-rose-200 dark:border-rose-900/60">🛡️</span>
+              <div>
+                <div class="flex items-center space-x-2">
+                  <h4 class="font-black text-base text-slate-900 dark:text-white">Contador de Sequência • X Dias Sem...</h4>
+                  <span class="px-2 py-0.5 rounded-full bg-rose-100 dark:bg-rose-950 text-rose-700 dark:text-rose-300 font-bold text-[10px]">Superação & Saúde</span>
+                </div>
+                <p class="text-xs text-slate-500 dark:text-slate-300">Monitore vitórias contra hábitos ruins (sem fumar, sem álcool, sem doces ou sintomas de saúde)</p>
+              </div>
+            </div>
+            <button onclick="openStreakModal()" class="px-4 py-2 rounded-2xl bg-gradient-to-r from-rose-600 to-amber-600 hover:from-rose-500 hover:to-amber-500 text-white font-black text-xs shadow-md transition flex items-center space-x-1.5 self-start sm:self-auto">
+              <span>➕</span><span>Criar Novo Contador</span>
+            </button>
+          </div>
+
+          <!-- Grid dos Contadores de Sequência Ativos -->
+          <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4" id="streaksGridContainer">
+            <!-- Renderizado dinamicamente via JS -->
+          </div>
         </div>
 
         <div class="space-y-4">
@@ -2657,6 +2684,67 @@
     </div>
   </div>
 
+
+  <!-- ================= MODAL DO CONTADOR DE SEQUÊNCIA (X DIAS SEM...) ================= -->
+  <div id="streakModal" class="modal-backdrop">
+    <div class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-3xl max-w-md w-full p-6 shadow-2xl relative space-y-4">
+      <button onclick="closeStreakModal()" class="absolute top-5 right-5 p-1.5 rounded-xl text-slate-400 hover:text-slate-600 dark:hover:text-slate-200">✕</button>
+
+      <div class="flex items-center space-x-2.5 pb-2 border-b border-slate-100 dark:border-slate-800">
+        <span class="text-2xl p-1.5 rounded-xl bg-rose-100 dark:bg-rose-950 text-rose-600">🛡️</span>
+        <div>
+          <h3 class="font-bold text-base text-slate-900 dark:text-white" id="streakModalTitle">Novo Contador de Sequência</h3>
+          <p class="text-xs text-slate-500">Acompanhe quantos dias você está vencendo um hábito</p>
+        </div>
+      </div>
+
+      <form onsubmit="saveStreakData(event)" class="space-y-3.5">
+        <input type="hidden" id="streakId" value="">
+
+        <div>
+          <label class="block text-xs font-bold text-slate-700 dark:text-slate-300 mb-1">O que você está evitando ou superando?</label>
+          <input type="text" id="streakTitle" required placeholder="Ex: Sem Fumar, Sem Refrigerante, Sem Açúcar, Sem Redes Sociais..." class="w-full px-3.5 py-2.5 rounded-xl border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 text-xs font-bold text-slate-900 dark:text-white outline-none">
+        </div>
+
+        <div class="grid grid-cols-2 gap-3">
+          <div>
+            <label class="block text-xs font-bold text-slate-700 dark:text-slate-300 mb-1">Emoji / Ícone</label>
+            <select id="streakIcon" class="w-full px-3 py-2 rounded-xl border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 text-xs text-slate-900 dark:text-white outline-none">
+              <option value="🚭">🚭 Sem Fumar</option>
+              <option value="🍺">🍺 Sem Bebidas Alcoólicas</option>
+              <option value="🍬">🍬 Sem Açúcar / Doces</option>
+              <option value="📱">📱 Sem Redes Sociais / Celular</option>
+              <option value="🚽">🚽 Saúde Intestinal / Regularidade</option>
+              <option value="🎮">🎮 Sem Apostas / Jogos</option>
+              <option value="💳">💳 Sem Gastos Impulsivos</option>
+              <option value="⚡">⚡ Outro Hábito de Força</option>
+            </select>
+          </div>
+          <div>
+            <label class="block text-xs font-bold text-slate-700 dark:text-slate-300 mb-1">Data de Início</label>
+            <input type="date" id="streakStartDate" required class="w-full px-3 py-2 rounded-xl border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 text-xs text-slate-900 dark:text-white outline-none">
+          </div>
+        </div>
+
+        <div>
+          <label class="block text-xs font-bold text-slate-700 dark:text-slate-300 mb-1">Economia Financeira Diária Estimada (R$)</label>
+          <input type="number" step="0.5" id="streakDailySavings" placeholder="Ex: 12.00 (custo diário do maço ou doce)" class="w-full px-3.5 py-2.5 rounded-xl border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 text-xs font-bold text-slate-900 dark:text-white outline-none">
+          <p class="text-[10px] text-slate-400 mt-1">Opcional: calculamos quanto dinheiro você economizou e guardou!</p>
+        </div>
+
+        <div>
+          <label class="block text-xs font-bold text-slate-700 dark:text-slate-300 mb-1">Sua Motivação / Por que você quer vencer?</label>
+          <input type="text" id="streakMotivation" placeholder="Ex: Por mais saúde para brincar com meus filhos e viver mais!" class="w-full px-3.5 py-2.5 rounded-xl border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 text-xs text-slate-900 dark:text-white outline-none">
+        </div>
+
+        <div class="flex justify-end space-x-2 pt-3 border-t border-slate-100 dark:border-slate-800">
+          <button type="button" onclick="closeStreakModal()" class="px-4 py-2 rounded-xl border border-slate-200 dark:border-slate-700 text-xs font-bold text-slate-600 dark:text-slate-300 hover:bg-slate-50">Cancelar</button>
+          <button type="submit" class="px-5 py-2 rounded-xl bg-rose-600 hover:bg-rose-700 text-white font-bold text-xs shadow-md">Salvar Contador</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
   <!-- ================= MODAL / MENU DE GERENCIAMENTO DA CONTA ATIVA ================= -->
   <div id="accountManagerModal" class="modal-backdrop">
     <div class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-3xl max-w-sm w-full p-6 shadow-2xl relative text-center">
@@ -4351,6 +4439,14 @@
     window.toggleDashboardDailyHabit = toggleDashboardDailyHabit;
     window.switchEvolutionChartTab = switchEvolutionChartTab;
     window.renderEvolutionChart = renderEvolutionChart;
+
+    
+    window.openStreakModal = openStreakModal;
+    window.closeStreakModal = closeStreakModal;
+    window.saveStreakData = saveStreakData;
+    window.resetStreakCounter = resetStreakCounter;
+    window.deleteStreak = deleteStreak;
+    window.renderStreaks = renderStreaks;
 
     renderAll();
       showToast('👤 Demonstração de Pessoa Solteira carregada com sucesso!', '🚀', 4000);
@@ -8427,6 +8523,186 @@
           </div>
         `;
       }
+    }
+
+    
+    // ==========================================
+    // CONTADORES DE SEQUÊNCIA & DIAS LIMPO (X DIAS SEM...)
+    // ==========================================
+    function openStreakModal(id = null) {
+      const modal = document.getElementById('streakModal');
+      const titleElem = document.getElementById('streakModalTitle');
+      const fId = document.getElementById('streakId');
+      const fTitle = document.getElementById('streakTitle');
+      const fIcon = document.getElementById('streakIcon');
+      const fDate = document.getElementById('streakStartDate');
+      const fSav = document.getElementById('streakDailySavings');
+      const fMot = document.getElementById('streakMotivation');
+
+      if (id) {
+        const item = (state.streaks || []).find(s => s.id === id);
+        if (item) {
+          if (titleElem) titleElem.textContent = 'Editar Contador';
+          fId.value = item.id;
+          fTitle.value = item.title;
+          fIcon.value = item.icon || '🚭';
+          fDate.value = item.startDate;
+          fSav.value = item.dailySavings || '';
+          fMot.value = item.motivation || '';
+        }
+      } else {
+        if (titleElem) titleElem.textContent = 'Novo Contador de Sequência';
+        fId.value = '';
+        fTitle.value = '';
+        fDate.value = new Date().toISOString().split('T')[0];
+        fSav.value = '';
+        fMot.value = '';
+      }
+
+      if (modal) modal.classList.add('active');
+    }
+
+    function closeStreakModal() {
+      const modal = document.getElementById('streakModal');
+      if (modal) modal.classList.remove('active');
+    }
+
+    function saveStreakData(e) {
+      e.preventDefault();
+      const id = document.getElementById('streakId').value;
+      const title = document.getElementById('streakTitle').value.trim();
+      const icon = document.getElementById('streakIcon').value;
+      const startDate = document.getElementById('streakStartDate').value;
+      const dailySavings = parseFloat(document.getElementById('streakDailySavings').value) || 0;
+      const motivation = document.getElementById('streakMotivation').value.trim();
+
+      state.streaks = state.streaks || [];
+
+      if (id) {
+        const idx = state.streaks.findIndex(s => s.id === id);
+        if (idx !== -1) {
+          state.streaks[idx] = { ...state.streaks[idx], title, icon, startDate, dailySavings, motivation };
+        }
+      } else {
+        const newStreak = {
+          id: 'strk-' + Date.now(),
+          title,
+          icon,
+          startDate,
+          dailySavings,
+          motivation,
+          resets: 0
+        };
+        state.streaks.push(newStreak);
+      }
+
+      saveState();
+      renderStreaks();
+      closeStreakModal();
+      showToast('Contador de Sequência salvo com sucesso!', '🛡️');
+    }
+
+    function resetStreakCounter(id) {
+      const item = (state.streaks || []).find(s => s.id === id);
+      if (!item) return;
+
+      if (confirm(`Deseja reiniciar o contador de "${item.title}"?\n\nNão desanime! Toda grande superação é construída passo a passo. O importante é recomeçar hoje com mais força!`)) {
+        item.startDate = new Date().toISOString().split('T')[0];
+        item.resets = (item.resets || 0) + 1;
+        saveState();
+        renderStreaks();
+        showToast('Contador reiniciado. Força no recomeço!', '💪');
+      }
+    }
+
+    function deleteStreak(id) {
+      if (!confirm('Deseja realmente excluir este contador de sequência?')) return;
+      state.streaks = (state.streaks || []).filter(s => s.id !== id);
+      saveState();
+      renderStreaks();
+      showToast('Contador removido.', '🗑️');
+    }
+
+    function renderStreaks() {
+      const container = document.getElementById('streaksGridContainer');
+      if (!container) return;
+
+      state.streaks = state.streaks || [
+        { id: 'strk-demo-1', title: 'Sem Fumar Cigarro', icon: '🚭', startDate: '2026-10-15', dailySavings: 15.0, motivation: 'Mais fôlego e saúde para ver meus filhos crescerem!' },
+        { id: 'strk-demo-2', title: 'Sem Refrigerante / Açúcar', icon: '🍬', startDate: '2026-11-01', dailySavings: 8.0, motivation: 'Queima de gordura e disposição física máxima!' }
+      ];
+
+      if (state.streaks.length === 0) {
+        container.innerHTML = `
+          <div class="col-span-full p-8 rounded-3xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 text-center space-y-2">
+            <span class="text-4xl block">🛡️</span>
+            <h5 class="text-sm font-bold text-slate-800 dark:text-slate-200">Nenhum contador de abstinência ativo</h5>
+            <p class="text-xs text-slate-400 max-w-sm mx-auto">Crie seu primeiro contador para acompanhar quantos dias você está sem fumar, sem doces ou sem vícios.</p>
+            <button onclick="openStreakModal()" class="px-4 py-2 rounded-xl bg-rose-600 text-white font-bold text-xs shadow-md">Criar Meu 1º Contador</button>
+          </div>
+        `;
+        return;
+      }
+
+      const now = new Date();
+
+      container.innerHTML = state.streaks.map(s => {
+        const start = new Date(s.startDate + 'T00:00:00');
+        const diffMs = now - start;
+        const days = Math.max(0, Math.floor(diffMs / (1000 * 60 * 60 * 24)));
+        const savedMoney = (s.dailySavings && s.dailySavings > 0) ? (days * s.dailySavings).toFixed(2) : null;
+
+        // Marco alcançado
+        let badge = 'Iniciante (1-3 dias)';
+        let badgeColor = 'bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400';
+        if (days >= 90) { badge = '💎 Diamante (90+ dias)'; badgeColor = 'bg-cyan-100 dark:bg-cyan-950 text-cyan-700 dark:text-cyan-300'; }
+        else if (days >= 30) { badge = '🥇 Ouro (30+ dias)'; badgeColor = 'bg-amber-100 dark:bg-amber-950 text-amber-700 dark:text-amber-300'; }
+        else if (days >= 7) { badge = '🥈 Prata (7+ dias)'; badgeColor = 'bg-indigo-100 dark:bg-indigo-950 text-indigo-700 dark:text-indigo-300'; }
+        else if (days >= 3) { badge = '🥉 Bronze (3+ dias)'; badgeColor = 'bg-emerald-100 dark:bg-emerald-950 text-emerald-700 dark:text-emerald-300'; }
+
+        return `
+          <div class="bg-white dark:bg-slate-900 rounded-3xl p-5 border border-slate-200 dark:border-slate-800 shadow-sm flex flex-col justify-between space-y-3 relative overflow-hidden transition hover:shadow-md">
+            <div>
+              <div class="flex items-center justify-between pb-2 border-b border-slate-100 dark:border-slate-800">
+                <div class="flex items-center space-x-2">
+                  <span class="text-2xl">${s.icon || '🛡️'}</span>
+                  <div>
+                    <h5 class="text-xs font-black text-slate-900 dark:text-white truncate">${s.title}</h5>
+                    <span class="text-[10px] text-slate-400">Desde ${s.startDate}</span>
+                  </div>
+                </div>
+                <div class="flex items-center space-x-1">
+                  <button onclick="openStreakModal('${s.id}')" title="Editar" class="p-1 text-slate-400 hover:text-indigo-600 text-xs">✏️</button>
+                  <button onclick="deleteStreak('${s.id}')" title="Excluir" class="p-1 text-slate-400 hover:text-rose-500 text-xs">🗑️</button>
+                </div>
+              </div>
+
+              <!-- Placar Gigante de Dias -->
+              <div class="py-3 text-center">
+                <div class="text-4xl sm:text-5xl font-black text-rose-600 dark:text-rose-400 font-mono tracking-tight">${days} <span class="text-sm font-sans font-bold text-slate-400">dias</span></div>
+                <span class="inline-block mt-1 px-2.5 py-0.5 rounded-full text-[10px] font-black uppercase tracking-wider ${badgeColor}">${badge}</span>
+              </div>
+
+              <!-- Economia Acumulada em R$ se houver -->
+              ${savedMoney ? `
+                <div class="p-2.5 rounded-xl bg-emerald-50 dark:bg-emerald-950/40 border border-emerald-200 dark:border-emerald-800 text-center">
+                  <span class="text-[10px] font-bold text-emerald-700 dark:text-emerald-300 block">💰 Economia Acumulada:</span>
+                  <div class="text-sm font-black text-emerald-600 dark:text-emerald-400">R$ ${savedMoney}</div>
+                </div>
+              ` : ''}
+
+              ${s.motivation ? `
+                <p class="text-[11px] text-slate-500 dark:text-slate-300 italic pt-1 text-center">"${s.motivation}"</p>
+              ` : ''}
+            </div>
+
+            <!-- Botão de Recaída / Reiniciar -->
+            <button onclick="resetStreakCounter('${s.id}')" class="w-full py-1.5 rounded-xl border border-slate-200 dark:border-slate-700 hover:border-rose-300 dark:hover:border-rose-800 text-[11px] font-bold text-slate-500 hover:text-rose-600 transition flex items-center justify-center space-x-1">
+              <span>🔄</span><span>Reiniciar Contador</span>
+            </button>
+          </div>
+        `;
+      }).join('');
     }
 
     function renderFitness() {
