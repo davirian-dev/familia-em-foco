@@ -196,20 +196,20 @@
           </div>
         </div>
 
-        <!-- Botão Busca Rápida (Ctrl+K) -->
-        <button onclick="openSearchModal()" class="flex items-center space-x-1.5 p-2 sm:px-2.5 sm:py-1.5 rounded-xl text-slate-500 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors text-xs font-semibold" title="Buscar em todo o app (Ctrl+K)">
+        <!-- Botão Busca Rápida (Ctrl+K) - Neutro com Contorno -->
+        <button onclick="openSearchModal()" class="flex items-center space-x-1.5 px-3 py-1.5 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 text-slate-700 dark:text-slate-200 hover:bg-slate-50 dark:hover:bg-slate-800 transition text-xs font-semibold shadow-xs" title="Buscar em todo o app (Ctrl+K)">
           <span>🔍</span>
-          <span class="hidden md:inline text-slate-400 text-[10px] bg-slate-200 dark:bg-slate-700 px-1.5 py-0.5 rounded font-mono">Ctrl K</span>
+          <span class="hidden md:inline text-slate-500 dark:text-slate-400 text-[10px] bg-slate-100 dark:bg-slate-800 px-1.5 py-0.5 rounded-lg font-mono">Ctrl K</span>
         </button>
 
-        <!-- Sino de Notificações Inteligentes -->
-        <button onclick="openNotificationsModal()" class="relative p-2 rounded-xl text-slate-500 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors" title="Notificações e Lembretes da Família">
+        <!-- Sino de Notificações - Neutro com Contorno -->
+        <button onclick="openNotificationsModal()" class="relative p-2 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 text-slate-700 dark:text-slate-200 hover:bg-slate-50 dark:hover:bg-slate-800 transition shadow-xs" title="Notificações e Lembretes da Família">
           <span>🔔</span>
-          <span id="notifBadge" class="absolute top-1 right-1 w-2.5 h-2.5 bg-rose-500 rounded-full border-2 border-white dark:border-slate-900 animate-pulse"></span>
+          <span id="notifBadge" class="absolute top-1.5 right-1.5 w-2 h-2 bg-rose-500 rounded-full animate-pulse"></span>
         </button>
 
-        <!-- Botão Dark Mode Dinâmico (Sol / Lua) -->
-        <button onclick="toggleDarkMode()" id="btnDarkMode" class="p-2 rounded-xl text-slate-500 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors text-base" title="Alternar Modo Escuro / Claro">
+        <!-- Botão Dark Mode - Neutro com Contorno -->
+        <button onclick="toggleDarkMode()" id="btnDarkMode" class="p-2 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 text-slate-700 dark:text-slate-200 hover:bg-slate-50 dark:hover:bg-slate-800 transition shadow-xs text-sm" title="Alternar Modo Escuro / Claro">
           <span id="darkModeIcon">🌙</span>
         </button>
 
@@ -380,26 +380,26 @@
       <!-- ================= 1. DASHBOARD COM CAPA DO APLICATIVO ================= -->
       <section id="tab-dashboard" class="space-y-6 mobile-safe-bottom">
         
-        <!-- ================= CAPA DO APLICATIVO 100% DINÂMICA ================= -->
-        <div id="appCoverBanner" class="relative overflow-hidden rounded-3xl bg-gradient-to-br from-indigo-950 via-slate-900 to-purple-950 border border-indigo-500/30 text-white p-6 sm:p-8 shadow-2xl transition-all">
-          <div class="absolute inset-0 hero-glow pointer-events-none"></div>
+        <!-- ================= CAPA DO APLICATIVO HARMONIOSA NO TEMA CLARO E ESCURO ================= -->
+        <div id="appCoverBanner" class="relative overflow-hidden rounded-3xl bg-gradient-to-br from-indigo-50/90 via-purple-50/50 to-white dark:from-indigo-950 dark:via-slate-900 dark:to-purple-950 border border-indigo-100 dark:border-indigo-900/40 text-slate-900 dark:text-white p-6 sm:p-8 shadow-xs dark:shadow-2xl transition-all">
+          <div class="absolute inset-0 hero-glow pointer-events-none opacity-40 dark:opacity-100"></div>
           
           <div class="relative z-10 flex flex-col lg:flex-row lg:items-center justify-between gap-6">
             <div class="space-y-3 max-w-2xl">
               <div class="flex flex-wrap items-center gap-2">
-                <span id="appCoverEditionBadge" class="px-3 py-1 rounded-full bg-indigo-500/20 border border-indigo-400/30 text-indigo-300 font-black text-[11px] tracking-wide uppercase flex items-center gap-1.5">
+                <span id="appCoverEditionBadge" class="px-3 py-1 rounded-full bg-indigo-100 dark:bg-indigo-950/80 border border-indigo-200 dark:border-indigo-800 text-indigo-700 dark:text-indigo-300 font-black text-[11px] tracking-wide uppercase flex items-center gap-1.5 shadow-xs">
                   <span>✨</span> Família em Foco • Versão 2.5
                 </span>
-                <span class="px-2.5 py-0.5 rounded-full bg-emerald-500/20 border border-emerald-400/30 text-emerald-300 font-bold text-[10px]">
+                <span class="px-2.5 py-0.5 rounded-full bg-emerald-100 dark:bg-emerald-950/80 border border-emerald-200 dark:border-emerald-800 text-emerald-800 dark:text-emerald-300 font-bold text-[10px] shadow-xs">
                   ✓ Multi-dispositivo (Web • Celular • Tablet)
                 </span>
               </div>
 
-              <h2 id="appCoverTitle" class="text-3xl sm:text-4xl lg:text-5xl font-black tracking-tight leading-tight">
+              <h2 id="appCoverTitle" class="text-3xl sm:text-4xl lg:text-5xl font-black tracking-tight leading-tight text-slate-900 dark:text-white">
                 Família em Foco
               </h2>
 
-              <p id="appCoverSubtitle" class="text-slate-300 text-xs sm:text-sm leading-relaxed max-w-xl">
+              <p id="appCoverSubtitle" class="text-slate-600 dark:text-slate-300 text-xs sm:text-sm leading-relaxed max-w-xl font-medium">
                 O ecossistema definitivo de crescimento familiar: acompanhe a faculdade dos pais, a escola das crianças, finanças com amortização e compras inteligentes.
               </p>
 
@@ -439,15 +439,15 @@
               </p>
             </div>
           </div>
-          <div class="flex items-center gap-2.5 w-full md:w-auto shrink-0">
-            <button onclick="loadSingleDemoData()" class="flex-1 md:flex-none px-4 py-3 rounded-2xl bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-700 hover:to-teal-700 text-white font-bold text-xs shadow-md transition text-center flex items-center justify-center space-x-1.5">
-              <span>👤</span><span>Ver Modo Solteiro</span>
+          <div class="flex flex-wrap sm:flex-nowrap items-center gap-2.5 w-full md:w-auto shrink-0">
+            <button onclick="loadSingleDemoData()" class="flex-1 md:flex-none px-3.5 py-2.5 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 hover:bg-slate-50 dark:hover:bg-slate-800 text-slate-700 dark:text-slate-200 font-bold text-xs shadow-xs transition text-center flex items-center justify-center space-x-1.5">
+              <span>👤</span><span>Modo Solteiro</span>
             </button>
-            <button onclick="openUnifiedAuthModal('register')" class="flex-1 md:flex-none px-4 py-3 rounded-2xl bg-indigo-600 hover:bg-indigo-700 text-white font-bold text-xs shadow-lg shadow-indigo-600/30 transition text-center flex items-center justify-center space-x-1.5">
-              <span>✍️</span><span>Criar Minha Conta</span>
+            <button onclick="openUnifiedAuthModal('login')" class="flex-1 md:flex-none px-4 py-2.5 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 hover:bg-slate-50 dark:hover:bg-slate-800 text-slate-700 dark:text-slate-200 font-bold text-xs shadow-xs transition text-center flex items-center justify-center space-x-1.5">
+              <span>🔑</span><span>Entrar</span>
             </button>
-            <button onclick="openUnifiedAuthModal('login')" class="flex-1 md:flex-none px-5 py-3 rounded-2xl bg-white dark:bg-slate-800 border-2 border-indigo-200 dark:border-slate-700 hover:bg-slate-100 text-slate-800 dark:text-slate-200 font-bold text-xs shadow-xs transition text-center flex items-center justify-center space-x-2">
-              <span>🔑</span><span>Já Tenho Conta (Entrar)</span>
+            <button onclick="openUnifiedAuthModal('register')" class="flex-1 md:flex-none px-4 py-2.5 rounded-2xl bg-indigo-600 hover:bg-indigo-700 text-white font-bold text-xs shadow-sm transition text-center flex items-center justify-center space-x-1.5">
+              <span>✍️</span><span>Criar Conta</span>
             </button>
           </div>
         </div>
@@ -9104,7 +9104,7 @@ Todos os recursos avançados estão desbloqueados para você:
           `;
         } else {
           headerBadge.innerHTML = `
-            <button onclick="openUpgradeModal()" class="flex items-center space-x-1.5 px-3 py-1.5 rounded-2xl bg-gradient-to-r from-amber-500 to-yellow-500 hover:from-amber-600 hover:to-yellow-600 text-white font-black text-xs shadow-md shadow-amber-500/20 border border-amber-300/40 transition transform active:scale-95 animate-pulse">
+            <button onclick="openUpgradeModal()" class="flex items-center space-x-1.5 px-3 py-1.5 rounded-2xl bg-amber-400 hover:bg-amber-300 text-amber-950 font-black text-xs shadow-xs border border-amber-500/40 transition transform active:scale-95">
               <span class="text-sm">👑</span>
               <span class="hidden sm:inline">Seja</span>
               <span>PRO</span>
