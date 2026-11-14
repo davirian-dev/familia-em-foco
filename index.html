@@ -921,6 +921,98 @@
 
         <!-- PAINEL 2: FICHAS DE TREINO & MUSCULAÇÃO PERSONALIZADAS -->
         <div id="fitnessPanel-workouts" class="space-y-6" style="display: none;">
+
+          <!-- FERRAMENTAS PRO DE TREINO: TEMPORIZADOR DE DESCANSO & CALCULADORA 1RM -->
+          <div class="grid grid-cols-1 lg:grid-cols-2 gap-4">
+            <!-- 1. Temporizador de Descanso entre Séries (Rest Timer) -->
+            <div class="bg-gradient-to-br from-indigo-950 via-slate-900 to-slate-950 text-white rounded-3xl p-5 border border-indigo-500/30 shadow-md flex flex-col justify-between space-y-3">
+              <div class="flex items-center justify-between">
+                <div class="flex items-center space-x-2">
+                  <span class="p-1.5 rounded-xl bg-indigo-500/20 text-indigo-300 text-lg">⏱️</span>
+                  <div>
+                    <h5 class="text-xs font-black tracking-wide uppercase text-indigo-300">Temporizador de Descanso</h5>
+                    <p class="text-[11px] text-slate-400">Controle o tempo exato entre suas séries</p>
+                  </div>
+                </div>
+                <span id="restTimerStatusBadge" class="px-2 py-0.5 rounded-full bg-slate-800 text-[10px] font-bold text-slate-400">Pronto</span>
+              </div>
+
+              <!-- Mostrador do Tempo -->
+              <div class="text-center py-1">
+                <div id="restTimerDisplay" class="font-mono text-4xl sm:text-5xl font-black text-white tracking-wider">00:45</div>
+                <div class="w-full bg-slate-800 h-1.5 rounded-full mt-2 overflow-hidden">
+                  <div id="restTimerProgressBar" class="bg-indigo-500 h-full w-full transition-all duration-1000"></div>
+                </div>
+              </div>
+
+              <!-- Botões de Tempo Rápido -->
+              <div class="grid grid-cols-5 gap-1.5">
+                <button onclick="setRestTime(30)" class="py-1 px-1 rounded-xl bg-slate-800/80 hover:bg-indigo-600 text-[11px] font-bold text-slate-200 hover:text-white transition text-center">30s</button>
+                <button onclick="setRestTime(45)" class="py-1 px-1 rounded-xl bg-indigo-600/40 hover:bg-indigo-600 text-[11px] font-bold text-indigo-200 hover:text-white transition text-center border border-indigo-500/40">45s</button>
+                <button onclick="setRestTime(60)" class="py-1 px-1 rounded-xl bg-slate-800/80 hover:bg-indigo-600 text-[11px] font-bold text-slate-200 hover:text-white transition text-center">60s</button>
+                <button onclick="setRestTime(90)" class="py-1 px-1 rounded-xl bg-slate-800/80 hover:bg-indigo-600 text-[11px] font-bold text-slate-200 hover:text-white transition text-center">90s</button>
+                <button onclick="setRestTime(120)" class="py-1 px-1 rounded-xl bg-slate-800/80 hover:bg-indigo-600 text-[11px] font-bold text-slate-200 hover:text-white transition text-center">2m</button>
+              </div>
+
+              <!-- Controles do Timer -->
+              <div class="flex items-center space-x-2 pt-1">
+                <button onclick="startRestTimer()" id="btnStartRest" class="flex-1 py-2 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-xs shadow-md transition flex items-center justify-center space-x-1">
+                  <span>▶️</span><span>Iniciar Descanso</span>
+                </button>
+                <button onclick="pauseRestTimer()" class="px-3 py-2 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-300 font-bold text-xs transition">
+                  ⏸️
+                </button>
+                <button onclick="resetRestTimer()" class="px-3 py-2 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-300 font-bold text-xs transition">
+                  🔄
+                </button>
+              </div>
+            </div>
+
+            <!-- 2. Calculadora Inteligente de 1RM & Zonas de Treino -->
+            <div class="bg-white dark:bg-slate-900 rounded-3xl p-5 border border-slate-200 dark:border-slate-800 shadow-sm flex flex-col justify-between space-y-3">
+              <div class="flex items-center justify-between">
+                <div class="flex items-center space-x-2">
+                  <span class="p-1.5 rounded-xl bg-amber-100 dark:bg-amber-950 text-amber-700 text-lg">⚡</span>
+                  <div>
+                    <h5 class="text-xs font-bold text-slate-900 dark:text-white">Calculadora de Carga Máxima (1RM)</h5>
+                    <p class="text-[11px] text-slate-400">Descubra sua força máxima e cargas ideais</p>
+                  </div>
+                </div>
+                <span class="px-2 py-0.5 rounded-full bg-amber-100 dark:bg-amber-950 text-amber-700 dark:text-amber-300 font-black text-[9px] uppercase">Fórmula Epley</span>
+              </div>
+
+              <div class="grid grid-cols-2 gap-2">
+                <div>
+                  <label class="block text-[10px] font-bold text-slate-500 uppercase mb-0.5">Peso Levantado (kg)</label>
+                  <input type="number" id="calcWeightInput" placeholder="Ex: 70" value="70" oninput="calculateOneRepMax()" class="w-full px-3 py-1.5 rounded-xl border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 text-xs font-bold text-slate-900 dark:text-white outline-none">
+                </div>
+                <div>
+                  <label class="block text-[10px] font-bold text-slate-500 uppercase mb-0.5">Repetições Feitas</label>
+                  <input type="number" id="calcRepsInput" placeholder="Ex: 8" value="8" oninput="calculateOneRepMax()" class="w-full px-3 py-1.5 rounded-xl border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 text-xs font-bold text-slate-900 dark:text-white outline-none">
+                </div>
+              </div>
+
+              <!-- Tabela das Zonas de Carga Calculadas -->
+              <div class="grid grid-cols-3 gap-2 pt-1 text-center" id="oneRepMaxResultsGrid">
+                <div class="p-2 rounded-xl bg-slate-50 dark:bg-slate-800/60 border border-slate-200 dark:border-slate-700">
+                  <span class="text-[9px] font-bold text-slate-400 uppercase block">1RM Estimado</span>
+                  <div class="text-sm font-black text-amber-600 dark:text-amber-400" id="res1RMVal">88.7 kg</div>
+                  <span class="text-[9px] text-slate-500 block">100% Carga</span>
+                </div>
+                <div class="p-2 rounded-xl bg-indigo-50/60 dark:bg-indigo-950/40 border border-indigo-200 dark:border-indigo-900/60">
+                  <span class="text-[9px] font-bold text-indigo-600 dark:text-indigo-400 uppercase block">Hipertrofia</span>
+                  <div class="text-sm font-black text-indigo-700 dark:text-indigo-300" id="resHypVal">66.5 kg</div>
+                  <span class="text-[9px] text-slate-500 block">75% (8-12 reps)</span>
+                </div>
+                <div class="p-2 rounded-xl bg-slate-50 dark:bg-slate-800/60 border border-slate-200 dark:border-slate-700">
+                  <span class="text-[9px] font-bold text-slate-400 uppercase block">Força Pura</span>
+                  <div class="text-sm font-black text-emerald-600 dark:text-emerald-400" id="resStrVal">79.8 kg</div>
+                  <span class="text-[9px] text-slate-500 block">90% (3-5 reps)</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
           <div class="bg-white dark:bg-slate-900 rounded-3xl p-5 border border-slate-200 dark:border-slate-800 shadow-sm flex flex-col sm:flex-row sm:items-center justify-between gap-3">
             <div>
               <h4 class="font-bold text-base text-slate-900 dark:text-white flex items-center gap-2">
@@ -4148,6 +4240,13 @@
     window.shareTodayWorkoutOnWhatsApp = shareTodayWorkoutOnWhatsApp;
     window.togglePixQrCodeModal = togglePixQrCodeModal;
     window.updateOverallEvolutionBanner = updateOverallEvolutionBanner;
+
+    
+    window.setRestTime = setRestTime;
+    window.startRestTimer = startRestTimer;
+    window.pauseRestTimer = pauseRestTimer;
+    window.resetRestTimer = resetRestTimer;
+    window.calculateOneRepMax = calculateOneRepMax;
 
     renderAll();
       showToast('👤 Demonstração de Pessoa Solteira carregada com sucesso!', '🚀', 4000);
@@ -7733,6 +7832,148 @@
 
       badgesElem.innerHTML = badgesHtml || `<span class="text-xs text-slate-400">Medidas estáveis</span>`;
     }
+
+    
+    // ==========================================
+    // RECURSOS PRO: REST TIMER E CALCULADORA 1RM
+    // ==========================================
+    let restTimerInterval = null;
+    let restTimeTotal = 45;
+    let restTimeRemaining = 45;
+    let isRestTimerRunning = false;
+
+    function setRestTime(seconds) {
+      pauseRestTimer();
+      restTimeTotal = seconds;
+      restTimeRemaining = seconds;
+      updateRestTimerUI();
+      showToast(`Descanso ajustado para ${seconds}s`, '⏱️');
+    }
+
+    function updateRestTimerUI() {
+      const display = document.getElementById('restTimerDisplay');
+      const bar = document.getElementById('restTimerProgressBar');
+      const badge = document.getElementById('restTimerStatusBadge');
+
+      if (display) {
+        const mins = Math.floor(restTimeRemaining / 60).toString().padStart(2, '0');
+        const secs = (restTimeRemaining % 60).toString().padStart(2, '0');
+        display.textContent = `${mins}:${secs}`;
+      }
+
+      if (bar) {
+        const pct = (restTimeRemaining / restTimeTotal) * 100;
+        bar.style.width = `${pct}%`;
+        bar.className = (pct <= 20) ? 'bg-rose-500 h-full transition-all duration-1000' : 'bg-indigo-500 h-full transition-all duration-1000';
+      }
+
+      if (badge) {
+        if (isRestTimerRunning) {
+          badge.textContent = 'Descansando...';
+          badge.className = 'px-2 py-0.5 rounded-full bg-emerald-950 text-emerald-400 text-[10px] font-bold animate-pulse';
+        } else if (restTimeRemaining === 0) {
+          badge.textContent = 'Tempo Esgotado!';
+          badge.className = 'px-2 py-0.5 rounded-full bg-rose-950 text-rose-400 text-[10px] font-bold';
+        } else {
+          badge.textContent = 'Pausado';
+          badge.className = 'px-2 py-0.5 rounded-full bg-slate-800 text-[10px] font-bold text-slate-400';
+        }
+      }
+    }
+
+    function startRestTimer() {
+      if (restTimeRemaining <= 0) {
+        restTimeRemaining = restTimeTotal;
+      }
+      isRestTimerRunning = true;
+      updateRestTimerUI();
+      const btn = document.getElementById('btnStartRest');
+      if (btn) btn.innerHTML = '<span>⏸️</span><span>Pausar</span>';
+
+      clearInterval(restTimerInterval);
+      restTimerInterval = setInterval(() => {
+        if (restTimeRemaining > 0) {
+          restTimeRemaining--;
+          updateRestTimerUI();
+        } else {
+          clearInterval(restTimerInterval);
+          isRestTimerRunning = false;
+          updateRestTimerUI();
+          if (btn) btn.innerHTML = '<span>▶️</span><span>Iniciar Descanso</span>';
+          playRestTimerAlarm();
+          showToast('⏰ Tempo de descanso finalizado! Bora pra próxima série!', '💪', 4000);
+        }
+      }, 1000);
+    }
+
+    function pauseRestTimer() {
+      isRestTimerRunning = false;
+      clearInterval(restTimerInterval);
+      const btn = document.getElementById('btnStartRest');
+      if (btn) btn.innerHTML = '<span>▶️</span><span>Retomar</span>';
+      updateRestTimerUI();
+    }
+
+    function resetRestTimer() {
+      pauseRestTimer();
+      restTimeRemaining = restTimeTotal;
+      const btn = document.getElementById('btnStartRest');
+      if (btn) btn.innerHTML = '<span>▶️</span><span>Iniciar Descanso</span>';
+      updateRestTimerUI();
+    }
+
+    function playRestTimerAlarm() {
+      try {
+        const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+        const osc = audioCtx.createOscillator();
+        const gain = audioCtx.createGain();
+        osc.connect(gain);
+        gain.connect(audioCtx.destination);
+        osc.type = 'sine';
+        osc.frequency.setValueAtTime(880, audioCtx.currentTime); // Nota Lá (A5)
+        gain.gain.setValueAtTime(0.3, audioCtx.currentTime);
+        osc.start();
+        osc.stop(audioCtx.currentTime + 0.35);
+      } catch (e) {
+        console.log('Áudio de alarme não suportado neste dispositivo.');
+      }
+    }
+
+    // Calculadora 1RM (Fórmula de Epley)
+    function calculateOneRepMax() {
+      const weight = parseFloat(document.getElementById('calcWeightInput')?.value) || 0;
+      const reps = parseInt(document.getElementById('calcRepsInput')?.value) || 0;
+
+      if (weight <= 0 || reps <= 0) return;
+
+      const oneRM = weight * (1 + (reps / 30));
+      const hypertrophyWeight = oneRM * 0.75;
+      const strengthWeight = oneRM * 0.90;
+
+      const el1RM = document.getElementById('res1RMVal');
+      const elHyp = document.getElementById('resHypVal');
+      const elStr = document.getElementById('resStrVal');
+
+      if (el1RM) el1RM.textContent = `${oneRM.toFixed(1)} kg`;
+      if (elHyp) elHyp.textContent = `${hypertrophyWeight.toFixed(1)} kg`;
+      if (elStr) elStr.textContent = `${strengthWeight.toFixed(1)} kg`;
+    }
+
+    // ==========================================
+    // MELHORIA DE USABILIDADE: FECHAR MODAIS COM ESC E CLIQUE FORA
+    // ==========================================
+    document.addEventListener('keydown', function(event) {
+      if (event.key === 'Escape' || event.key === 'Esc') {
+        const activeModals = document.querySelectorAll('.modal-backdrop.active');
+        activeModals.forEach(m => m.classList.remove('active'));
+      }
+    });
+
+    document.addEventListener('click', function(event) {
+      if (event.target.classList.contains('modal-backdrop')) {
+        event.target.classList.remove('active');
+      }
+    });
 
     function renderFitness() {
       updateOverallEvolutionBanner();
