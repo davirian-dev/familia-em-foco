@@ -864,6 +864,20 @@
 
         <!-- PAINEL 1: MEDIDAS CORPORAIS EXATAS & HISTÓRICO -->
         <div id="fitnessPanel-measures" class="space-y-6">
+          <!-- Banner de Evolução Geral Acumulada -->
+          <div id="overallFitnessEvolutionBanner" class="p-4 rounded-3xl bg-gradient-to-r from-indigo-500/10 via-purple-500/10 to-emerald-500/10 border border-indigo-200 dark:border-indigo-800/60 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+            <div class="flex items-center space-x-3">
+              <span class="text-3xl p-2 rounded-2xl bg-white dark:bg-slate-800 shadow-xs">🏆</span>
+              <div>
+                <h4 class="font-black text-sm text-slate-900 dark:text-white" id="overallEvolutionTitle">Sua Jornada de Transformação</h4>
+                <p class="text-xs text-slate-500" id="overallEvolutionSubtitle">Calculando seu progresso desde a primeira medição...</p>
+              </div>
+            </div>
+            <div id="overallEvolutionBadges" class="flex flex-wrap items-center gap-2">
+              <!-- Populado via JS -->
+            </div>
+          </div>
+
           <!-- Cards de Destaque das Medidas Atuais -->
           <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-3" id="currentMeasuresSummaryGrid">
             <!-- Renderizado via JS -->
@@ -918,7 +932,10 @@
               <button onclick="openWorkoutDivisionModal()" class="px-3.5 py-2 rounded-xl bg-indigo-600 hover:bg-indigo-700 text-white font-bold text-xs shadow-xs flex items-center space-x-1.5">
                 <span>➕</span><span>Nova Divisão / Ficha</span>
               </button>
-              <button onclick="openWorkoutModal()" class="px-3.5 py-2 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-xs shadow-xs flex items-center space-x-1.5">
+              <button onclick="shareTodayWorkoutOnWhatsApp()" class="px-3.5 py-2 rounded-xl bg-emerald-500 hover:bg-emerald-600 text-white font-bold text-xs shadow-xs flex items-center space-x-1.5">
+                <span>📲</span><span>Enviar Treino WhatsApp</span>
+              </button>
+              <button onclick="openWorkoutModal()" class="px-3.5 py-2 rounded-xl bg-indigo-600 hover:bg-indigo-700 text-white font-bold text-xs shadow-xs flex items-center space-x-1.5">
                 <span>🏋️</span><span>Novo Exercício</span>
               </button>
             </div>
@@ -1221,6 +1238,22 @@
                 <span>📋</span>
                 <span id="btnCopyFinancialPixText">COPIAR CHAVE PIX</span>
               </button>
+              <button onclick="togglePixQrCodeModal()" class="px-4 py-3.5 rounded-2xl border-2 border-emerald-500 bg-white dark:bg-slate-900 hover:bg-emerald-50 dark:hover:bg-slate-800 text-emerald-600 dark:text-emerald-400 font-black text-xs transition flex items-center justify-center space-x-1.5 shadow-sm">
+                <span>📷</span>
+                <span>VER QR CODE</span>
+              </button>
+            </div>
+
+            <!-- Card de QR Code Visual Integrado -->
+            <div id="integratedPixQrBox" class="p-4 rounded-2xl bg-white dark:bg-slate-900 border border-emerald-200 dark:border-emerald-800 flex flex-col sm:flex-row items-center gap-4 text-center sm:text-left">
+              <div class="p-2 bg-white rounded-xl shadow-xs border border-slate-200 flex-shrink-0">
+                <img src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=71981223348" alt="QR Code PIX 71981223348" class="w-28 h-28 object-contain">
+              </div>
+              <div class="space-y-1">
+                <span class="px-2 py-0.5 rounded-full bg-emerald-100 dark:bg-emerald-950 text-emerald-700 dark:text-emerald-300 font-bold text-[10px] uppercase">Escanear com Celular</span>
+                <h5 class="text-xs font-bold text-slate-900 dark:text-white">Pagar via Câmera do Celular</h5>
+                <p class="text-[11px] text-slate-500">Se você estiver no computador ou tablet, basta abrir a câmera do seu celular ou app do banco e apontar para o QR Code ao lado.</p>
+              </div>
             </div>
 
             <!-- Alerta de Cópia com Sucesso -->
@@ -4110,6 +4143,11 @@
     window.sendDonationConfirmationWhatsApp = sendDonationConfirmationWhatsApp;
     window.togglePixEditForm = togglePixEditForm;
     window.saveCustomPixKey = saveCustomPixKey;
+
+    
+    window.shareTodayWorkoutOnWhatsApp = shareTodayWorkoutOnWhatsApp;
+    window.togglePixQrCodeModal = togglePixQrCodeModal;
+    window.updateOverallEvolutionBanner = updateOverallEvolutionBanner;
 
     renderAll();
       showToast('👤 Demonstração de Pessoa Solteira carregada com sucesso!', '🚀', 4000);
@@ -7560,7 +7598,7 @@
 
       if (navigator.clipboard && navigator.clipboard.writeText) {
         navigator.clipboard.writeText(key).then(() => {
-          showFinancialCopySuccess(btnText, alertBox);
+          showFinancialCopySuccess(btnText, alertBox); showToast('Chave PIX 71981223348 copiada com sucesso!', '💸');
         }).catch(() => {
           fallbackFinancialCopy(key, btnText, alertBox);
         });
@@ -7576,7 +7614,7 @@
       el.select();
       try {
         document.execCommand('copy');
-        showFinancialCopySuccess(btnText, alertBox);
+        showFinancialCopySuccess(btnText, alertBox); showToast('Chave PIX 71981223348 copiada com sucesso!', '💸');
       } catch(e) {
         prompt('Copie a chave PIX abaixo:', key);
       }
@@ -7616,7 +7654,88 @@
       alert(`Chave PIX atualizada com sucesso para: ${key}`);
     }
 
+    
+    // ==========================================
+    // MELHORIAS ADICIONAIS: COMPARTILHAMENTO DE TREINO E EVOLUÇÃO GERAL
+    // ==========================================
+    function shareTodayWorkoutOnWhatsApp() {
+      const workouts = state.workouts || [];
+      const divs = state.workoutDivisions || [];
+      if (workouts.length === 0) {
+        showToast('Nenhum exercício cadastrado para compartilhar.', '⚠️');
+        return;
+      }
+
+      let msg = `💪 *MEU TREINO PERSONALIZADO - FAMÍLIA EM FOCO*\n\n`;
+      divs.forEach(d => {
+        const divId = d.id || d.key;
+        const exList = workouts.filter(w => w.division === divId || (d.key && w.division === d.key));
+        if (exList.length > 0) {
+          msg += `*${d.icon || '🏋️'} ${d.name || d.title} (${d.subtitle || ''})*\n`;
+          exList.forEach((ex, idx) => {
+            const check = ex.completedToday ? '✅' : '⬜';
+            msg += `${idx + 1}. ${check} ${ex.name}: ${ex.sets}x${ex.reps} (${ex.weight || 'Livre'})\n`;
+          });
+          msg += `\n`;
+        }
+      });
+
+      msg += `App: ${window.location.href}`;
+      window.open(`https://api.whatsapp.com/send?text=${encodeURIComponent(msg)}`, '_blank');
+    }
+
+    function togglePixQrCodeModal() {
+      const box = document.getElementById('integratedPixQrBox');
+      if (box) {
+        box.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        showToast('QR Code do PIX disponível na tela!', '📷');
+      }
+    }
+
+    function updateOverallEvolutionBanner() {
+      const titleElem = document.getElementById('overallEvolutionTitle');
+      const subElem = document.getElementById('overallEvolutionSubtitle');
+      const badgesElem = document.getElementById('overallEvolutionBadges');
+      const measures = state.bodyMeasures || [];
+
+      if (!titleElem || !subElem || !badgesElem) return;
+
+      if (measures.length < 2) {
+        titleElem.textContent = 'Comece a Registrar Suas Medidas';
+        subElem.textContent = 'Cadastre sua 2ª medição para ver a evolução total de ganho muscular e perda de medidas!';
+        badgesElem.innerHTML = `<span class="px-3 py-1 rounded-full bg-indigo-50 dark:bg-indigo-950 text-indigo-600 dark:text-indigo-400 font-bold text-xs">Aguardando 2ª Medição</span>`;
+        return;
+      }
+
+      const latest = measures[0];
+      const oldest = measures[measures.length - 1];
+
+      const diffBiceps = (latest.biceps - oldest.biceps).toFixed(1);
+      const diffThigh = (latest.thigh - oldest.thigh).toFixed(1);
+      const diffCalf = (latest.calf - oldest.calf).toFixed(1);
+
+      titleElem.textContent = '🔥 Transformação Corporal Ativa!';
+      subElem.textContent = `Comparando seu 1º registro (${oldest.date}) com o mais recente (${latest.date}):`;
+
+      let badgesHtml = '';
+      if (diffBiceps != 0) {
+        const isUp = diffBiceps > 0;
+        badgesHtml += `<span class="px-2.5 py-1 rounded-xl ${isUp ? 'bg-emerald-100 dark:bg-emerald-950 text-emerald-700 dark:text-emerald-300' : 'bg-slate-100 text-slate-700'} font-black text-xs">💪 Bíceps: ${isUp ? '+' : ''}${diffBiceps} cm</span>`;
+      }
+      if (diffThigh != 0) {
+        const isUp = diffThigh > 0;
+        badgesHtml += `<span class="px-2.5 py-1 rounded-xl ${isUp ? 'bg-emerald-100 dark:bg-emerald-950 text-emerald-700 dark:text-emerald-300' : 'bg-slate-100 text-slate-700'} font-black text-xs">🍗 Coxa: ${isUp ? '+' : ''}${diffThigh} cm</span>`;
+      }
+      if (diffCalf != 0) {
+        const isUp = diffCalf > 0;
+        badgesHtml += `<span class="px-2.5 py-1 rounded-xl ${isUp ? 'bg-emerald-100 dark:bg-emerald-950 text-emerald-700 dark:text-emerald-300' : 'bg-slate-100 text-slate-700'} font-black text-xs">🦵 Panturrilha: ${isUp ? '+' : ''}${diffCalf} cm</span>`;
+      }
+
+      badgesElem.innerHTML = badgesHtml || `<span class="text-xs text-slate-400">Medidas estáveis</span>`;
+    }
+
     function renderFitness() {
+      updateOverallEvolutionBanner();
       // 1. Resumo das Medidas Atuais
       const summaryGrid = document.getElementById('currentMeasuresSummaryGrid');
       const measures = state.bodyMeasures || [];
