@@ -156,6 +156,7 @@
         </button>
 
         <!-- CONTA GOOGLE / GMAIL (NOVO!) -->
+        <div id="proPlanBadgeHeader" class="relative"></div>
         <div id="authHeaderSection" class="relative">
           <!-- Renderizado via JS -->
         </div>
@@ -178,7 +179,8 @@
             <p class="text-[10px] text-slate-500 truncate" id="sidebarAccountStatus">Sem login ativo</p>
           </div>
         </div>
-        <button onclick="openUnifiedAuthModal()" id="sidebarAuthActionBtn" class="w-full py-1.5 px-2 rounded-xl bg-indigo-600 hover:bg-indigo-700 text-white text-[11px] font-bold shadow-xs transition flex items-center justify-center space-x-1.5">
+        <div id="sidebarProBanner" class="mt-2 pt-2 border-t border-indigo-100 dark:border-indigo-900/50"></div>
+        <button onclick="openUnifiedAuthModal()" id="sidebarAuthActionBtn"  class="w-full py-1.5 px-2 rounded-xl bg-indigo-600 hover:bg-indigo-700 text-white text-[11px] font-bold shadow-xs transition flex items-center justify-center space-x-1.5">
           <span>🔐</span><span>Entrar / Criar Conta</span>
         </button>
       </div>
@@ -2138,6 +2140,109 @@
     </div>
   </div>
 
+
+  <!-- ================= MODAL DE UPGRADE / PLANO PRO (FREEMIUM) ================= -->
+  <div id="upgradeModal" class="modal-backdrop">
+    <div class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-3xl max-w-lg w-full p-6 shadow-2xl relative max-h-[92vh] overflow-y-auto">
+      <button onclick="closeUpgradeModal()" class="absolute top-5 right-5 p-1.5 rounded-xl text-slate-400 hover:text-slate-600 dark:hover:text-slate-200">✕</button>
+
+      <!-- Cabeçalho do Modal de Vendas -->
+      <div class="text-center pb-4 border-b border-slate-100 dark:border-slate-800">
+        <div class="w-14 h-14 rounded-2xl bg-gradient-to-tr from-amber-400 via-yellow-400 to-amber-600 text-white text-3xl font-bold flex items-center justify-center mx-auto mb-2 shadow-lg shadow-amber-400/30">
+          👑
+        </div>
+        <span class="px-3 py-1 rounded-full bg-amber-100 dark:bg-amber-950/60 text-amber-800 dark:text-amber-300 font-black text-[11px] tracking-wide uppercase">Plano Premium & Família</span>
+        <h3 class="font-black text-xl text-slate-900 dark:text-white mt-2" id="upgradeModalTitle">Desbloqueie o Potencial Máximo</h3>
+        <p class="text-xs text-slate-500 mt-1" id="upgradeModalSubtitle">Evolua seu corpo, finanças e rotina familiar sem limitações.</p>
+      </div>
+
+      <!-- Benefícios do Plano PRO -->
+      <div class="my-4 space-y-2.5">
+        <div class="p-3 rounded-2xl bg-slate-50 dark:bg-slate-800/60 border border-slate-200/70 dark:border-slate-700/60 flex items-start space-x-3">
+          <span class="text-xl p-1.5 rounded-xl bg-amber-100 dark:bg-amber-950 text-amber-700">📸</span>
+          <div>
+            <h5 class="text-xs font-bold text-slate-900 dark:text-white">Fotos de Antes & Depois com Comparador</h5>
+            <p class="text-[11px] text-slate-500">Fotografe sua evolução física e veja o comparativo lado a lado de perda de gordura e ganho muscular.</p>
+          </div>
+        </div>
+
+        <div class="p-3 rounded-2xl bg-slate-50 dark:bg-slate-800/60 border border-slate-200/70 dark:border-slate-700/60 flex items-start space-x-3">
+          <span class="text-xl p-1.5 rounded-xl bg-indigo-100 dark:bg-indigo-950 text-indigo-700">🏋️</span>
+          <div>
+            <h5 class="text-xs font-bold text-slate-900 dark:text-white">Fichas de Treino Personalizadas Ilimitadas</h5>
+            <p class="text-[11px] text-slate-500">Crie divisões sob medida (Push/Pull/Legs, Treino A, B, C, Pernas) com séries, repetições e cargas.</p>
+          </div>
+        </div>
+
+        <div class="p-3 rounded-2xl bg-slate-50 dark:bg-slate-800/60 border border-slate-200/70 dark:border-slate-700/60 flex items-start space-x-3">
+          <span class="text-xl p-1.5 rounded-xl bg-yellow-100 dark:bg-yellow-950 text-yellow-700">🏆</span>
+          <div>
+            <h5 class="text-xs font-bold text-slate-900 dark:text-white">Mural de Troféus & Conquistas com Fotos</h5>
+            <p class="text-[11px] text-slate-500">Guarde medalhas de corrida, certificações, metas financeiras batidas e vitórias da sua vida.</p>
+          </div>
+        </div>
+
+        <div class="p-3 rounded-2xl bg-slate-50 dark:bg-slate-800/60 border border-slate-200/70 dark:border-slate-700/60 flex items-start space-x-3">
+          <span class="text-xl p-1.5 rounded-xl bg-emerald-100 dark:bg-emerald-950 text-emerald-700">👨‍👩‍👧‍👦</span>
+          <div>
+            <h5 class="text-xs font-bold text-slate-900 dark:text-white">Membros da Família Ilimitados</h5>
+            <p class="text-[11px] text-slate-500">Adicione cônjuge, filhos e irmãos com rotinas sincronizadas e recompensas gamificadas.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Tabela de Opções de Preço -->
+      <div class="grid grid-cols-2 gap-3 my-4">
+        <!-- Opção 1: Mensal -->
+        <div onclick="selectPricingOption('monthly')" id="priceCardMonthly" class="p-3.5 rounded-2xl border-2 border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 cursor-pointer hover:border-indigo-500 transition text-center">
+          <span class="text-[10px] font-bold text-slate-400 uppercase block">Mensal</span>
+          <div class="text-xl font-black text-slate-900 dark:text-white my-0.5">R$ 19,90<span class="text-xs font-normal text-slate-400">/mês</span></div>
+          <span class="text-[10px] text-slate-500 block">Cancele quando quiser</span>
+        </div>
+
+        <!-- Opção 2: Vitalício / Anual (Destaque) -->
+        <div onclick="selectPricingOption('lifetime')" id="priceCardLifetime" class="p-3.5 rounded-2xl border-2 border-amber-500 bg-amber-50/50 dark:bg-amber-950/20 cursor-pointer transition text-center relative shadow-sm">
+          <span class="absolute -top-2.5 right-3 px-2 py-0.5 rounded-full bg-gradient-to-r from-amber-500 to-yellow-500 text-white font-black text-[9px] uppercase tracking-wider">Mais Popular 🔥</span>
+          <span class="text-[10px] font-bold text-amber-700 dark:text-amber-400 uppercase block">Acesso Vitalício</span>
+          <div class="text-xl font-black text-slate-900 dark:text-white my-0.5">R$ 97,00<span class="text-xs font-normal text-slate-400"> único</span></div>
+          <span class="text-[10px] text-emerald-600 dark:text-emerald-400 font-bold block">Sem mensalidade • Para Sempre</span>
+        </div>
+      </div>
+
+      <!-- Botão de Ação de Pagamento -->
+      <div class="space-y-2">
+        <button onclick="handlePaymentCheckout()" class="w-full py-3.5 rounded-2xl bg-gradient-to-r from-amber-500 via-yellow-500 to-amber-600 hover:from-amber-600 hover:to-yellow-600 text-white font-black text-sm shadow-lg shadow-amber-500/25 flex items-center justify-center space-x-2 transition">
+          <span>🚀</span>
+          <span id="btnPaymentLabel">Desbloquear Plano PRO Agora (PIX / Cartão)</span>
+        </button>
+        <p class="text-[10px] text-center text-slate-400">🔒 Pagamento 100% Seguro com Liberação Imediata</p>
+      </div>
+
+      <!-- Seção: Já pagou? Ativar por Código VIP / Chave de Acesso -->
+      <div class="mt-5 pt-4 border-t border-slate-100 dark:border-slate-800">
+        <div class="bg-indigo-50/70 dark:bg-indigo-950/40 border border-indigo-200 dark:border-indigo-900/60 rounded-2xl p-4">
+          <div class="flex items-center space-x-2 mb-2">
+            <span class="text-base">🔑</span>
+            <h5 class="text-xs font-bold text-indigo-950 dark:text-indigo-200">Já realizou o pagamento ou tem um Código VIP?</h5>
+          </div>
+          <p class="text-[11px] text-slate-500 mb-3">Digite a sua chave de ativação para desbloquear instantaneamente todos os recursos:</p>
+          <div class="flex gap-2">
+            <input type="text" id="vipCodeInput" placeholder="Ex: PRO-2026" class="flex-1 px-3 py-2 rounded-xl border border-indigo-200 dark:border-indigo-800 bg-white dark:bg-slate-900 text-xs uppercase font-mono font-bold tracking-wider outline-none text-slate-900 dark:text-white">
+            <button onclick="redeemVipCode()" class="px-4 py-2 rounded-xl bg-indigo-600 hover:bg-indigo-700 text-white font-bold text-xs shadow-xs transition">
+              Ativar
+            </button>
+          </div>
+          <p id="vipCodeErrorMsg" class="text-[11px] font-bold text-rose-500 mt-1.5 hidden"></p>
+        </div>
+      </div>
+
+      <!-- Atalho Administrativo para o Davi -->
+      <div id="adminVipShortcut" class="mt-4 pt-3 border-t border-dashed border-slate-200 dark:border-slate-800 text-center">
+        <!-- Renderizado dinamicamente via JS -->
+      </div>
+    </div>
+  </div>
+
   <!-- ================= MODAL / MENU DE GERENCIAMENTO DA CONTA ATIVA ================= -->
   <div id="accountManagerModal" class="modal-backdrop">
     <div class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-3xl max-w-sm w-full p-6 shadow-2xl relative text-center">
@@ -3785,6 +3890,16 @@
     window.deleteWorkoutDivision = deleteWorkoutDivision;
     window.renderFitness = renderFitness;
 
+    
+    window.isUserPro = isUserPro;
+    window.openUpgradeModal = openUpgradeModal;
+    window.closeUpgradeModal = closeUpgradeModal;
+    window.selectPricingOption = selectPricingOption;
+    window.handlePaymentCheckout = handlePaymentCheckout;
+    window.redeemVipCode = redeemVipCode;
+    window.toggleAdminProSimulation = toggleAdminProSimulation;
+    window.renderProUI = renderProUI;
+
     renderAll();
       showToast('👤 Demonstração de Pessoa Solteira carregada com sucesso!', '🚀', 4000);
     }
@@ -4242,6 +4357,10 @@
 
     // ================= GESTÃO DE MEMBROS =================
     function openMemberModal(editId = null) {
+      if (!editId && !isUserPro() && (state.members || []).length >= 1) {
+        openUpgradeModal('Adicionar Familiares Ilimitados (Cônjuge, Filhos e Irmãos)');
+        return;
+      }
       const modal = document.getElementById('memberModal');
       const form = document.getElementById('memberForm');
       form.reset();
@@ -6964,6 +7083,10 @@
     }
 
     function openTrophyModal() {
+      if (!isUserPro() && (state.trophies || []).length >= 1) {
+        openUpgradeModal('Mural de Troféus & Conquistas com Fotos');
+        return;
+      }
       const sel = document.getElementById('tro-member');
       if (sel) {
         sel.innerHTML = (state.members || []).map(m => `
@@ -7073,6 +7196,10 @@
     // FICHAS DE TREINO PERSONALIZADAS
     // ==========================================
     function openWorkoutDivisionModal() {
+      if (!isUserPro() && (state.workoutDivisions || []).length >= 1) {
+        openUpgradeModal('Fichas de Treino Personalizadas Ilimitadas');
+        return;
+      }
       const el = document.getElementById('workoutDivisionModal');
       if (el) el.classList.add('active');
     }
@@ -7352,7 +7479,228 @@
       updateAuthUI();
     }
 
+    
+    // ==========================================
+    // SISTEMA DE MONETIZAÇÃO E FREEMIUM (PRO vs FREE)
+    // ==========================================
+    let currentSelectedPlan = 'lifetime'; // 'monthly' ou 'lifetime'
+
+    // Códigos VIP válidos para ativação instantânea
+    const VALID_VIP_CODES = [
+      'PRO-2026',
+      'VIP-DAVI',
+      'EVOLUCAO-PRO',
+      'FAMILIA-PRO',
+      'VITALICIO-VIP',
+      'SHAPE-PRO'
+    ];
+
+    function isUserPro() {
+      // 1. Se estiver marcado como PRO no state
+      if (state.plan === 'pro' || state.isProActive === true) return true;
+      // 2. Se a conta atual for de administrador (Davi)
+      if (currentSessionUser && (currentSessionUser.includes('davi') || currentSessionUser.includes('admin'))) return true;
+      // 3. Se houver chave salva neste dispositivo
+      if (localStorage.getItem('family_app_pro_unlocked') === 'true') return true;
+      return false;
+    }
+
+    function openUpgradeModal(featureName) {
+      const modal = document.getElementById('upgradeModal');
+      const title = document.getElementById('upgradeModalTitle');
+      const subtitle = document.getElementById('upgradeModalSubtitle');
+      const err = document.getElementById('vipCodeErrorMsg');
+      if (err) err.classList.add('hidden');
+
+      if (featureName) {
+        if (title) title.textContent = `Desbloqueie ${featureName}`;
+        if (subtitle) subtitle.textContent = `Este recurso exclusivo está disponível no Plano PRO. Faça o upgrade e aproveite sem limites!`;
+      } else {
+        if (title) title.textContent = 'Desbloqueie o Potencial Máximo';
+        if (subtitle) subtitle.textContent = 'Evolua seu corpo, finanças e rotina familiar sem limitações.';
+      }
+
+      updateAdminVipShortcut();
+      if (modal) modal.classList.add('active');
+    }
+
+    function closeUpgradeModal() {
+      const modal = document.getElementById('upgradeModal');
+      if (modal) modal.classList.remove('active');
+    }
+
+    function selectPricingOption(type) {
+      currentSelectedPlan = type;
+      const cardM = document.getElementById('priceCardMonthly');
+      const cardL = document.getElementById('priceCardLifetime');
+      const btn = document.getElementById('btnPaymentLabel');
+
+      if (type === 'monthly') {
+        if (cardM) { cardM.className = 'p-3.5 rounded-2xl border-2 border-indigo-500 bg-indigo-50/40 dark:bg-indigo-950/20 cursor-pointer transition text-center shadow-xs'; }
+        if (cardL) { cardL.className = 'p-3.5 rounded-2xl border-2 border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 cursor-pointer hover:border-amber-500 transition text-center'; }
+        if (btn) btn.textContent = 'Assinar Plano Mensal (R$ 19,90/mês)';
+      } else {
+        if (cardL) { cardL.className = 'p-3.5 rounded-2xl border-2 border-amber-500 bg-amber-50/50 dark:bg-amber-950/20 cursor-pointer transition text-center relative shadow-sm'; }
+        if (cardM) { cardM.className = 'p-3.5 rounded-2xl border-2 border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 cursor-pointer hover:border-indigo-500 transition text-center'; }
+        if (btn) btn.textContent = 'Desbloquear Acesso Vitalício (R$ 97,00 Único)';
+      }
+    }
+
+    function handlePaymentCheckout() {
+      const valor = currentSelectedPlan === 'monthly' ? 'R$ 19,90' : 'R$ 97,00';
+      const planoNome = currentSelectedPlan === 'monthly' ? 'Mensal' : 'Vitalício';
+      
+      const resposta = prompt(`💎 INSTRUÇÃO DE PAGAMENTO:
+
+Para ativar o seu Plano ${planoNome} (${valor}):
+
+1. Faça o PIX ou realize o pagamento pelo link da plataforma.
+2. Após o pagamento, você receberá a sua Chave VIP de Ativação (Ex: PRO-2026).
+
+Você já efetuou o pagamento e possui sua chave? Digite OK para inserir a chave agora ou digite o código VIP direto aqui:`, 'PRO-2026');
+
+      if (resposta) {
+        const cod = resposta.trim().toUpperCase();
+        if (VALID_VIP_CODES.includes(cod) || cod === 'OK') {
+          if (cod !== 'OK') {
+            activateProAccount(cod);
+          } else {
+            document.getElementById('vipCodeInput')?.focus();
+          }
+        } else {
+          alert('Chave de ativação inválida ou não reconhecida. Verifique se digitou corretamente.');
+        }
+      }
+    }
+
+    function redeemVipCode() {
+      const input = document.getElementById('vipCodeInput');
+      const err = document.getElementById('vipCodeErrorMsg');
+      const code = input?.value?.trim()?.toUpperCase();
+
+      if (!code) {
+        if (err) {
+          err.textContent = 'Por favor, digite uma chave de ativação.';
+          err.classList.remove('hidden');
+        }
+        return;
+      }
+
+      if (VALID_VIP_CODES.includes(code)) {
+        if (err) err.classList.add('hidden');
+        activateProAccount(code);
+      } else {
+        if (err) {
+          err.textContent = 'Código VIP inválido. Verifique sua chave ou realize a assinatura.';
+          err.classList.remove('hidden');
+        }
+      }
+    }
+
+    function activateProAccount(codeUsed) {
+      state.plan = 'pro';
+      state.isProActive = true;
+      localStorage.setItem('family_app_pro_unlocked', 'true');
+      saveState();
+      updateAuthUI();
+      closeUpgradeModal();
+
+      alert(`🎉 PARABÉNS! ASSINATURA PRO ATIVADA COM SUCESSO!
+
+Sua chave VIP "${codeUsed}" foi validada com sucesso.
+Todos os recursos avançados estão desbloqueados para você:
+- Fotos de Antes & Depois
+- Fichas de Treino Ilimitadas
+- Mural de Troféus com Fotos
+- Todos os Membros da Família!`);
+    }
+
+    function toggleAdminProSimulation() {
+      if (state.plan === 'pro') {
+        state.plan = 'free';
+        state.isProActive = false;
+        localStorage.removeItem('family_app_pro_unlocked');
+        alert('Modo Simulação FREE ativado! Agora você pode navegar exatamente como um visitante gratuito para testar os bloqueios e vendas.');
+      } else {
+        state.plan = 'pro';
+        state.isProActive = true;
+        localStorage.setItem('family_app_pro_unlocked', 'true');
+        alert('Modo PRO Restaurado! Todos os recursos estão desbloqueados.');
+      }
+      saveState();
+      updateAuthUI();
+      closeUpgradeModal();
+    }
+
+    function updateAdminVipShortcut() {
+      const container = document.getElementById('adminVipShortcut');
+      if (!container) return;
+      const isPro = isUserPro();
+      container.innerHTML = `
+        <div class="flex items-center justify-between text-[11px] text-slate-500">
+          <span>Status Atual: <strong class="${isPro ? 'text-amber-500' : 'text-slate-600'}">${isPro ? '👑 Assinante PRO Ativo' : '⭐ Visitante Gratuito'}</strong></span>
+          <button onclick="toggleAdminProSimulation()" class="text-indigo-600 dark:text-indigo-400 font-bold hover:underline">
+            ${isPro ? 'Simular Modo Grátis' : 'Ativar Modo PRO Instantâneo'}
+          </button>
+        </div>
+      `;
+    }
+
+    // Atualizar UI dos Badges PRO no Cabeçalho e na Sidebar
+    function renderProUI() {
+      const headerBadge = document.getElementById('proPlanBadgeHeader');
+      const sidebarBanner = document.getElementById('sidebarProBanner');
+      const isPro = isUserPro();
+
+      if (headerBadge) {
+        if (isPro) {
+          headerBadge.innerHTML = `
+            <button onclick="openUpgradeModal()" class="flex items-center space-x-1.5 px-3 py-1.5 rounded-2xl bg-amber-50 dark:bg-amber-950/40 border border-amber-300 dark:border-amber-700/70 text-amber-700 dark:text-amber-300 font-black text-xs shadow-xs hover:border-amber-500 transition">
+              <span class="text-sm">👑</span>
+              <span class="hidden sm:inline">Plano</span>
+              <span>PRO</span>
+            </button>
+          `;
+        } else {
+          headerBadge.innerHTML = `
+            <button onclick="openUpgradeModal()" class="flex items-center space-x-1.5 px-3 py-1.5 rounded-2xl bg-gradient-to-r from-amber-500 to-yellow-500 hover:from-amber-600 hover:to-yellow-600 text-white font-black text-xs shadow-md shadow-amber-500/20 border border-amber-300/40 transition transform active:scale-95 animate-pulse">
+              <span class="text-sm">👑</span>
+              <span class="hidden sm:inline">Seja</span>
+              <span>PRO</span>
+            </button>
+          `;
+        }
+      }
+
+      if (sidebarBanner) {
+        if (isPro) {
+          sidebarBanner.innerHTML = `
+            <div onclick="openUpgradeModal()" class="p-2.5 rounded-xl bg-gradient-to-r from-amber-500/10 via-yellow-500/10 to-amber-500/5 border border-amber-200 dark:border-amber-800/60 cursor-pointer hover:border-amber-400 transition">
+              <div class="flex items-center space-x-1.5 text-amber-700 dark:text-amber-300 font-bold text-xs">
+                <span>👑</span>
+                <span>Membro PRO VIP Ativo</span>
+              </div>
+              <p class="text-[10px] text-slate-500 mt-0.5">Acesso total a todos os recursos liberados</p>
+            </div>
+          `;
+        } else {
+          sidebarBanner.innerHTML = `
+            <div onclick="openUpgradeModal()" class="p-2.5 rounded-xl bg-gradient-to-r from-amber-500/15 to-yellow-500/10 border border-amber-300 dark:border-amber-700/70 cursor-pointer hover:border-amber-500 transition shadow-xs">
+              <div class="flex items-center justify-between">
+                <span class="text-xs font-black text-amber-800 dark:text-amber-300 flex items-center space-x-1">
+                  <span>👑</span><span>Plano Gratuito</span>
+                </span>
+                <span class="text-[10px] font-bold text-amber-700 dark:text-amber-400 bg-amber-100 dark:bg-amber-950 px-1.5 py-0.5 rounded-lg">Upgrade</span>
+              </div>
+              <p class="text-[10px] text-slate-500 mt-1">Desbloqueie fotos de shape, treinos e troféus</p>
+            </div>
+          `;
+        }
+      }
+    }
+
     function updateAuthUI() {
+      renderProUI();
       const headerContainer = document.getElementById('authHeaderSection') || document.getElementById('googleAuthSection');
       const isLogged = !!currentSessionUser || (state.googleAuth && state.googleAuth.isLoggedIn);
       const email = currentSessionUser || (state.googleAuth && state.googleAuth.email) || '';
