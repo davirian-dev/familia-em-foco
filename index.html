@@ -138,6 +138,64 @@
           👤➕
         </button>
 
+        <!-- BOTÃO GLOBAL DE AÇÕES RÁPIDAS (+) -->
+        <div class="relative">
+          <button onclick="toggleQuickActionsMenu(event)" id="btnGlobalQuickAction" class="flex items-center space-x-1.5 px-3 py-1.5 rounded-2xl bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-700 hover:to-purple-700 text-white font-bold text-xs shadow-md shadow-indigo-500/25 transition-all transform active:scale-95" title="Adicionar Rápido (+)">
+            <span class="text-sm font-black">➕</span>
+            <span class="hidden sm:inline">Adicionar</span>
+            <span class="text-[9px] opacity-70">▼</span>
+          </button>
+
+          <!-- Dropdown Menu de Ações Rápidas -->
+          <div id="quickActionsDropdown" class="hidden absolute right-0 mt-2 w-56 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-3xl shadow-2xl p-2 z-50 space-y-1">
+            <div class="px-3 py-1.5 text-[10px] font-black uppercase tracking-wider text-slate-400 border-b border-slate-100 dark:border-slate-800">
+              ⚡ Criar Rapidamente
+            </div>
+            <button onclick="quickActionTrigger('finance')" class="w-full flex items-center space-x-2.5 px-3 py-2 rounded-xl text-left text-xs font-bold text-slate-700 dark:text-slate-200 hover:bg-emerald-50 dark:hover:bg-emerald-950/40 hover:text-emerald-600 transition">
+              <span class="text-base">💰</span>
+              <div>
+                <div>Nova Despesa / Gasto</div>
+                <div class="text-[10px] text-slate-400 font-normal">Registrar nas finanças</div>
+              </div>
+            </button>
+            <button onclick="quickActionTrigger('event')" class="w-full flex items-center space-x-2.5 px-3 py-2 rounded-xl text-left text-xs font-bold text-slate-700 dark:text-slate-200 hover:bg-indigo-50 dark:hover:bg-indigo-950/40 hover:text-indigo-600 transition">
+              <span class="text-base">📅</span>
+              <div>
+                <div>Novo Evento / Consulta</div>
+                <div class="text-[10px] text-slate-400 font-normal">Adicionar na agenda</div>
+              </div>
+            </button>
+            <button onclick="quickActionTrigger('shopping')" class="w-full flex items-center space-x-2.5 px-3 py-2 rounded-xl text-left text-xs font-bold text-slate-700 dark:text-slate-200 hover:bg-amber-50 dark:hover:bg-amber-950/40 hover:text-amber-600 transition">
+              <span class="text-base">🛒</span>
+              <div>
+                <div>Item de Compras</div>
+                <div class="text-[10px] text-slate-400 font-normal">Supermercado ou farmácia</div>
+              </div>
+            </button>
+            <button onclick="quickActionTrigger('habit')" class="w-full flex items-center space-x-2.5 px-3 py-2 rounded-xl text-left text-xs font-bold text-slate-700 dark:text-slate-200 hover:bg-purple-50 dark:hover:bg-purple-950/40 hover:text-purple-600 transition">
+              <span class="text-base">🔄</span>
+              <div>
+                <div>Novo Hábito ou Meta</div>
+                <div class="text-[10px] text-slate-400 font-normal">Passo a passo com prazo</div>
+              </div>
+            </button>
+            <button onclick="quickActionTrigger('measure')" class="w-full flex items-center space-x-2.5 px-3 py-2 rounded-xl text-left text-xs font-bold text-slate-700 dark:text-slate-200 hover:bg-teal-50 dark:hover:bg-teal-950/40 hover:text-teal-600 transition">
+              <span class="text-base">📏</span>
+              <div>
+                <div>Medição Corporal</div>
+                <div class="text-[10px] text-slate-400 font-normal">Bíceps, peso e foto</div>
+              </div>
+            </button>
+            <button onclick="quickActionTrigger('workout')" class="w-full flex items-center space-x-2.5 px-3 py-2 rounded-xl text-left text-xs font-bold text-slate-700 dark:text-slate-200 hover:bg-rose-50 dark:hover:bg-rose-950/40 hover:text-rose-600 transition">
+              <span class="text-base">🏋️</span>
+              <div>
+                <div>Novo Exercício / Ficha</div>
+                <div class="text-[10px] text-slate-400 font-normal">Séries, reps e carga</div>
+              </div>
+            </button>
+          </div>
+        </div>
+
         <!-- Botão Busca Rápida (Ctrl+K) -->
         <button onclick="openSearchModal()" class="flex items-center space-x-1.5 p-2 sm:px-2.5 sm:py-1.5 rounded-xl text-slate-500 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors text-xs font-semibold" title="Buscar em todo o app (Ctrl+K)">
           <span>🔍</span>
@@ -185,130 +243,122 @@
         </button>
       </div>
 
-      <div class="px-3 pb-1 text-[11px] font-bold uppercase tracking-wider text-slate-400">Navegação Geral</div>
-      
-      <button onclick="navigate('dashboard')" id="nav-dashboard" class="nav-btn w-full flex items-center space-x-3 px-3.5 py-2.5 rounded-2xl text-left text-sm transition-all tab-active">
-        <span>📊</span>
-        <div>
-          <div class="font-bold">Visão Geral</div>
-          <div class="text-[11px] opacity-80">Resumo da família</div>
-        </div>
-      </button>
-
-      <button onclick="navigate('studies')" id="nav-studies" class="nav-btn w-full flex items-center space-x-3 px-3.5 py-2.5 rounded-2xl text-left text-sm transition-all hover:bg-slate-100 dark:hover:bg-slate-800 text-slate-600 dark:text-slate-300">
-        <span>🎓</span>
-        <div>
-          <div class="font-bold">Centro de Estudos</div>
-          <div class="text-[11px] text-slate-400">Faculdade, Escola & Theo</div>
-        </div>
-      </button>
-
-      <button onclick="navigate('members')" id="nav-members" class="nav-btn w-full flex items-center space-x-3 px-3.5 py-2.5 rounded-2xl text-left text-sm transition-all hover:bg-slate-100 dark:hover:bg-slate-800 text-slate-600 dark:text-slate-300">
-        <span>📏</span>
-        <div>
-          <div class="font-bold">Membros & IMC</div>
-          <div class="text-[11px] text-slate-400">Profissão, Peso & Altura</div>
-        </div>
-      </button>
-
-      <button onclick="navigate('calendar')" id="nav-calendar" class="nav-btn w-full flex items-center space-x-3 px-3.5 py-2.5 rounded-2xl text-left text-sm transition-all hover:bg-slate-100 dark:hover:bg-slate-800 text-slate-600 dark:text-slate-300">
-        <span>📅</span>
-        <div>
-          <div class="font-bold">Calendário Familiar</div>
-          <div class="text-[11px] text-slate-400">Pediatria & Provas</div>
-        </div>
-      </button>
-
-      <button onclick="navigate('shopping')" id="nav-shopping" class="nav-btn w-full flex items-center space-x-3 px-3.5 py-2.5 rounded-2xl text-left text-sm transition-all hover:bg-slate-100 dark:hover:bg-slate-800 text-slate-600 dark:text-slate-300">
-        <span>🛒</span>
-        <div>
-          <div class="font-bold">Lista de Compras</div>
-          <div class="text-[11px] text-slate-400">Dia a Dia, Essencial & Quero</div>
-        </div>
-      </button>
-
-      <button onclick="navigate('finances')" id="nav-finances" class="nav-btn w-full flex items-center space-x-3 px-3.5 py-2.5 rounded-2xl text-left text-sm transition-all hover:bg-slate-100 dark:hover:bg-slate-800 text-slate-600 dark:text-slate-300">
-        <span>💰</span>
-        <div>
-          <div class="font-bold">Gestão Financeira</div>
-          <div class="text-[11px] text-slate-400">Dívidas & Investimentos</div>
-        </div>
-      </button>
-
-      <button onclick="navigate('pomodoro')" id="nav-pomodoro" class="nav-btn w-full flex items-center space-x-3 px-3.5 py-2.5 rounded-2xl text-left text-sm transition-all hover:bg-slate-100 dark:hover:bg-slate-800 text-slate-600 dark:text-slate-300">
-        <span>⏱️</span>
-        <div>
-          <div class="font-bold">Timer de Foco & Pomodoro</div>
-          <div class="text-[11px] text-slate-400">Estudos & Produtividade</div>
-        </div>
-      </button>
-
-      <button onclick="navigate('mural')" id="nav-mural" class="nav-btn w-full flex items-center space-x-3 px-3.5 py-2.5 rounded-2xl text-left text-sm transition-all hover:bg-slate-100 dark:hover:bg-slate-800 text-slate-600 dark:text-slate-300">
-        <span>💌</span>
-        <div>
-          <div class="font-bold">Mural de Afeto & Recados</div>
-          <div class="text-[11px] text-slate-400">Quadro de Amor da Família</div>
-        </div>
-      </button>
-
-      <button onclick="navigate('habits-goals')" id="nav-habits-goals" class="nav-btn w-full flex items-center space-x-3 px-3.5 py-2.5 rounded-2xl text-left text-sm transition-all hover:bg-slate-100 dark:hover:bg-slate-800 text-slate-600 dark:text-slate-300">
-        <span>🎯</span>
-        <div>
-          <div class="font-bold">Metas & Hábitos</div>
-          <div class="text-[11px] text-slate-400">Rotina de Alta Performance</div>
-        </div>
-      </button>
-
-            <button onclick="navigate('trophies')" id="nav-trophies" class="nav-btn w-full flex items-center space-x-3 px-3.5 py-2.5 rounded-2xl text-left text-sm transition-all hover:bg-slate-100 dark:hover:bg-slate-800 text-slate-600 dark:text-slate-300">
-        <span>🏆</span>
-        <div>
-          <div class="font-bold">Troféus & Conquistas</div>
-          <div class="text-[11px] text-slate-400">Vitórias, Fotos & Diplomas</div>
-        </div>
-      </button>
-
-      <button onclick="navigate('fitness')" id="nav-fitness" class="nav-btn w-full flex items-center space-x-3 px-3.5 py-2.5 rounded-2xl text-left text-sm transition-all hover:bg-slate-100 dark:hover:bg-slate-800 text-slate-600 dark:text-slate-300">
-        <span>🏋️</span>
-        <div>
-          <div class="font-bold">Treino, Medidas & Fit</div>
-          <div class="text-[11px] text-slate-400">Bíceps, Coxas & Suplementos</div>
-        </div>
-      </button>
-
-      <button onclick="navigate('kids')" id="nav-kids" class="nav-btn w-full flex items-center space-x-3 px-3.5 py-2.5 rounded-2xl text-left text-sm transition-all hover:bg-slate-100 dark:hover:bg-slate-800 text-slate-600 dark:text-slate-300">
-        <span>⭐</span>
-        <div>
-          <div class="font-bold">Missões das Crianças</div>
-          <div class="text-[11px] text-slate-400">Tarefas e Gamificação</div>
-        </div>
-      </button>
-
-      <button onclick="navigate('milestones')" id="nav-milestones" class="nav-btn w-full flex items-center space-x-3 px-3.5 py-2.5 rounded-2xl text-left text-sm transition-all hover:bg-slate-100 dark:hover:bg-slate-800 text-slate-600 dark:text-slate-300">
-        <span>👶</span>
-        <div>
-          <div class="font-bold">Diário do Theo</div>
-          <div class="text-[11px] text-slate-400">Primeiros Passos aos 2a</div>
-        </div>
-      </button>
-
-      <button onclick="navigate('rewards')" id="nav-rewards" class="nav-btn w-full flex items-center space-x-3 px-3.5 py-2.5 rounded-2xl text-left text-sm transition-all hover:bg-slate-100 dark:hover:bg-slate-800 text-slate-600 dark:text-slate-300">
-        <span>🎁</span>
-        <div>
-          <div class="font-bold">Loja de Recompensas</div>
-          <div class="text-[11px] text-slate-400">Troca de moedas</div>
-        </div>
-      </button>
-
-      <button onclick="navigate('developer')" id="nav-developer" class="nav-btn w-full flex items-center space-x-3 px-3.5 py-2.5 rounded-2xl text-left text-sm transition-all bg-emerald-500/10 hover:bg-emerald-500/20 text-emerald-600 dark:text-emerald-400 border border-emerald-300 dark:border-emerald-700/60 shadow-xs">
-        <span class="text-xl">💰</span>
-        <div class="flex-1">
-          <div class="font-bold flex items-center justify-between">
-            <span>Apoie Financeiramente</span>
-            <span class="px-2 py-0.5 rounded-full bg-emerald-600 text-white text-[9px] font-black uppercase tracking-wider animate-pulse">PIX 💸</span>
+            <!-- MENU LATERAL ORGANIZADO EM CATEGORIAS EXPANSÍVEIS (ACORDEÕES) -->
+      <div class="space-y-1.5" id="sidebarAccordionContainer">
+        
+        <!-- ITEM FIXO: VISÃO GERAL -->
+        <button onclick="navigate('dashboard')" id="nav-dashboard" class="nav-btn w-full flex items-center space-x-3 px-3.5 py-2.5 rounded-2xl text-left text-sm transition-all tab-active">
+          <span class="text-base">📊</span>
+          <div class="flex-1 min-w-0">
+            <div class="font-bold truncate">Visão Geral</div>
+            <div class="text-[11px] opacity-80 truncate">Resumo da família</div>
           </div>
-          <div class="text-[11px] text-slate-500 dark:text-slate-400">Ajude o desenvolvedor via PIX</div>
+        </button>
+
+        <!-- CATEGORIA 1: SAÚDE & PERFORMANCE (ACORDEÃO) -->
+        <div class="rounded-2xl border border-slate-200/80 dark:border-slate-800/80 bg-slate-50/50 dark:bg-slate-900/40 overflow-hidden">
+          <button onclick="toggleSidebarAccordion('acc-health')" class="w-full flex items-center justify-between px-3.5 py-2.5 text-left text-xs font-bold text-slate-700 dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-800/60 transition">
+            <span class="flex items-center space-x-2">
+              <span class="text-emerald-500">💪</span>
+              <span>Saúde & Performance</span>
+            </span>
+            <span id="arrow-acc-health" class="text-[10px] text-slate-400 transform transition-transform duration-200">▼</span>
+          </button>
+          <div id="content-acc-health" class="space-y-1 p-1 pt-0">
+            <button onclick="navigate('fitness')" id="nav-fitness" class="nav-btn w-full flex items-center space-x-2.5 px-3 py-2 rounded-xl text-left text-xs transition hover:bg-slate-100 dark:hover:bg-slate-800 text-slate-600 dark:text-slate-300">
+              <span>🏋️</span><span>Treino, Medidas & Fit</span>
+            </button>
+            <button onclick="navigate('members')" id="nav-members" class="nav-btn w-full flex items-center space-x-2.5 px-3 py-2 rounded-xl text-left text-xs transition hover:bg-slate-100 dark:hover:bg-slate-800 text-slate-600 dark:text-slate-300">
+              <span>📏</span><span>Membros & IMC</span>
+            </button>
+            <button onclick="navigate('trophies')" id="nav-trophies" class="nav-btn w-full flex items-center space-x-2.5 px-3 py-2 rounded-xl text-left text-xs transition hover:bg-slate-100 dark:hover:bg-slate-800 text-slate-600 dark:text-slate-300">
+              <span>🏆</span><span>Troféus & Conquistas</span>
+            </button>
+          </div>
         </div>
-      </button>
+
+        <!-- CATEGORIA 2: GESTÃO & FINANÇAS (ACORDEÃO) -->
+        <div class="rounded-2xl border border-slate-200/80 dark:border-slate-800/80 bg-slate-50/50 dark:bg-slate-900/40 overflow-hidden">
+          <button onclick="toggleSidebarAccordion('acc-finance')" class="w-full flex items-center justify-between px-3.5 py-2.5 text-left text-xs font-bold text-slate-700 dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-800/60 transition">
+            <span class="flex items-center space-x-2">
+              <span class="text-amber-500">💰</span>
+              <span>Gestão & Finanças</span>
+            </span>
+            <span id="arrow-acc-finance" class="text-[10px] text-slate-400 transform transition-transform duration-200">▼</span>
+          </button>
+          <div id="content-acc-finance" class="space-y-1 p-1 pt-0">
+            <button onclick="navigate('finances')" id="nav-finances" class="nav-btn w-full flex items-center space-x-2.5 px-3 py-2 rounded-xl text-left text-xs transition hover:bg-slate-100 dark:hover:bg-slate-800 text-slate-600 dark:text-slate-300">
+              <span>💰</span><span>Gestão Financeira</span>
+            </button>
+            <button onclick="navigate('shopping')" id="nav-shopping" class="nav-btn w-full flex items-center space-x-2.5 px-3 py-2 rounded-xl text-left text-xs transition hover:bg-slate-100 dark:hover:bg-slate-800 text-slate-600 dark:text-slate-300">
+              <span>🛒</span><span>Lista de Compras</span>
+            </button>
+            <button onclick="navigate('calendar')" id="nav-calendar" class="nav-btn w-full flex items-center space-x-2.5 px-3 py-2 rounded-xl text-left text-xs transition hover:bg-slate-100 dark:hover:bg-slate-800 text-slate-600 dark:text-slate-300">
+              <span>📅</span><span>Calendário Familiar</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- CATEGORIA 3: EDUCAÇÃO & PRODUTIVIDADE (ACORDEÃO) -->
+        <div class="rounded-2xl border border-slate-200/80 dark:border-slate-800/80 bg-slate-50/50 dark:bg-slate-900/40 overflow-hidden">
+          <button onclick="toggleSidebarAccordion('acc-edu')" class="w-full flex items-center justify-between px-3.5 py-2.5 text-left text-xs font-bold text-slate-700 dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-800/60 transition">
+            <span class="flex items-center space-x-2">
+              <span class="text-indigo-500">📚</span>
+              <span>Educação & Foco</span>
+            </span>
+            <span id="arrow-acc-edu" class="text-[10px] text-slate-400 transform transition-transform duration-200">▼</span>
+          </button>
+          <div id="content-acc-edu" class="space-y-1 p-1 pt-0">
+            <button onclick="navigate('studies')" id="nav-studies" class="nav-btn w-full flex items-center space-x-2.5 px-3 py-2 rounded-xl text-left text-xs transition hover:bg-slate-100 dark:hover:bg-slate-800 text-slate-600 dark:text-slate-300">
+              <span>🎓</span><span>Centro de Estudos</span>
+            </button>
+            <button onclick="navigate('pomodoro')" id="nav-pomodoro" class="nav-btn w-full flex items-center space-x-2.5 px-3 py-2 rounded-xl text-left text-xs transition hover:bg-slate-100 dark:hover:bg-slate-800 text-slate-600 dark:text-slate-300">
+              <span>⏱️</span><span>Timer de Foco & Pomodoro</span>
+            </button>
+            <button onclick="navigate('habits-goals')" id="nav-habits-goals" class="nav-btn w-full flex items-center space-x-2.5 px-3 py-2 rounded-xl text-left text-xs transition hover:bg-slate-100 dark:hover:bg-slate-800 text-slate-600 dark:text-slate-300">
+              <span>🎯</span><span>Metas & Hábitos</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- CATEGORIA 4: FAMÍLIA & FILHOS (ACORDEÃO) -->
+        <div class="rounded-2xl border border-slate-200/80 dark:border-slate-800/80 bg-slate-50/50 dark:bg-slate-900/40 overflow-hidden" id="accordionFamilyGroup">
+          <button onclick="toggleSidebarAccordion('acc-family')" class="w-full flex items-center justify-between px-3.5 py-2.5 text-left text-xs font-bold text-slate-700 dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-800/60 transition">
+            <span class="flex items-center space-x-2">
+              <span class="text-pink-500">👨‍👩‍👧‍👦</span>
+              <span>Família & Filhos</span>
+            </span>
+            <span id="arrow-acc-family" class="text-[10px] text-slate-400 transform transition-transform duration-200">▼</span>
+          </button>
+          <div id="content-acc-family" class="space-y-1 p-1 pt-0">
+            <button onclick="navigate('kids')" id="nav-kids" class="nav-btn w-full flex items-center space-x-2.5 px-3 py-2 rounded-xl text-left text-xs transition hover:bg-slate-100 dark:hover:bg-slate-800 text-slate-600 dark:text-slate-300">
+              <span>⭐</span><span>Missões das Crianças</span>
+            </button>
+            <button onclick="navigate('milestones')" id="nav-milestones" class="nav-btn w-full flex items-center space-x-2.5 px-3 py-2 rounded-xl text-left text-xs transition hover:bg-slate-100 dark:hover:bg-slate-800 text-slate-600 dark:text-slate-300">
+              <span>👶</span><span>Diário do Theo / Bebê</span>
+            </button>
+            <button onclick="navigate('rewards')" id="nav-rewards" class="nav-btn w-full flex items-center space-x-2.5 px-3 py-2 rounded-xl text-left text-xs transition hover:bg-slate-100 dark:hover:bg-slate-800 text-slate-600 dark:text-slate-300">
+              <span>🎁</span><span>Loja de Recompensas</span>
+            </button>
+            <button onclick="navigate('mural')" id="nav-mural" class="nav-btn w-full flex items-center space-x-2.5 px-3 py-2 rounded-xl text-left text-xs transition hover:bg-slate-100 dark:hover:bg-slate-800 text-slate-600 dark:text-slate-300">
+              <span>💌</span><span>Mural de Afeto & Recados</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- DESTAQUE DIRETO: APOIE O DESENVOLVEDOR -->
+        <button onclick="navigate('developer')" id="nav-developer" class="nav-btn w-full flex items-center space-x-3 px-3.5 py-2.5 rounded-2xl text-left text-sm transition-all bg-emerald-500/10 hover:bg-emerald-500/20 text-emerald-600 dark:text-emerald-400 border border-emerald-300 dark:border-emerald-700/60 shadow-xs">
+          <span class="text-base">💰</span>
+          <div class="flex-1 min-w-0">
+            <div class="font-bold flex items-center justify-between text-xs">
+              <span class="truncate">Apoio Financeiro</span>
+              <span class="px-1.5 py-0.2 rounded-full bg-emerald-600 text-white text-[9px] font-black uppercase tracking-wider animate-pulse">PIX 💸</span>
+            </div>
+            <div class="text-[10px] text-slate-500 dark:text-slate-400 truncate">Ajude o dev via PIX</div>
+          </div>
+        </button>
+
+      </div>
 
       <div class="mt-auto pt-3 border-t border-slate-200 dark:border-slate-800 text-xs text-slate-400 space-y-2">
         <div>
@@ -402,51 +452,60 @@
           </div>
         </div>
 
-        <!-- ================= WIDGET "HOJE NA FAMÍLIA" (CENTRAL DIÁRIA) ================= -->
-        <div class="bg-gradient-to-r from-amber-500/10 via-indigo-500/10 to-purple-500/10 border border-indigo-500/20 dark:border-indigo-500/30 rounded-3xl p-5 shadow-sm">
-          <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-4">
-            <div class="flex items-center space-x-2.5">
-              <span class="text-2xl">☀️</span>
+        <!-- ================= 6. NOVO GRÁFICO INTERATIVO DE EVOLUÇÃO NO DASHBOARD ================= -->
+        <div class="bg-white dark:bg-slate-900 rounded-3xl p-6 border border-slate-200 dark:border-slate-800 shadow-sm space-y-4">
+          <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+            <div class="flex items-center space-x-3">
+              <span class="text-2xl p-2.5 rounded-2xl bg-indigo-50 dark:bg-indigo-950 text-indigo-600 dark:text-indigo-400">📈</span>
               <div>
-                <h3 class="font-bold text-base text-slate-900 dark:text-white">Hoje na Família • Rotina do Dia</h3>
-                <p class="text-xs text-slate-500">Ações prioritárias para manter a harmonia e o desenvolvimento de todos</p>
+                <h3 class="font-bold text-base text-slate-900 dark:text-white">Gráfico de Evolução & Progresso</h3>
+                <p class="text-xs text-slate-500 dark:text-slate-300">Acompanhe a curva de crescimento financeiro, saúde e consistência</p>
               </div>
             </div>
-            <div class="flex items-center space-x-2">
-              <span class="text-xs font-bold text-indigo-600 dark:text-indigo-400 bg-indigo-50 dark:bg-indigo-950/60 px-3 py-1 rounded-full border border-indigo-200 dark:border-indigo-800 flex items-center gap-1">
-                <span>🏆</span> Harmonia Familiar: <strong id="harmonyScore">94%</strong>
-              </span>
+            <!-- Abas do Gráfico -->
+            <div class="flex p-1 rounded-2xl bg-slate-100 dark:bg-slate-800 text-xs font-bold">
+              <button onclick="switchEvolutionChartTab('finances')" id="chartBtnFinances" class="px-3 py-1.5 rounded-xl transition bg-white dark:bg-slate-900 text-indigo-600 dark:text-indigo-400 shadow-xs">💰 Finanças</button>
+              <button onclick="switchEvolutionChartTab('fitness')" id="chartBtnFitness" class="px-3 py-1.5 rounded-xl transition text-slate-500 dark:text-slate-300 hover:text-slate-900">💪 Fitness / Peso</button>
+              <button onclick="switchEvolutionChartTab('habits')" id="chartBtnHabits" class="px-3 py-1.5 rounded-xl transition text-slate-500 dark:text-slate-300 hover:text-slate-900">🎯 Hábitos</button>
             </div>
           </div>
 
-          <!-- Cards Rápidos do Dia -->
+          <!-- Área do Gráfico SVG Responsivo -->
+          <div id="dashboardEvolutionChartContainer" class="pt-2">
+            <!-- Renderizado dinamicamente via JS -->
+          </div>
+        </div>
+
+        <!-- ================= 5. WIDGET "HOJE NA FAMÍLIA" COM GAMIFICAÇÃO & CHECKBOXES ================= -->
+        <div class="bg-gradient-to-r from-amber-500/10 via-indigo-500/10 to-purple-500/10 border border-indigo-500/20 dark:border-indigo-500/30 rounded-3xl p-6 shadow-sm space-y-4">
+          <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+            <div class="flex items-center space-x-3">
+              <span class="text-3xl">☀️</span>
+              <div>
+                <h3 class="font-bold text-base text-slate-900 dark:text-white">Hoje na Família • Rotina com Checkboxes</h3>
+                <p class="text-xs text-slate-500 dark:text-slate-300">Marque as tarefas e hábitos essenciais diretamente por aqui</p>
+              </div>
+            </div>
+
+            <!-- 5. GAMIFICAÇÃO VISUAL DA HARMONIA FAMILIAR -->
+            <div class="flex items-center space-x-3 p-2 px-3 rounded-2xl bg-white dark:bg-slate-900 border border-indigo-200 dark:border-indigo-800 shadow-xs">
+              <div class="relative w-11 h-11 flex items-center justify-center">
+                <svg class="w-11 h-11 transform -rotate-90">
+                  <circle cx="22" cy="22" r="18" stroke="currentColor" stroke-width="4" class="text-slate-200 dark:text-slate-700" fill="transparent" />
+                  <circle cx="22" cy="22" r="18" stroke="currentColor" stroke-width="4" class="text-emerald-500 transition-all duration-1000" stroke-dasharray="113" stroke-dashoffset="7" stroke-linecap="round" fill="transparent" />
+                </svg>
+                <span class="absolute text-[11px] font-black text-slate-900 dark:text-white" id="harmonyScore">94%</span>
+              </div>
+              <div>
+                <span class="text-[10px] font-bold text-emerald-600 dark:text-emerald-400 uppercase tracking-wider block">Harmonia Familiar</span>
+                <span class="text-xs font-black text-slate-800 dark:text-slate-200">✨ Clima Excelente!</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Cards Interativos de Rotina Diária com Checkboxes Táteis -->
           <div class="grid grid-cols-1 sm:grid-cols-3 gap-3" id="todayHighlightsGrid">
-            <div class="p-3.5 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 flex items-start space-x-3">
-              <span class="text-2xl">🏃</span>
-              <div class="flex-1 min-w-0">
-                <span class="text-[10px] font-bold text-indigo-600 uppercase tracking-wide">Saúde Davi</span>
-                <h5 class="text-xs font-bold text-slate-900 dark:text-white truncate">Treino Corrida 10km</h5>
-                <p class="text-[11px] text-slate-500">Meta hidratação 3L ativa</p>
-              </div>
-            </div>
-
-            <div class="p-3.5 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 flex items-start space-x-3">
-              <span class="text-2xl">🎒</span>
-              <div class="flex-1 min-w-0">
-                <span class="text-[10px] font-bold text-amber-600 uppercase tracking-wide">Escola Benjamin</span>
-                <h5 class="text-xs font-bold text-slate-900 dark:text-white truncate">Tabuada do 8 e Lição</h5>
-                <p class="text-[11px] text-slate-500">140 moedas conquistadas</p>
-              </div>
-            </div>
-
-            <div class="p-3.5 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 flex items-start space-x-3">
-              <span class="text-2xl">🍼</span>
-              <div class="flex-1 min-w-0">
-                <span class="text-[10px] font-bold text-cyan-600 uppercase tracking-wide">Puericultura Theo</span>
-                <h5 class="text-xs font-bold text-slate-900 dark:text-white truncate">Frutas & Sono 20h30</h5>
-                <p class="text-[11px] text-slate-500">Desfralde em progresso</p>
-              </div>
-            </div>
+            <!-- Renderizado dinamicamente com checkboxes interativos -->
           </div>
         </div>
 
@@ -4284,6 +4343,15 @@
     window.calculateOneRepMax = calculateOneRepMax;
 
     window.printFitnessReport = printFitnessReport;
+    
+    window.toggleSidebarAccordion = toggleSidebarAccordion;
+    window.toggleQuickActionsMenu = toggleQuickActionsMenu;
+    window.quickActionTrigger = quickActionTrigger;
+    window.renderTodayDashboardCheckboxes = renderTodayDashboardCheckboxes;
+    window.toggleDashboardDailyHabit = toggleDashboardDailyHabit;
+    window.switchEvolutionChartTab = switchEvolutionChartTab;
+    window.renderEvolutionChart = renderEvolutionChart;
+
     renderAll();
       showToast('👤 Demonstração de Pessoa Solteira carregada com sucesso!', '🚀', 4000);
     }
@@ -8156,6 +8224,209 @@
       `);
       printWindow.document.close();
       showToast('Relatório completo gerado! Pronto para impressão ou salvar em PDF.', '📄');
+    }
+
+    
+    // ==========================================
+    // 1. ACORDEÕES DO MENU LATERAL (SIDEBAR)
+    // ==========================================
+    function toggleSidebarAccordion(accId) {
+      const content = document.getElementById('content-' + accId);
+      const arrow = document.getElementById('arrow-' + accId);
+      if (!content) return;
+
+      const isHidden = content.classList.contains('hidden');
+      if (isHidden) {
+        content.classList.remove('hidden');
+        if (arrow) arrow.style.transform = 'rotate(0deg)';
+      } else {
+        content.classList.add('hidden');
+        if (arrow) arrow.style.transform = 'rotate(-90deg)';
+      }
+    }
+
+    // ==========================================
+    // 2. AÇÕES RÁPIDAS (QUICK ACTIONS MENU)
+    // ==========================================
+    function toggleQuickActionsMenu(event) {
+      if (event) event.stopPropagation();
+      const menu = document.getElementById('quickActionsDropdown');
+      if (menu) menu.classList.toggle('hidden');
+    }
+
+    document.addEventListener('click', function(event) {
+      const menu = document.getElementById('quickActionsDropdown');
+      const btn = document.getElementById('btnGlobalQuickAction');
+      if (menu && !menu.classList.contains('hidden') && !menu.contains(event.target) && !btn.contains(event.target)) {
+        menu.classList.add('hidden');
+      }
+    });
+
+    function quickActionTrigger(type) {
+      const menu = document.getElementById('quickActionsDropdown');
+      if (menu) menu.classList.add('hidden');
+
+      if (type === 'finance') {
+        openCrudModal('finance');
+      } else if (type === 'event') {
+        openEventModal();
+      } else if (type === 'shopping') {
+        openShoppingModal();
+      } else if (type === 'habit') {
+        openAdvancedHabitModal();
+      } else if (type === 'measure') {
+        openMeasureModal();
+      } else if (type === 'workout') {
+        openWorkoutModal();
+      }
+    }
+
+    // ==========================================
+    // 5. CHECKBOXES DE HÁBITOS NO DASHBOARD
+    // ==========================================
+    function renderTodayDashboardCheckboxes() {
+      const grid = document.getElementById('todayHighlightsGrid');
+      if (!grid) return;
+
+      const habits = state.habits || [];
+      const defaultTasks = [
+        { id: 'dash-w-1', title: '💧 Beber 2.5L de Água', subtitle: 'Hidratação essencial', done: false, icon: '💧', color: 'indigo' },
+        { id: 'dash-w-2', title: '🏋️ Treino de Musculação', subtitle: 'Executar ficha do dia', done: false, icon: '🏋️', color: 'emerald' },
+        { id: 'dash-w-3', title: '📚 30 Minutos de Estudo', subtitle: 'Foco e evolução', done: false, icon: '📚', color: 'amber' }
+      ];
+
+      const items = (habits.length >= 3) ? habits.slice(0, 3).map((h, i) => ({
+        id: h.id,
+        title: h.title,
+        subtitle: (h.freq === 'weekdays' ? 'Dias úteis' : 'Rotina diária'),
+        done: h.completedToday || false,
+        icon: (h.category === 'health' ? '🏃' : (h.category === 'study' ? '📖' : '⭐')),
+        color: (i === 0 ? 'indigo' : (i === 1 ? 'emerald' : 'amber'))
+      })) : defaultTasks;
+
+      grid.innerHTML = items.map(item => `
+        <div class="p-4 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-xs flex items-center justify-between transition hover:border-indigo-400">
+          <div class="flex items-center space-x-3 min-w-0">
+            <input type="checkbox" ${item.done ? 'checked' : ''} onchange="toggleDashboardDailyHabit('${item.id}')" class="w-5 h-5 rounded-lg text-indigo-600 cursor-pointer accent-indigo-600 transition">
+            <div class="min-w-0">
+              <h5 class="text-xs font-bold ${item.done ? 'line-through text-slate-400 dark:text-slate-500' : 'text-slate-900 dark:text-white'} truncate">${item.title}</h5>
+              <p class="text-[11px] text-slate-500 dark:text-slate-300 truncate">${item.subtitle}</p>
+            </div>
+          </div>
+          <span class="text-xl opacity-80">${item.icon}</span>
+        </div>
+      `).join('');
+    }
+
+    function toggleDashboardDailyHabit(habitId) {
+      const habit = (state.habits || []).find(h => h.id === habitId);
+      if (habit) {
+        habit.completedToday = !habit.completedToday;
+        saveState();
+      }
+      renderTodayDashboardCheckboxes();
+      showToast('Status da tarefa atualizado!', '✓');
+    }
+
+    // ==========================================
+    // 6. GRÁFICOS DE EVOLUÇÃO NO DASHBOARD INICIAL (SVG RESPONSIVO)
+    // ==========================================
+    let currentChartTab = 'finances';
+
+    function switchEvolutionChartTab(tab) {
+      currentChartTab = tab;
+      const bFin = document.getElementById('chartBtnFinances');
+      const bFit = document.getElementById('chartBtnFitness');
+      const bHab = document.getElementById('chartBtnHabits');
+
+      [bFin, bFit, bHab].forEach(b => {
+        if (!b) return;
+        b.className = 'px-3 py-1.5 rounded-xl transition text-slate-500 dark:text-slate-300 hover:text-slate-900';
+      });
+
+      if (tab === 'finances' && bFin) bFin.className = 'px-3 py-1.5 rounded-xl transition bg-white dark:bg-slate-900 text-indigo-600 dark:text-indigo-400 shadow-xs';
+      if (tab === 'fitness' && bFit) bFit.className = 'px-3 py-1.5 rounded-xl transition bg-white dark:bg-slate-900 text-indigo-600 dark:text-indigo-400 shadow-xs';
+      if (tab === 'habits' && bHab) bHab.className = 'px-3 py-1.5 rounded-xl transition bg-white dark:bg-slate-900 text-indigo-600 dark:text-indigo-400 shadow-xs';
+
+      renderEvolutionChart();
+    }
+
+    function renderEvolutionChart() {
+      const container = document.getElementById('dashboardEvolutionChartContainer');
+      if (!container) return;
+
+      if (currentChartTab === 'finances') {
+        container.innerHTML = `
+          <div class="space-y-2">
+            <div class="flex items-center justify-between text-xs text-slate-500 dark:text-slate-300 px-1">
+              <span>Evolução de Saldo & Economia (Últimos 6 meses)</span>
+              <strong class="text-emerald-600 dark:text-emerald-400">+28.4% de Reserva</strong>
+            </div>
+            <div class="w-full h-40 bg-slate-50 dark:bg-slate-800/50 rounded-2xl p-3 flex items-end">
+              <svg viewBox="0 0 500 120" class="w-full h-full overflow-visible">
+                <defs>
+                  <linearGradient id="finGrad" x1="0" y1="0" x2="0" y2="1">
+                    <stop offset="0%" stop-color="#10B981" stop-opacity="0.35"/>
+                    <stop offset="100%" stop-color="#10B981" stop-opacity="0.0"/>
+                  </linearGradient>
+                </defs>
+                <path d="M 0,90 Q 100,75 200,60 T 350,35 T 500,15 L 500,120 L 0,120 Z" fill="url(#finGrad)"/>
+                <path d="M 0,90 Q 100,75 200,60 T 350,35 T 500,15" fill="none" stroke="#10B981" stroke-width="3" stroke-linecap="round"/>
+                <circle cx="200" cy="60" r="5" fill="#10B981" class="animate-ping"/>
+                <circle cx="200" cy="60" r="4" fill="#10B981"/>
+                <circle cx="500" cy="15" r="5" fill="#10B981"/>
+              </svg>
+            </div>
+            <div class="flex justify-between text-[11px] text-slate-400 font-bold px-2">
+              <span>Jun</span><span>Jul</span><span>Ago</span><span>Set</span><span>Out</span><span>Nov (Atual)</span>
+            </div>
+          </div>
+        `;
+      } else if (currentChartTab === 'fitness') {
+        container.innerHTML = `
+          <div class="space-y-2">
+            <div class="flex items-center justify-between text-xs text-slate-500 dark:text-slate-300 px-1">
+              <span>Progresso de Carga & Ganho Muscular (Bíceps)</span>
+              <strong class="text-indigo-600 dark:text-indigo-400">+2.5 cm Ganho</strong>
+            </div>
+            <div class="w-full h-40 bg-slate-50 dark:bg-slate-800/50 rounded-2xl p-3 flex items-end">
+              <svg viewBox="0 0 500 120" class="w-full h-full overflow-visible">
+                <defs>
+                  <linearGradient id="fitGrad" x1="0" y1="0" x2="0" y2="1">
+                    <stop offset="0%" stop-color="#6366F1" stop-opacity="0.35"/>
+                    <stop offset="100%" stop-color="#6366F1" stop-opacity="0.0"/>
+                  </linearGradient>
+                </defs>
+                <path d="M 0,105 Q 120,80 250,55 T 500,20 L 500,120 L 0,120 Z" fill="url(#fitGrad)"/>
+                <path d="M 0,105 Q 120,80 250,55 T 500,20" fill="none" stroke="#6366F1" stroke-width="3" stroke-linecap="round"/>
+                <circle cx="250" cy="55" r="4" fill="#6366F1"/>
+                <circle cx="500" cy="20" r="5" fill="#6366F1"/>
+              </svg>
+            </div>
+            <div class="flex justify-between text-[11px] text-slate-400 font-bold px-2">
+              <span>Início (35.5cm)</span><span>Semana 4</span><span>Semana 8</span><span>Hoje (38.0cm)</span>
+            </div>
+          </div>
+        `;
+      } else {
+        container.innerHTML = `
+          <div class="space-y-2">
+            <div class="flex items-center justify-between text-xs text-slate-500 dark:text-slate-300 px-1">
+              <span>Taxa de Cumprimento de Hábitos na Semana</span>
+              <strong class="text-purple-600 dark:text-purple-400">92% Consistência</strong>
+            </div>
+            <div class="grid grid-cols-7 gap-2 h-40 items-end bg-slate-50 dark:bg-slate-800/50 rounded-2xl p-4">
+              <div class="flex flex-col items-center gap-1.5 h-full justify-end"><div class="w-full bg-purple-500 rounded-lg h-[80%]"></div><span class="text-[10px] text-slate-400 font-bold">Seg</span></div>
+              <div class="flex flex-col items-center gap-1.5 h-full justify-end"><div class="w-full bg-purple-500 rounded-lg h-[100%]"></div><span class="text-[10px] text-slate-400 font-bold">Ter</span></div>
+              <div class="flex flex-col items-center gap-1.5 h-full justify-end"><div class="w-full bg-purple-500 rounded-lg h-[90%]"></div><span class="text-[10px] text-slate-400 font-bold">Qua</span></div>
+              <div class="flex flex-col items-center gap-1.5 h-full justify-end"><div class="w-full bg-purple-500 rounded-lg h-[85%]"></div><span class="text-[10px] text-slate-400 font-bold">Qui</span></div>
+              <div class="flex flex-col items-center gap-1.5 h-full justify-end"><div class="w-full bg-purple-500 rounded-lg h-[95%]"></div><span class="text-[10px] text-slate-400 font-bold">Sex</span></div>
+              <div class="flex flex-col items-center gap-1.5 h-full justify-end"><div class="w-full bg-indigo-400 rounded-lg h-[75%]"></div><span class="text-[10px] text-slate-400 font-bold">Sáb</span></div>
+              <div class="flex flex-col items-center gap-1.5 h-full justify-end"><div class="w-full bg-indigo-500 rounded-lg h-[90%]"></div><span class="text-[10px] text-slate-400 font-bold">Dom</span></div>
+            </div>
+          </div>
+        `;
+      }
     }
 
     function renderFitness() {
