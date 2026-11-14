@@ -1,5 +1,5 @@
 // Service Worker Oficial - Família em Foco v3.3
-const CACHE_NAME = 'familia-em-foco-v3.8';
+const CACHE_NAME = 'familia-em-foco-v3.9';
 
 const ASSETS_TO_CACHE = [
   './',

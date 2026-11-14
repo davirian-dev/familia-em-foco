@@ -1501,19 +1501,19 @@
               <span class="text-xs font-black text-slate-800 dark:text-slate-200 flex items-center gap-1.5">
                 <span>🔑</span> CHAVE PIX OFICIAL DO DESENVOLVEDOR:
               </span>
-              <span class="text-[10px] font-bold text-emerald-600 bg-emerald-100 dark:bg-emerald-950 px-2 py-0.5 rounded-full">Chave E-mail</span>
+              <span class="text-[10px] font-bold text-emerald-600 bg-emerald-100 dark:bg-emerald-950 px-2.5 py-0.5 rounded-full border border-emerald-200 dark:border-emerald-800">PIX Copia e Cola Oficial</span>
             </div>
 
-            <div class="flex flex-col sm:flex-row gap-2">
-              <div class="flex-1 bg-white dark:bg-slate-900 border-2 border-emerald-400 dark:border-emerald-700 rounded-2xl px-4 py-3 font-mono text-sm sm:text-base font-black text-slate-900 dark:text-white flex items-center justify-between select-all shadow-inner">
-                <span id="devFinancialPixKey" class="truncate max-w-[200px] sm:max-w-none text-xs sm:text-sm font-mono">00020126580014BR.GOV.BCB.PIX01362036b759-ae21-4846-9f88-25256a51823a5204000053039865802BR5925Davi Rian Nascimento Pere6009SAO PAULO62140510yGOUlGxzvX63043796</span>
-                <span class="text-[10px] font-sans font-normal text-slate-400 ml-2 hidden sm:inline">(PIX Copia e Cola)</span>
+            <div class="flex flex-col sm:flex-row gap-2 items-stretch">
+              <div class="flex-1 min-w-0 bg-white dark:bg-slate-900 border-2 border-emerald-400 dark:border-emerald-700 rounded-2xl px-4 py-3 overflow-hidden flex items-center justify-between shadow-inner" title="Código Oficial PIX Copia e Cola">
+                <span id="devFinancialPixKey" class="truncate block w-full text-xs font-mono font-bold text-slate-900 dark:text-white select-all">00020126580014BR.GOV.BCB.PIX01362036b759-ae21-4846-9f88-25256a51823a5204000053039865802BR5925Davi Rian Nascimento Pere6009SAO PAULO62140510yGOUlGxzvX63043796</span>
+                <span class="text-[10px] font-sans font-normal text-slate-400 ml-2 shrink-0 hidden sm:inline">(Copia e Cola)</span>
               </div>
-              <button onclick="copyFinancialPixKey()" id="btnCopyFinancialPix" class="px-6 py-3.5 rounded-2xl bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-700 hover:to-teal-700 text-white font-black text-sm shadow-lg shadow-emerald-600/30 transition flex items-center justify-center space-x-2">
+              <button onclick="copyFinancialPixKey()" id="btnCopyFinancialPix" class="px-5 py-3.5 rounded-2xl bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-700 hover:to-teal-700 text-white font-black text-xs sm:text-sm shadow-lg shadow-emerald-600/30 transition flex items-center justify-center space-x-2 shrink-0">
                 <span>📋</span>
                 <span id="btnCopyFinancialPixText">COPIAR CHAVE PIX</span>
               </button>
-              <button onclick="togglePixQrCodeModal()" class="px-4 py-3.5 rounded-2xl border-2 border-emerald-500 bg-white dark:bg-slate-900 hover:bg-emerald-50 dark:hover:bg-slate-800 text-emerald-600 dark:text-emerald-400 font-black text-xs transition flex items-center justify-center space-x-1.5 shadow-sm">
+              <button onclick="togglePixQrCodeModal()" class="px-4 py-3.5 rounded-2xl border-2 border-emerald-500 bg-white dark:bg-slate-900 hover:bg-emerald-50 dark:hover:bg-slate-800 text-emerald-600 dark:text-emerald-400 font-black text-xs transition flex items-center justify-center space-x-1.5 shadow-sm shrink-0">
                 <span>📷</span>
                 <span>VER QR CODE</span>
               </button>
@@ -1591,7 +1591,7 @@
         </div>
 
         <!-- Configuração para o Desenvolvedor (Apenas Administrador) -->
-        <div id="adminPixConfigArea" class="bg-slate-100 dark:bg-slate-800/60 rounded-2xl p-4 text-xs text-slate-500 space-y-2">
+        <div id="adminPixConfigArea" style="display: none;" class="bg-slate-100 dark:bg-slate-800/60 rounded-2xl p-4 text-xs text-slate-500 space-y-2 border border-slate-200 dark:border-slate-700">
           <div class="flex items-center justify-between">
             <span class="font-bold text-slate-700 dark:text-slate-300 flex items-center gap-1.5">
               <span>⚙️</span> Personalizar Chave PIX (Painel do Administrador)
@@ -8337,8 +8337,16 @@
     }
 
     function togglePixEditForm() {
-      const form = document.getElementById('pixEditForm');
-      if (form) form.classList.toggle('hidden');
+      // Somente o Davi com PIN de Administrador (1234) pode abrir e editar a chave PIX
+      if (typeof openAdminPinModal === 'function') {
+        openAdminPinModal(() => {
+          const form = document.getElementById('pixEditForm');
+          if (form) form.classList.toggle('hidden');
+        }, 'Editar Chave PIX (Administrador Davi)');
+      } else {
+        const form = document.getElementById('pixEditForm');
+        if (form) form.classList.toggle('hidden');
+      }
     }
 
     function saveCustomPixKey() {
@@ -9781,6 +9789,12 @@ Todos os recursos avançados estão disponíveis para você:
 
     function updateAuthUI() {
       renderProUI();
+      // Controle de visibilidade da área de configuração de PIX: NUNCA visível para visitantes comuns
+      const adminPixArea = document.getElementById('adminPixConfigArea');
+      if (adminPixArea) {
+        const isAdmin = currentSessionUser && (currentSessionUser.includes('davi') || currentSessionUser.includes('admin'));
+        adminPixArea.style.display = isAdmin ? 'block' : 'none';
+      }
       const headerContainer = document.getElementById('authHeaderSection') || document.getElementById('googleAuthSection');
       const isLogged = !!currentSessionUser || (state.googleAuth && state.googleAuth.isLoggedIn);
       const email = currentSessionUser || (state.googleAuth && state.googleAuth.email) || '';
@@ -10308,7 +10322,7 @@ Todos os recursos avançados estão disponíveis para você:
     // Registro de Service Worker para PWA Offline e Instalação Nativa
     if ('serviceWorker' in navigator) {
       window.addEventListener('load', () => {
-        navigator.serviceWorker.register('./sw.js?v=3.8', { updateViaCache: 'none' })
+        navigator.serviceWorker.register('./sw.js?v=3.9', { updateViaCache: 'none' })
           .then((reg) => {
             reg.update();
           })
