@@ -257,6 +257,14 @@
         </div>
       </button>
 
+            <button onclick="navigate('trophies')" id="nav-trophies" class="nav-btn w-full flex items-center space-x-3 px-3.5 py-2.5 rounded-2xl text-left text-sm transition-all hover:bg-slate-100 dark:hover:bg-slate-800 text-slate-600 dark:text-slate-300">
+        <span>🏆</span>
+        <div>
+          <div class="font-bold">Troféus & Conquistas</div>
+          <div class="text-[11px] text-slate-400">Vitórias, Fotos & Diplomas</div>
+        </div>
+      </button>
+
       <button onclick="navigate('fitness')" id="nav-fitness" class="nav-btn w-full flex items-center space-x-3 px-3.5 py-2.5 rounded-2xl text-left text-sm transition-all hover:bg-slate-100 dark:hover:bg-slate-800 text-slate-600 dark:text-slate-300">
         <span>🏋️</span>
         <div>
@@ -738,10 +746,10 @@
             <p class="text-xs text-slate-500">Desenvolvimento profissional de alta performance, treino, nutrição e paternidade</p>
           </div>
           <div class="flex space-x-2">
-            <button onclick="openCrudModal('habit')" class="px-3.5 py-2 bg-indigo-600 hover:bg-indigo-700 text-white font-bold text-xs rounded-xl shadow-md flex items-center space-x-1.5">
+            <button onclick="openAdvancedHabitModal()" class="px-3.5 py-2 bg-indigo-600 hover:bg-indigo-700 text-white font-bold text-xs rounded-xl shadow-md flex items-center space-x-1.5">
               <span>➕</span><span>Novo Hábito</span>
             </button>
-            <button onclick="openCrudModal('goal')" class="px-3.5 py-2 bg-purple-600 hover:bg-purple-700 text-white font-bold text-xs rounded-xl shadow-md flex items-center space-x-1.5">
+            <button onclick="openAdvancedGoalModal()" class="px-3.5 py-2 bg-purple-600 hover:bg-purple-700 text-white font-bold text-xs rounded-xl shadow-md flex items-center space-x-1.5">
               <span>➕</span><span>Nova Meta</span>
             </button>
           </div>
@@ -761,7 +769,49 @@
         </div>
       </section>
 
-            <!-- ================= 6.5 ABA FITNESS: TREINO, MEDIDAS & SUPLEMENTAÇÃO ================= -->
+                  <!-- ================= 6.8 ABA DE TROFÉUS & CONQUISTAS (VITÓRIAS DA FAMÍLIA) ================= -->
+      <section id="tab-trophies" style="display: none;" class="space-y-6">
+        
+        <!-- Cabeçalho de Troféus -->
+        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+          <div>
+            <div class="flex items-center space-x-2">
+              <span class="px-2.5 py-0.5 rounded-full bg-amber-100 dark:bg-amber-950 text-amber-800 dark:text-amber-300 font-bold text-xs">🏆 Hall da Fama</span>
+            </div>
+            <h3 class="font-bold text-xl sm:text-2xl text-slate-900 dark:text-white mt-1">Troféus, Medalhas & Conquistas</h3>
+            <p class="text-xs text-slate-500">Registre momentos marcantes, diplomas, medalhas de corrida, metas batidas e fotos de vitória!</p>
+          </div>
+          <button onclick="openTrophyModal()" class="px-4 py-2.5 bg-gradient-to-r from-amber-500 to-yellow-600 hover:from-amber-600 hover:to-yellow-700 text-white font-bold text-xs rounded-xl shadow-md flex items-center space-x-2">
+            <span>🏆</span><span>Registrar Nova Conquista</span>
+          </button>
+        </div>
+
+        <!-- Banner com Placar de Troféus -->
+        <div class="p-6 rounded-3xl bg-gradient-to-br from-amber-500/20 via-yellow-500/10 to-indigo-500/10 border-2 border-amber-300 dark:border-amber-800 shadow-sm flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+          <div class="flex items-center space-x-4">
+            <span class="text-4xl p-3 rounded-2xl bg-amber-500 text-white shadow-lg shadow-amber-500/30">🏆</span>
+            <div>
+              <h4 class="font-black text-lg text-slate-900 dark:text-white" id="trophyTotalScoreTitle">Galeria de Vitórias</h4>
+              <p class="text-xs text-slate-500" id="trophyTotalSubtitle">Cada esforço diário se transforma em memórias inesquecíveis.</p>
+            </div>
+          </div>
+          <div class="flex items-center gap-3">
+            <div class="px-4 py-2 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 text-center">
+              <span class="text-lg font-black text-amber-600 block" id="trophyCountDisplay">0</span>
+              <span class="text-[10px] text-slate-400 uppercase font-bold">Conquistas</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Grid de Troféus e Conquistas com Fotos -->
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4" id="trophiesListGrid">
+          <!-- Renderizado via JS -->
+        </div>
+
+      </section>
+
+
+      <!-- ================= 6.5 ABA FITNESS: TREINO, MEDIDAS & SUPLEMENTAÇÃO ================= -->
       <section id="tab-fitness" style="display: none;" class="space-y-6">
         
         <!-- Cabeçalho da Aba Fitness -->
@@ -806,6 +856,26 @@
             <!-- Renderizado via JS -->
           </div>
 
+          <!-- Galeria Comparativa de Antes & Depois com Fotos -->
+          <div class="bg-white dark:bg-slate-900 rounded-3xl p-5 sm:p-6 border border-slate-200 dark:border-slate-800 shadow-sm space-y-4">
+            <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
+              <div>
+                <h4 class="font-bold text-base text-slate-900 dark:text-white flex items-center gap-2">
+                  <span>📸</span> Galeria de Evolução: Fotos de Antes & Depois
+                </h4>
+                <p class="text-xs text-slate-500">Veja a transformação do seu shape lado a lado com suas medidas</p>
+              </div>
+              <button onclick="openMeasureModal()" class="px-3 py-1.5 rounded-xl bg-indigo-600 hover:bg-indigo-700 text-white font-bold text-xs shadow-xs">
+                📸 Tirar Foto de Hoje
+              </button>
+            </div>
+
+            <!-- Comparador Lado a Lado (Antes vs Depois) -->
+            <div id="beforeAfterComparatorGrid" class="grid grid-cols-1 md:grid-cols-2 gap-4 pt-2">
+              <!-- Renderizado via JS -->
+            </div>
+          </div>
+
           <!-- Histórico Completo de Medições com Comparativo de Evolução -->
           <div class="bg-white dark:bg-slate-900 rounded-3xl p-5 sm:p-6 border border-slate-200 dark:border-slate-800 shadow-sm space-y-4">
             <div class="flex items-center justify-between">
@@ -822,10 +892,27 @@
           </div>
         </div>
 
-        <!-- PAINEL 2: FICHAS DE TREINO & MUSCULAÇÃO -->
+        <!-- PAINEL 2: FICHAS DE TREINO & MUSCULAÇÃO PERSONALIZADAS -->
         <div id="fitnessPanel-workouts" class="space-y-6" style="display: none;">
-          <div class="grid grid-cols-1 md:grid-cols-3 gap-4" id="workoutsDivisionsList">
-            <!-- Renderizado via JS (Treino A, Treino B, Treino C) -->
+          <div class="bg-white dark:bg-slate-900 rounded-3xl p-5 border border-slate-200 dark:border-slate-800 shadow-sm flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+            <div>
+              <h4 class="font-bold text-base text-slate-900 dark:text-white flex items-center gap-2">
+                <span>🏋️</span> Fichas de Treino Personalizadas
+              </h4>
+              <p class="text-xs text-slate-500">Monte suas próprias divisões de treino livremente (Treino A, B, C, Push/Pull/Legs, Pernas) e adicione seus exercícios</p>
+            </div>
+            <div class="flex items-center gap-2">
+              <button onclick="openWorkoutDivisionModal()" class="px-3.5 py-2 rounded-xl bg-indigo-600 hover:bg-indigo-700 text-white font-bold text-xs shadow-xs flex items-center space-x-1.5">
+                <span>➕</span><span>Nova Divisão / Ficha</span>
+              </button>
+              <button onclick="openWorkoutModal()" class="px-3.5 py-2 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-xs shadow-xs flex items-center space-x-1.5">
+                <span>🏋️</span><span>Novo Exercício</span>
+              </button>
+            </div>
+          </div>
+
+          <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4" id="workoutsDivisionsList">
+            <!-- Renderizado dinamicamente via JS -->
           </div>
         </div>
 
@@ -1030,6 +1117,48 @@
     <button onclick="openUnifiedAuthModal()" class="flex flex-col items-center text-[10px] text-indigo-600 dark:text-indigo-400 font-bold px-2 py-0.5 rounded-xl bg-indigo-50 dark:bg-indigo-950/50 border border-indigo-200 dark:border-indigo-800"><span>🔐</span><span>Login/Conta</span></button>
   </nav>
 
+    <!-- ================= MODAL DE NOVA DIVISÃO DE TREINO PERSONALIZADA ================= -->
+  <div id=workoutDivisionModal class="modal-backdrop">
+    <div class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-3xl max-w-md w-full p-6 shadow-2xl relative">
+      <button onclick="closeWorkoutDivisionModal()" class="absolute top-5 right-5 p-1.5 rounded-xl text-slate-400 hover:text-slate-600">✕</button>
+      
+      <div class="flex items-center space-x-2 mb-1">
+        <span class="text-2xl">📋</span>
+        <h3 class="font-bold text-lg text-slate-900 dark:text-white">Nova Divisão / Ficha de Treino</h3>
+      </div>
+      <p class="text-xs text-slate-500 mb-4">Crie sua própria divisão personalizada de musculação ou esportes.</p>
+
+      <div class="space-y-3">
+        <div>
+          <label class="block text-xs font-bold text-slate-700 dark:text-slate-300 mb-1">Nome da Ficha / Divisão</label>
+          <input type="text" id="div-name" placeholder="Ex: Treino A, Pernas & Glúteos, Push Day..." class="w-full px-3 py-2 rounded-xl border border-slate-200 dark:border-slate-700 dark:bg-slate-800 dark:text-white text-xs">
+        </div>
+        <div>
+          <label class="block text-xs font-bold text-slate-700 dark:text-slate-300 mb-1">Músculos Focados / Descrição</label>
+          <input type="text" id="div-subtitle" placeholder="Ex: Peito, Tríceps & Ombro Frontal" class="w-full px-3 py-2 rounded-xl border border-slate-200 dark:border-slate-700 dark:bg-slate-800 dark:text-white text-xs">
+        </div>
+        <div>
+          <label class="block text-xs font-bold text-slate-700 dark:text-slate-300 mb-1">Ícone / Emoji Representativo</label>
+          <select id="div-icon" class="w-full px-3 py-2 rounded-xl border border-slate-200 dark:border-slate-700 dark:bg-slate-800 dark:text-white text-xs">
+            <option value="💥">💥 Explosão / Peito & Tríceps</option>
+            <option value="🦅">🦅 Asa / Costas & Dorsal</option>
+            <option value="🦵">🦵 Pernas & Quadríceps</option>
+            <option value="💪">💪 Braços & Bíceps</option>
+            <option value="🥊">🥊 Luta / Funcional</option>
+            <option value="🏃">🏃 Corrida / Cardio</option>
+            <option value="⚡">⚡ HIIT / Alta Intensidade</option>
+            <option value="🧘">🧘 Alongamento / Mobilidade</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="flex justify-end space-x-2 pt-4 mt-2 border-t border-slate-100 dark:border-slate-800">
+        <button onclick="closeWorkoutDivisionModal()" class="px-4 py-2 rounded-xl border border-slate-200 dark:border-slate-700 text-xs font-bold text-slate-600 dark:text-slate-300 hover:bg-slate-50">Cancelar</button>
+        <button onclick="saveCustomWorkoutDivision()" class="px-4 py-2 rounded-xl bg-indigo-600 text-white text-xs font-bold hover:bg-indigo-700 shadow-sm">Salvar Divisão</button>
+      </div>
+    </div>
+  </div>
+
     <!-- ================= MODAL DE REGISTRO DE MEDIDAS CORPORAIS ================= -->
   <div id="measureModal" class="modal-backdrop">
     <div class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-3xl max-w-lg w-full p-6 shadow-2xl relative max-h-[90vh] overflow-y-auto">
@@ -1089,6 +1218,18 @@
         <div>
           <label class="block text-xs font-bold text-slate-700 dark:text-slate-300 mb-1">Anotações do Treino / Fase</label>
           <input type="text" id="mea-notes" placeholder="Ex: Treino forte de hipertrofia, creatina em dia, boa retenção" class="w-full px-3 py-2 rounded-xl border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 text-xs outline-none">
+        </div>
+
+        <!-- Foto de Evolução (Antes / Depois) -->
+        <div class="p-3.5 rounded-2xl bg-indigo-50/60 dark:bg-slate-800/60 border border-indigo-200 dark:border-indigo-900/60 space-y-2">
+          <label class="block text-xs font-bold text-indigo-900 dark:text-indigo-300">📸 Foto de Evolução Física (Tire foto ou anexe)</label>
+          <div class="flex items-center space-x-3">
+            <input type="file" id="mea-photo" accept="image/*" capture="environment" onchange="previewMeasurePhoto(event)" class="text-xs text-slate-500 file:mr-2 file:py-1.5 file:px-3 file:rounded-xl file:border-0 file:text-xs file:font-bold file:bg-indigo-600 file:text-white hover:file:bg-indigo-700 cursor-pointer">
+            <div id="meaPhotoPreviewContainer" class="hidden">
+              <img id="meaPhotoPreviewImg" src="" class="w-12 h-12 rounded-xl object-cover border-2 border-indigo-500 shadow-sm">
+            </div>
+          </div>
+          <p class="text-[10px] text-slate-400">Tire fotos na mesma iluminação e pose para comparar seu Antes e Depois!</p>
         </div>
 
         <div class="flex justify-end space-x-2 pt-3 border-t border-slate-100 dark:border-slate-800">
@@ -1172,6 +1313,170 @@
         <div class="flex justify-end space-x-2 pt-3 border-t border-slate-100 dark:border-slate-800">
           <button type="button" onclick="closeSupplementModal()" class="px-4 py-2 rounded-xl text-xs font-semibold text-slate-500 hover:bg-slate-100">Cancelar</button>
           <button type="submit" class="px-5 py-2 bg-purple-600 hover:bg-purple-700 text-white font-bold text-xs rounded-xl shadow-md">Salvar Suplemento</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- ================= MODAL DE REGISTRO DE TROFÉU & CONQUISTA ================= -->
+  <div id="trophyModal" class="modal-backdrop">
+    <div class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-3xl max-w-lg w-full p-6 shadow-2xl relative max-h-[90vh] overflow-y-auto">
+      <button onclick="closeTrophyModal()" class="absolute top-5 right-5 p-1.5 rounded-xl text-slate-400 hover:text-slate-600">✕</button>
+      <h3 class="font-bold text-lg text-slate-900 dark:text-white mb-1">Registrar Conquista / Troféu</h3>
+      <p class="text-xs text-slate-500 mb-4">Celebre suas vitórias em esportes, faculdade, finanças ou em família.</p>
+
+      <form onsubmit="saveTrophyData(event)" class="space-y-3.5">
+        <div class="grid grid-cols-2 gap-3">
+          <div>
+            <label class="block text-xs font-bold text-slate-700 dark:text-slate-300 mb-1">Quem conquistou? *</label>
+            <select id="tro-member" class="w-full px-3 py-2 rounded-xl border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 text-xs font-bold outline-none">
+              <!-- Populado via JS -->
+            </select>
+          </div>
+          <div>
+            <label class="block text-xs font-bold text-slate-700 dark:text-slate-300 mb-1">Data da Vitória *</label>
+            <input type="date" id="tro-date" required class="w-full px-3 py-2 rounded-xl border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 text-xs outline-none">
+          </div>
+        </div>
+
+        <div class="grid grid-cols-3 gap-3">
+          <div class="col-span-2">
+            <label class="block text-xs font-bold text-slate-700 dark:text-slate-300 mb-1">Título da Conquista *</label>
+            <input type="text" id="tro-title" required placeholder="Ex: Medalha Corrida 10km, Formatura Tech, Quitação de Financiamento..." class="w-full px-3 py-2 rounded-xl border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 text-xs outline-none">
+          </div>
+          <div>
+            <label class="block text-xs font-bold text-slate-700 dark:text-slate-300 mb-1">Ícone / Medalha</label>
+            <select id="tro-icon" class="w-full px-3 py-2 rounded-xl border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 text-xs font-bold outline-none">
+              <option value="🏆">🏆 Troféu Ouro</option>
+              <option value="🥇">🥇 Medalha Ouro</option>
+              <option value="🥈">🥈 Medalha Prata</option>
+              <option value="🎓">🎓 Diploma / Formatura</option>
+              <option value="💰">💰 Vitória Financeira</option>
+              <option value="🏃">🏃 Conquista Corrida/Fit</option>
+              <option value="🌟">🌟 Estrela Especial</option>
+            </select>
+          </div>
+        </div>
+
+        <div>
+          <label class="block text-xs font-bold text-slate-700 dark:text-slate-300 mb-1">História / Memória Destaque</label>
+          <textarea id="tro-desc" rows="2" placeholder="Ex: Treinei durante 3 meses sem faltar, acordando cedo. Sensação indescritível cruzar a linha de chegada!" class="w-full px-3 py-2 rounded-xl border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 text-xs outline-none"></textarea>
+        </div>
+
+        <!-- Foto da Conquista -->
+        <div class="p-3.5 rounded-2xl bg-amber-50/60 dark:bg-slate-800/60 border border-amber-200 dark:border-amber-900/60 space-y-2">
+          <label class="block text-xs font-bold text-amber-900 dark:text-amber-300">📸 Foto da Conquista (Medalha, Diploma, Celebração)</label>
+          <div class="flex items-center space-x-3">
+            <input type="file" id="tro-photo" accept="image/*" capture="environment" onchange="previewTrophyPhoto(event)" class="text-xs text-slate-500 file:mr-2 file:py-1.5 file:px-3 file:rounded-xl file:border-0 file:text-xs file:font-bold file:bg-amber-600 file:text-white hover:file:bg-amber-700 cursor-pointer">
+            <div id="troPhotoPreviewContainer" class="hidden">
+              <img id="troPhotoPreviewImg" src="" class="w-12 h-12 rounded-xl object-cover border-2 border-amber-500 shadow-sm">
+            </div>
+          </div>
+        </div>
+
+        <div class="flex justify-end space-x-2 pt-3 border-t border-slate-100 dark:border-slate-800">
+          <button type="button" onclick="closeTrophyModal()" class="px-4 py-2 rounded-xl text-xs font-semibold text-slate-500 hover:bg-slate-100">Cancelar</button>
+          <button type="submit" class="px-5 py-2 bg-amber-600 hover:bg-amber-700 text-white font-bold text-xs rounded-xl shadow-md">Salvar Troféu</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- ================= MODAL EXCLUSIVO DE METAS COM SUBMETAS E DATA LIMITE ================= -->
+  <div id="advancedGoalModal" class="modal-backdrop">
+    <div class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-3xl max-w-lg w-full p-6 shadow-2xl relative max-h-[92vh] overflow-y-auto">
+      <button onclick="closeAdvancedGoalModal()" class="absolute top-5 right-5 p-1.5 rounded-xl text-slate-400 hover:text-slate-600">✕</button>
+      <h3 class="font-bold text-lg text-slate-900 dark:text-white mb-1">Planejar Meta & Submetas</h3>
+      <p class="text-xs text-slate-500 mb-4">Defina a meta, a data para alcançar e as ações práticas que você vai fazer para chegar lá.</p>
+
+      <form onsubmit="saveAdvancedGoal(event)" class="space-y-3.5">
+        <input type="hidden" id="agoal-id" value="">
+
+        <div>
+          <label class="block text-xs font-bold text-slate-700 dark:text-slate-300 mb-1">Qual é a sua Meta Principal? *</label>
+          <input type="text" id="agoal-title" required placeholder="Ex: Bater R$ 30.000 Investidos, Passar no Concurso, Quitar Financiamento..." class="w-full px-3 py-2.5 rounded-xl border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 text-xs sm:text-sm outline-none font-bold">
+        </div>
+
+        <div class="grid grid-cols-2 gap-3">
+          <div>
+            <label class="block text-xs font-bold text-slate-700 dark:text-slate-300 mb-1">Data Limite (Prazo Final) *</label>
+            <input type="date" id="agoal-deadline" required class="w-full px-3 py-2 rounded-xl border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 text-xs outline-none">
+          </div>
+          <div>
+            <label class="block text-xs font-bold text-slate-700 dark:text-slate-300 mb-1">Categoria / Área</label>
+            <select id="agoal-category" class="w-full px-3 py-2 rounded-xl border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 text-xs font-bold outline-none">
+              <option value="Finanças">💰 Finanças & Patrimônio</option>
+              <option value="Carreira">🚀 Carreira & Estudos</option>
+              <option value="Saúde">🏃 Saúde & Shape</option>
+              <option value="Família">👨‍👩‍👧‍👦 Família & Lar</option>
+            </select>
+          </div>
+        </div>
+
+        <!-- Seção de Submetas / O que você vai fazer para chegar lá -->
+        <div class="p-3.5 rounded-2xl bg-indigo-50/50 dark:bg-slate-800/60 border border-indigo-200 dark:border-indigo-900/60 space-y-2">
+          <div class="flex items-center justify-between">
+            <label class="block text-xs font-bold text-indigo-900 dark:text-indigo-300">
+              📋 Submetas: O que você vai fazer para chegar lá?
+            </label>
+            <button type="button" onclick="addGoalSubtaskInput()" class="text-xs font-bold text-indigo-600 hover:underline">
+              ➕ Adicionar Ação
+            </button>
+          </div>
+          <p class="text-[10px] text-slate-400">Divida a meta em passos menores. Conforme você cumpre cada ação, o progresso sobe automaticamente!</p>
+          
+          <div id="goalSubtasksInputsContainer" class="space-y-2 pt-1">
+            <!-- Inputs dinâmicos de submetas -->
+          </div>
+        </div>
+
+        <div class="flex justify-end space-x-2 pt-3 border-t border-slate-100 dark:border-slate-800">
+          <button type="button" onclick="closeAdvancedGoalModal()" class="px-4 py-2 rounded-xl text-xs font-semibold text-slate-500 hover:bg-slate-100">Cancelar</button>
+          <button type="submit" class="px-5 py-2 bg-purple-600 hover:bg-purple-700 text-white font-bold text-xs rounded-xl shadow-md">Salvar Plano da Meta</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- ================= MODAL EXCLUSIVO DE HÁBITOS COM FREQUÊNCIA PERSONALIZADA ================= -->
+  <div id="advancedHabitModal" class="modal-backdrop">
+    <div class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-3xl max-w-md w-full p-6 shadow-2xl relative">
+      <button onclick="closeAdvancedHabitModal()" class="absolute top-5 right-5 p-1.5 rounded-xl text-slate-400 hover:text-slate-600">✕</button>
+      <h3 class="font-bold text-lg text-slate-900 dark:text-white mb-1">Cadastrar Hábito</h3>
+      <p class="text-xs text-slate-500 mb-4">Escolha a frequência exata: diário, semanal ou personalizado.</p>
+
+      <form onsubmit="saveAdvancedHabit(event)" class="space-y-3.5">
+        <div>
+          <label class="block text-xs font-bold text-slate-700 dark:text-slate-300 mb-1">Qual é o hábito? *</label>
+          <input type="text" id="ahab-title" required placeholder="Ex: Beber 2.5L de água, Treino de Musculação, Leitura 20 min..." class="w-full px-3 py-2 rounded-xl border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 text-xs sm:text-sm outline-none font-bold">
+        </div>
+
+        <div class="grid grid-cols-2 gap-3">
+          <div>
+            <label class="block text-xs font-bold text-slate-700 dark:text-slate-300 mb-1">Frequência *</label>
+            <select id="ahab-freq" onchange="handleHabitFreqChange(this.value)" class="w-full px-3 py-2 rounded-xl border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 text-xs font-bold outline-none">
+              <option value="daily">🔄 Todos os Dias (7x/sem)</option>
+              <option value="weekdays">⚡ Dias Úteis (Seg a Sex)</option>
+              <option value="weekly_3x">📅 3 Vezes por Semana</option>
+              <option value="weekly_4x">🔥 4 Vezes por Semana</option>
+              <option value="weekends">🌴 Finais de Semana</option>
+              <option value="custom">🎯 Personalizado</option>
+            </select>
+          </div>
+          <div>
+            <label class="block text-xs font-bold text-slate-700 dark:text-slate-300 mb-1">Categoria</label>
+            <select id="ahab-cat" class="w-full px-3 py-2 rounded-xl border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 text-xs font-bold outline-none">
+              <option value="Saúde">🏃 Saúde & Fitness</option>
+              <option value="Estudo">📚 Estudos & Foco</option>
+              <option value="Família">👨‍👩‍👧‍👦 Família & Casa</option>
+              <option value="Mindset">🧘 Mentalidade</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="flex justify-end space-x-2 pt-3 border-t border-slate-100 dark:border-slate-800">
+          <button type="button" onclick="closeAdvancedHabitModal()" class="px-4 py-2 rounded-xl text-xs font-semibold text-slate-500 hover:bg-slate-100">Cancelar</button>
+          <button type="submit" class="px-5 py-2 bg-indigo-600 hover:bg-indigo-700 text-white font-bold text-xs rounded-xl shadow-md">Salvar Hábito</button>
         </div>
       </form>
     </div>
@@ -3099,6 +3404,20 @@
       return JSON.parse(JSON.stringify(didaticTemplateData));
     })();
 
+    // Inicialização segura de todas as propriedades do app
+    state.trophies = Array.isArray(state.trophies) ? state.trophies : [];
+    state.workoutDivisions = Array.isArray(state.workoutDivisions) && state.workoutDivisions.length > 0 ? state.workoutDivisions : [
+      { id: 'div-a', name: 'Treino A', subtitle: 'Peito, Tríceps & Ombro', icon: '💥' },
+      { id: 'div-b', name: 'Treino B', subtitle: 'Costas, Bíceps & Trapézio', icon: '🦅' },
+      { id: 'div-c', name: 'Treino C', subtitle: 'Pernas Completas & Panturrilhas', icon: '🦵' }
+    ];
+    state.workouts = Array.isArray(state.workouts) ? state.workouts : [];
+    state.bodyMeasures = Array.isArray(state.bodyMeasures) ? state.bodyMeasures : [];
+    state.supplements = Array.isArray(state.supplements) ? state.supplements : [];
+    state.goals = Array.isArray(state.goals) ? state.goals : [];
+    state.habits = Array.isArray(state.habits) ? state.habits : [];
+    window.state = state;
+
     // Salvar estado com isolamento estrito
     function saveState() {
       if (currentSessionUser) {
@@ -3145,7 +3464,7 @@
 
     // NAVEGAÇÃO
     function navigate(tabId) {
-      const tabs = ['dashboard', 'studies', 'members', 'calendar', 'shopping', 'finances', 'pomodoro', 'mural', 'habits-goals', 'fitness', 'kids', 'milestones', 'rewards'];
+      const tabs = ['dashboard', 'studies', 'members', 'calendar', 'shopping', 'finances', 'pomodoro', 'mural', 'habits-goals', 'fitness', 'trophies', 'kids', 'milestones', 'rewards'];
       tabs.forEach(t => {
         const sec = document.getElementById('tab-' + t);
         if (sec) sec.style.display = (t === tabId) ? 'block' : 'none';
@@ -3440,7 +3759,33 @@
       currentSessionUser = null;
       localStorage.removeItem('family_app_current_session_email');
       saveState();
-      renderAll();
+      
+    // Exposição global de funções para compatibilidade total
+    window.state = state;
+    window.openTrophyModal = openTrophyModal;
+    window.closeTrophyModal = closeTrophyModal;
+    window.saveTrophy = saveTrophy;
+    window.deleteTrophy = deleteTrophy;
+    window.renderTrophies = renderTrophies;
+
+    window.openAdvancedGoalModal = openAdvancedGoalModal;
+    window.closeAdvancedGoalModal = closeAdvancedGoalModal;
+    window.addGoalSubtaskField = addGoalSubtaskField;
+    window.removeGoalSubtaskField = removeGoalSubtaskField;
+    window.saveAdvancedGoal = saveAdvancedGoal;
+    window.toggleGoalSubtask = toggleGoalSubtask;
+
+    window.openAdvancedHabitModal = openAdvancedHabitModal;
+    window.closeAdvancedHabitModal = closeAdvancedHabitModal;
+    window.saveAdvancedHabit = saveAdvancedHabit;
+
+    window.openWorkoutDivisionModal = openWorkoutDivisionModal;
+    window.closeWorkoutDivisionModal = closeWorkoutDivisionModal;
+    window.saveCustomWorkoutDivision = saveCustomWorkoutDivision;
+    window.deleteWorkoutDivision = deleteWorkoutDivision;
+    window.renderFitness = renderFitness;
+
+    renderAll();
       showToast('👤 Demonstração de Pessoa Solteira carregada com sucesso!', '🚀', 4000);
     }
 
@@ -4778,41 +5123,63 @@
 
     function renderGoals() {
       const container = document.getElementById('goalsList');
-      if (state.goals.length === 0) {
-        container.innerHTML = `<div class="col-span-full p-6 text-center text-xs text-slate-400">Nenhuma meta cadastrada.</div>`;
+      if (!container) return;
+      const goals = state.goals || [];
+
+      if (goals.length === 0) {
+        container.innerHTML = `<div class="col-span-full p-6 text-center text-xs text-slate-400">Nenhuma meta cadastrada. Clique em "+ Nova Meta".</div>`;
         return;
       }
 
-      container.innerHTML = state.goals.map(g => `
-        <div class="bg-white dark:bg-slate-900 rounded-3xl p-5 border border-slate-200 dark:border-slate-800 shadow-sm space-y-3">
-          <div class="flex justify-between items-center text-xs">
-            <span class="px-2 py-0.5 rounded-full font-bold bg-indigo-50 text-indigo-600 dark:bg-indigo-950 dark:text-indigo-400">${g.horizon}</span>
-            <div class="flex items-center space-x-1">
-              <span class="text-slate-400">${g.target}</span>
-              <button onclick="openCrudModal('goal', '${g.id}')" class="p-1 text-xs text-slate-400 hover:text-indigo-600" title="Editar">✏️</button>
-              <button onclick="deleteGoal('${g.id}')" class="p-1 text-xs text-slate-400 hover:text-red-500" title="Apagar">🗑️</button>
-            </div>
-          </div>
+      container.innerHTML = goals.map(g => {
+        const subtasks = g.subtasks || [];
+        const completedCount = subtasks.filter(s => s.done).length;
+        const progress = subtasks.length > 0 ? Math.round((completedCount / subtasks.length) * 100) : (g.progress || 0);
 
-          <h5 class="font-bold text-sm text-slate-900 dark:text-white">${g.title} (${g.member})</h5>
-          <p class="text-xs text-slate-500">${g.desc || ''}</p>
+        return `
+          <div class="bg-white dark:bg-slate-900 rounded-3xl p-5 sm:p-6 border border-slate-200 dark:border-slate-800 shadow-sm space-y-4">
+            <div class="flex justify-between items-start text-xs">
+              <span class="px-2.5 py-1 rounded-full font-black bg-indigo-50 text-indigo-700 dark:bg-indigo-950 dark:text-indigo-300">
+                ${g.category || 'Meta'}
+              </span>
+              <div class="flex items-center space-x-1.5">
+                ${g.deadline ? `<span class="text-[11px] font-bold text-rose-600 dark:text-rose-400 bg-rose-50 dark:bg-rose-950/60 px-2 py-0.5 rounded-lg">⏳ Prazo: ${g.deadline}</span>` : ''}
+                <button onclick="openAdvancedGoalModal('${g.id}')" class="p-1 text-xs text-slate-400 hover:text-indigo-600" title="Editar">✏️</button>
+                <button onclick="deleteGoal('${g.id}')" class="p-1 text-xs text-slate-400 hover:text-red-500" title="Apagar">🗑️</button>
+              </div>
+            </div>
 
-          <div>
-            <div class="flex justify-between text-xs mb-1">
-              <span class="text-slate-400">Progresso</span>
-              <span class="font-bold">${g.progress}%</span>
+            <div>
+              <h5 class="font-black text-base text-slate-900 dark:text-white">${g.title}</h5>
+              <p class="text-xs text-slate-500">${g.member ? `Responsável: ${g.member}` : ''}</p>
             </div>
-            <div class="w-full bg-slate-200 dark:bg-slate-700 h-2.5 rounded-full overflow-hidden">
-              <div class="bg-indigo-600 h-full rounded-full transition-all" style="width: ${g.progress}%"></div>
+
+            <!-- Barra de Progresso Automática -->
+            <div class="space-y-1">
+              <div class="flex justify-between text-xs font-bold">
+                <span class="text-slate-400">Progresso (${completedCount}/${subtasks.length} ações)</span>
+                <span class="text-indigo-600 dark:text-indigo-400">${progress}%</span>
+              </div>
+              <div class="w-full bg-slate-100 dark:bg-slate-800 h-2.5 rounded-full overflow-hidden">
+                <div class="bg-gradient-to-r from-indigo-500 to-purple-600 h-full rounded-full transition-all duration-300" style="width: ${progress}%"></div>
+              </div>
+            </div>
+
+            <!-- Checklist das Submetas Práticas -->
+            <div class="pt-2 border-t border-slate-100 dark:border-slate-800 space-y-2">
+              <span class="text-[11px] font-black uppercase text-slate-400 tracking-wider block">O que fazer para alcançar:</span>
+              <div class="space-y-1.5">
+                ${subtasks.map(st => `
+                  <div class="flex items-center space-x-2 text-xs">
+                    <input type="checkbox" ${st.done ? 'checked' : ''} onchange="toggleGoalSubtask('${g.id}', '${st.id}')" class="w-4 h-4 rounded text-indigo-600 cursor-pointer">
+                    <span class="${st.done ? 'line-through text-slate-400 font-normal' : 'text-slate-700 dark:text-slate-200 font-bold'}">${st.text}</span>
+                  </div>
+                `).join('')}
+              </div>
             </div>
           </div>
-          
-          <div class="flex justify-end space-x-2 pt-1">
-            <button onclick="adjustGoal('${g.id}', -10)" class="px-2 py-1 text-xs font-bold rounded-lg bg-slate-100 dark:bg-slate-800 hover:bg-slate-200">-10%</button>
-            <button onclick="adjustGoal('${g.id}', 10)" class="px-2 py-1 text-xs font-bold rounded-lg bg-slate-100 dark:bg-slate-800 hover:bg-slate-200">+10%</button>
-          </div>
-        </div>
-      `).join('');
+        `;
+      }).join('');
     }
 
     function renderTasks() {
@@ -6270,6 +6637,7 @@
 
       const newMeasure = {
         id: 'mea-' + Date.now(),
+        photo: currentMeasurePhotoBase64,
         memberId: memberId,
         date: date,
         biceps: biceps,
@@ -6393,6 +6761,383 @@
     }
 
     // RENDERIZADOR COMPLETO DA ABA FITNESS
+
+    // =========================================================================
+    // LÓGICA AVANÇADA: FOTOS ANTES/DEPOIS, SUBMETAS, FREQUÊNCIAS & TROFÉUS
+    // =========================================================================
+
+    // 1. Fotos de Antes & Depois nas Medições Corporais
+    let currentMeasurePhotoBase64 = null;
+    function previewMeasurePhoto(e) {
+      const file = e.target.files[0];
+      if (!file) return;
+      const reader = new FileReader();
+      reader.onload = function(evt) {
+        currentMeasurePhotoBase64 = evt.target.result;
+        const container = document.getElementById('meaPhotoPreviewContainer');
+        const img = document.getElementById('meaPhotoPreviewImg');
+        if (container && img) {
+          img.src = currentMeasurePhotoBase64;
+          container.classList.remove('hidden');
+        }
+      };
+      reader.readAsDataURL(file);
+    }
+
+    // 2. Metas com Submetas e Data Limite
+    function openAdvancedGoalModal(goalId = null) {
+      const modal = document.getElementById('advancedGoalModal');
+      const container = document.getElementById('goalSubtasksInputsContainer');
+      container.innerHTML = '';
+
+      if (goalId) {
+        const g = (state.goals || []).find(item => item.id === goalId);
+        if (g) {
+          document.getElementById('agoal-id').value = g.id;
+          document.getElementById('agoal-title').value = g.title;
+          document.getElementById('agoal-deadline').value = g.deadline || '';
+          document.getElementById('agoal-category').value = g.category || 'Finanças';
+          (g.subtasks || []).forEach(st => addGoalSubtaskInput(st.text, st.done));
+        }
+      } else {
+        document.getElementById('agoal-id').value = '';
+        document.getElementById('agoal-title').value = '';
+        document.getElementById('agoal-deadline').value = '2026-12-31';
+        // Adiciona 3 submetas iniciais de exemplo
+        addGoalSubtaskInput('1. Fazer o planejamento e orçamento inicial', true);
+        addGoalSubtaskInput('2. Executar ações diárias com consistência', false);
+        addGoalSubtaskInput('3. Revisar resultados e bater a meta final', false);
+      }
+
+      modal.classList.add('active');
+    }
+
+    function closeAdvancedGoalModal() {
+      document.getElementById('advancedGoalModal').classList.remove('active');
+    }
+
+    function addGoalSubtaskInput(text = '', done = false) {
+      const container = document.getElementById('goalSubtasksInputsContainer');
+      const div = document.createElement('div');
+      div.className = "flex items-center space-x-2";
+      div.innerHTML = `
+        <input type="checkbox" ${done ? 'checked' : ''} class="w-4 h-4 rounded text-indigo-600 subtask-checkbox cursor-pointer">
+        <input type="text" value="${text}" placeholder="Ação prática para alcançar..." class="flex-1 px-3 py-1.5 rounded-xl border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 text-xs outline-none subtask-text">
+        <button type="button" onclick="this.parentElement.remove()" class="text-slate-400 hover:text-rose-500 text-xs p-1">✕</button>
+      `;
+      container.appendChild(div);
+    }
+
+    function saveAdvancedGoal(e) {
+      if (e) e.preventDefault();
+      const goalId = document.getElementById('agoal-id').value;
+      const title = (document.getElementById('agoal-title').value || '').trim();
+      const deadline = document.getElementById('agoal-deadline').value;
+      const category = document.getElementById('agoal-category').value;
+
+      if (!title) return;
+
+      const subtaskElements = document.querySelectorAll('#goalSubtasksInputsContainer > div');
+      const subtasks = [];
+      subtaskElements.forEach((el, idx) => {
+        const text = el.querySelector('.subtask-text').value.trim();
+        const done = el.querySelector('.subtask-checkbox').checked;
+        if (text) {
+          subtasks.push({ id: 'st-' + idx + '-' + Date.now(), text: text, done: done });
+        }
+      });
+
+      const completedCount = subtasks.filter(s => s.done).length;
+      const progress = subtasks.length > 0 ? Math.round((completedCount / subtasks.length) * 100) : 0;
+
+      if (!state.goals) state.goals = [];
+
+      if (goalId) {
+        const existing = state.goals.find(g => g.id === goalId);
+        if (existing) {
+          existing.title = title;
+          existing.deadline = deadline;
+          existing.category = category;
+          existing.subtasks = subtasks;
+          existing.progress = progress;
+        }
+      } else {
+        state.goals.push({
+          id: 'goal-' + Date.now(),
+          title: title,
+          deadline: deadline,
+          category: category,
+          member: state.members[0] ? state.members[0].name : 'Família',
+          subtasks: subtasks,
+          progress: progress,
+          horizon: 'Meta 2026'
+        });
+      }
+
+      saveState();
+      closeAdvancedGoalModal();
+      renderGoals();
+      showToast('🎯 Meta e submetas salvas com sucesso!', '✨');
+    }
+
+    function toggleGoalSubtask(goalId, subtaskId) {
+      const goal = (state.goals || []).find(g => g.id === goalId);
+      if (!goal || !goal.subtasks) return;
+      const st = goal.subtasks.find(s => s.id === subtaskId);
+      if (st) {
+        st.done = !st.done;
+        const completedCount = goal.subtasks.filter(s => s.done).length;
+        goal.progress = Math.round((completedCount / goal.subtasks.length) * 100);
+        saveState();
+        renderGoals();
+        showToast(st.done ? 'Ação concluída! Progresso aumentou! 🔥' : 'Ação pendente', '✓');
+      }
+    }
+
+    // 3. Hábitos com Frequência Personalizada
+    function openAdvancedHabitModal() {
+      document.getElementById('ahab-title').value = '';
+      document.getElementById('ahab-freq').value = 'daily';
+      document.getElementById('advancedHabitModal').classList.add('active');
+    }
+
+    function closeAdvancedHabitModal() {
+      document.getElementById('advancedHabitModal').classList.remove('active');
+    }
+
+    function handleHabitFreqChange(val) {
+      // Callback de mudança de freq se necessário
+    }
+
+    function saveAdvancedHabit(e) {
+      if (e) e.preventDefault();
+      const title = (document.getElementById('ahab-title').value || '').trim();
+      const freq = document.getElementById('ahab-freq').value;
+      const cat = document.getElementById('ahab-cat').value;
+
+      if (!title) return;
+      if (!state.habits) state.habits = [];
+
+      const freqLabels = {
+        daily: 'Todo Dia',
+        weekdays: 'Seg a Sex',
+        weekly_3x: '3x / semana',
+        weekly_4x: '4x / semana',
+        weekends: 'Fim de Semana',
+        custom: 'Personalizado'
+      };
+
+      state.habits.push({
+        id: 'hab-' + Date.now(),
+        title: title,
+        frequency: freq,
+        freqLabel: freqLabels[freq] || 'Frequência Livre',
+        category: cat,
+        member: state.members[0] ? state.members[0].name : 'Você',
+        streak: 1,
+        targetDays: freq === 'daily' ? 7 : (freq === 'weekdays' ? 5 : 3),
+        completedToday: true
+      });
+
+      saveState();
+      closeAdvancedHabitModal();
+      renderHabits();
+      showToast('🔥 Novo hábito ativado com sucesso!', '✨');
+    }
+
+    // 4. Troféus & Conquistas com Fotos
+    let currentTrophyPhotoBase64 = null;
+    function previewTrophyPhoto(e) {
+      const file = e.target.files[0];
+      if (!file) return;
+      const reader = new FileReader();
+      reader.onload = function(evt) {
+        currentTrophyPhotoBase64 = evt.target.result;
+        const container = document.getElementById('troPhotoPreviewContainer');
+        const img = document.getElementById('troPhotoPreviewImg');
+        if (container && img) {
+          img.src = currentTrophyPhotoBase64;
+          container.classList.remove('hidden');
+        }
+      };
+      reader.readAsDataURL(file);
+    }
+
+    function openTrophyModal() {
+      const sel = document.getElementById('tro-member');
+      if (sel) {
+        sel.innerHTML = (state.members || []).map(m => `
+          <option value="${m.name}">${m.avatar} ${m.name}</option>
+        `).join('');
+      }
+      document.getElementById('tro-date').value = new Date().toISOString().split('T')[0];
+      document.getElementById('tro-title').value = '';
+      document.getElementById('tro-desc').value = '';
+      currentTrophyPhotoBase64 = null;
+      document.getElementById('troPhotoPreviewContainer').classList.add('hidden');
+      document.getElementById('trophyModal').classList.add('active');
+    }
+
+    function closeTrophyModal() {
+      document.getElementById('trophyModal').classList.remove('active');
+    }
+
+    function saveTrophyData(e) {
+      if (e) e.preventDefault();
+      const member = document.getElementById('tro-member').value;
+      const date = document.getElementById('tro-date').value;
+      const title = (document.getElementById('tro-title').value || '').trim();
+      const icon = document.getElementById('tro-icon').value;
+      const desc = (document.getElementById('tro-desc').value || '').trim();
+
+      if (!title) return;
+      if (!state.trophies) state.trophies = [];
+
+      state.trophies.unshift({
+        id: 'tro-' + Date.now(),
+        member: member,
+        date: date,
+        title: title,
+        icon: icon,
+        desc: desc,
+        photo: currentTrophyPhotoBase64
+      });
+
+      saveState();
+      closeTrophyModal();
+      renderTrophies();
+      showToast('🏆 Vitória registrada no Hall da Fama!', '🌟', 4000);
+    }
+
+    function deleteTrophy(id) {
+      if (confirm('Deseja excluir esta conquista?')) {
+        state.trophies = (state.trophies || []).filter(t => t.id !== id);
+        saveState();
+        renderTrophies();
+      }
+    }
+
+    function renderTrophies() {
+      const grid = document.getElementById('trophiesListGrid');
+      const countDisplay = document.getElementById('trophyCountDisplay');
+      const trophies = state.trophies || [];
+
+      if (countDisplay) countDisplay.textContent = trophies.length;
+
+      if (!grid) return;
+
+      if (trophies.length === 0) {
+        grid.innerHTML = `
+          <div class="col-span-full p-8 rounded-3xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 text-center space-y-3">
+            <span class="text-4xl block">🏆</span>
+            <h4 class="font-bold text-sm text-slate-800 dark:text-slate-200">Nenhum troféu registrado ainda</h4>
+            <p class="text-xs text-slate-400 max-w-sm mx-auto">Registre medalhas de corrida, formaturas, primeiras palavras das crianças ou quitação de dívidas.</p>
+            <button onclick="openTrophyModal()" class="px-4 py-2 rounded-xl bg-amber-600 text-white font-bold text-xs shadow-md">Registrar Minha Primeira Vitória</button>
+          </div>
+        `;
+        return;
+      }
+
+      grid.innerHTML = trophies.map(t => `
+        <div class="bg-white dark:bg-slate-900 rounded-3xl border-2 border-amber-200 dark:border-amber-900/60 shadow-sm overflow-hidden flex flex-col justify-between group hover:border-amber-400 transition">
+          ${t.photo ? `
+            <div class="w-full h-44 bg-slate-950 relative overflow-hidden">
+              <img src="${t.photo}" class="w-full h-full object-cover group-hover:scale-105 transition duration-300" alt="${t.title}">
+              <span class="absolute top-3 left-3 text-2xl p-1.5 rounded-xl bg-black/60 backdrop-blur-md shadow">${t.icon}</span>
+              <button onclick="deleteTrophy('${t.id}')" class="absolute top-3 right-3 p-1.5 rounded-xl bg-black/60 text-white hover:text-rose-400 text-xs">🗑️</button>
+            </div>
+          ` : `
+            <div class="p-4 pb-0 flex items-center justify-between">
+              <span class="text-3xl p-2.5 rounded-2xl bg-amber-100 dark:bg-amber-950/80 shadow-xs">${t.icon}</span>
+              <button onclick="deleteTrophy('${t.id}')" class="text-slate-400 hover:text-rose-500 text-xs p-1">🗑️</button>
+            </div>
+          `}
+          
+          <div class="p-5 flex-1 flex flex-col justify-between space-y-2">
+            <div>
+              <div class="flex items-center space-x-2 text-[10px] font-bold text-amber-600 dark:text-amber-400">
+                <span>📅 ${t.date}</span>
+                <span>•</span>
+                <span>${t.member}</span>
+              </div>
+              <h4 class="font-black text-base text-slate-900 dark:text-white mt-1 leading-snug">${t.title}</h4>
+              <p class="text-xs text-slate-500 dark:text-slate-400 mt-1 leading-relaxed">${t.desc || ''}</p>
+            </div>
+          </div>
+        </div>
+      `).join('');
+    }
+
+    
+    // ==========================================
+    // FICHAS DE TREINO PERSONALIZADAS
+    // ==========================================
+    function openWorkoutDivisionModal() {
+      const el = document.getElementById('workoutDivisionModal');
+      if (el) el.classList.add('active');
+    }
+
+    function closeWorkoutDivisionModal() {
+      const el = document.getElementById('workoutDivisionModal');
+      if (el) el.classList.remove('active');
+      const nameInput = document.getElementById('div-name');
+      const subInput = document.getElementById('div-subtitle');
+      if (nameInput) nameInput.value = '';
+      if (subInput) subInput.value = '';
+    }
+
+    function saveCustomWorkoutDivision() {
+      const name = document.getElementById('div-name')?.value?.trim();
+      const subtitle = document.getElementById('div-subtitle')?.value?.trim() || 'Treino Personalizado';
+      const icon = document.getElementById('div-icon')?.value || '💪';
+
+      if (!name) {
+        alert('Por favor, informe o nome da divisão de treino (Ex: Treino D, Superior, Funcional).');
+        return;
+      }
+
+      state.workoutDivisions = state.workoutDivisions || [];
+      const newDiv = {
+        id: 'div-' + Date.now(),
+        name: name,
+        subtitle: subtitle,
+        icon: icon
+      };
+
+      state.workoutDivisions.push(newDiv);
+      saveState();
+      renderFitness();
+      closeWorkoutDivisionModal();
+    }
+
+    function deleteWorkoutDivision(divId) {
+      if (!confirm('Deseja realmente excluir esta divisão e os exercícios dela?')) return;
+      state.workoutDivisions = (state.workoutDivisions || []).filter(d => d.id !== divId && d.key !== divId);
+      // Remove exercícios atrelados a esta divisão
+      state.workouts = (state.workouts || []).filter(w => w.division !== divId);
+      saveState();
+      renderFitness();
+    }
+
+    // Atualizar opções do modal de exercício para incluir todas as divisões
+    const originalOpenWorkoutModal = window.openWorkoutModal;
+    window.openWorkoutModal = function(selectedDivisionId) {
+      const select = document.getElementById('wo-division');
+      if (select) {
+        const divs = state.workoutDivisions || [
+          { id: 'div-a', name: 'Treino A', subtitle: 'Peito & Tríceps', icon: '💥' },
+          { id: 'div-b', name: 'Treino B', subtitle: 'Costas & Bíceps', icon: '🦅' },
+          { id: 'div-c', name: 'Treino C', subtitle: 'Pernas & Panturrilhas', icon: '🦵' }
+        ];
+        select.innerHTML = divs.map(d => `<option value="${d.id || d.key}">${d.icon || '💪'} ${d.name} (${d.subtitle || ''})</option>`).join('');
+        if (selectedDivisionId) {
+          select.value = selectedDivisionId;
+        }
+      }
+      const el = document.getElementById('workoutModal');
+      if (el) el.classList.add('active');
+    };
+
     function renderFitness() {
       // 1. Resumo das Medidas Atuais
       const summaryGrid = document.getElementById('currentMeasuresSummaryGrid');
@@ -6494,18 +7239,21 @@
         }
       }
 
-      // 3. Fichas de Treino por Divisão (Treino A, B, C, Cardio)
+      // 3. Fichas de Treino por Divisão Personalizada
       const workoutsGrid = document.getElementById('workoutsDivisionsList');
       if (workoutsGrid) {
         const workouts = state.workouts || [];
-        const divisions = [
-          { key: 'A', title: 'Treino A', subtitle: 'Peito, Tríceps & Ombro', icon: '💥' },
-          { key: 'B', title: 'Treino B', subtitle: 'Costas, Bíceps & Antebraço', icon: '🦅' },
-          { key: 'C', title: 'Treino C', subtitle: 'Pernas Completas & Panturrilhas', icon: '🦵' }
+        const divisions = (state.workoutDivisions && state.workoutDivisions.length > 0) ? state.workoutDivisions : [
+          { id: 'div-a', key: 'A', name: 'Treino A', title: 'Treino A', subtitle: 'Peito, Tríceps & Ombro', icon: '💥' },
+          { id: 'div-b', key: 'B', name: 'Treino B', title: 'Treino B', subtitle: 'Costas, Bíceps & Trapézio', icon: '🦅' },
+          { id: 'div-c', key: 'C', name: 'Treino C', title: 'Treino C', subtitle: 'Pernas Completas & Panturrilhas', icon: '🦵' }
         ];
 
         workoutsGrid.innerHTML = divisions.map(d => {
-          const exercises = workouts.filter(w => w.division === d.key);
+          const divId = d.id || d.key;
+          const exercises = workouts.filter(w => w.division === divId || (d.key && w.division === d.key));
+          const title = d.name || d.title;
+          const icon = d.icon || '💪';
           return `
             <div class="bg-white dark:bg-slate-900 rounded-3xl p-5 border border-slate-200 dark:border-slate-800 shadow-sm space-y-3">
               <div class="flex items-center justify-between pb-2 border-b border-slate-100 dark:border-slate-800">
@@ -6535,9 +7283,14 @@
                 `).join('')}
               </div>
 
-              <button onclick="openWorkoutModal()" class="w-full py-1.5 rounded-xl border border-dashed border-indigo-300 dark:border-indigo-800 text-indigo-600 dark:text-indigo-400 hover:bg-indigo-50 text-[11px] font-bold transition">
-                ➕ Adicionar Exercício
-              </button>
+              <div class="flex items-center space-x-2 pt-1">
+                <button onclick="window.openWorkoutModal('${divId}')" class="flex-1 py-1.5 rounded-xl border border-dashed border-indigo-300 dark:border-indigo-800 text-indigo-600 dark:text-indigo-400 hover:bg-indigo-50 dark:hover:bg-indigo-950/40 text-[11px] font-bold transition">
+                  ➕ Adicionar Exercício
+                </button>
+                <button onclick="deleteWorkoutDivision('${divId}')" title="Excluir Ficha" class="p-1.5 text-slate-400 hover:text-rose-500 rounded-xl transition text-xs">
+                  🗑️
+                </button>
+              </div>
             </div>
           `;
         }).join('');
