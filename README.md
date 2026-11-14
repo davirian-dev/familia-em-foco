@@ -6,6 +6,7 @@
 [![PWA Ready](https://img.shields.io/badge/PWA-Instalável_Offline-purple?style=for-the-badge)](https://davirian-dev.github.io/familia-em-foco/)
 [![Estudante ADS](https://img.shields.io/badge/Desenvolvedor-Estudante_de_ADS-blue?style=for-the-badge)](https://linktr.ee/daviriann)
 [![Licença](https://img.shields.io/badge/Licença-MIT-yellow?style=for-the-badge)](LICENSE)
+[![Download APK](https://img.shields.io/badge/Download_App-Android_APK_(v1.0.0)-success?style=for-the-badge&logo=android)](https://github.com/davirian-dev/familia-em-foco/releases/download/v1.0.0/familia-em-foco.apk)
 
 <br />
 
@@ -40,6 +41,21 @@ Você pode acessar e testar o aplicativo diretamente pelo navegador ou instalá-
 > 💡 **Dica de Instalação no Celular**: Ao abrir no Google Chrome (Android) ou Safari (iOS), toque em **"Adicionar à Tela de Início"** ou **"Instalar Aplicativo"**. O app funciona em tela cheia com ícone próprio e suporte offline!
 
 ---
+
+
+---
+
+## 📲 Download do Aplicativo para Celular Android (.APK)
+
+Você pode instalar o aplicativo no seu smartphone Android de duas formas:
+
+1. **Baixar o Instalador Direto (.APK)**:
+   * 👉 **[Clique aqui para Baixar o APK (v1.0.0)](https://github.com/davirian-dev/familia-em-foco/releases/download/v1.0.0/familia-em-foco.apk)**
+   * Após baixar, abra o arquivo no celular e toque em **Instalar** (permita a instalação caso o Android solicite).
+
+2. **Instalação via Navegador (PWA Instantâneo)**:
+   * Acesse [davirian-dev.github.io/familia-em-foco/](https://davirian-dev.github.io/familia-em-foco/) no Chrome do celular.
+   * Toque nos 3 pontinhos e escolha **"Instalar aplicativo"**.
 
 ## ✨ Principais Funcionalidades
 
