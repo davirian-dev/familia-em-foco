@@ -8315,7 +8315,15 @@
           <div class="footer">
             Relatório gerado pelo aplicativo Família em Foco PRO • Suporte: Davi Rian (linktr.ee/daviriann)
           </div>
-        </body>
+          <!-- Registro de Service Worker para PWA Offline e Instalação Nativa -->
+  <script>
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', () => {
+        navigator.serviceWorker.register('./sw.js').catch(() => {});
+      });
+    }
+  </script>
+</body>
         </html>
       `);
       printWindow.document.close();

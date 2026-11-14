@@ -2,7 +2,7 @@
   "name": "Família em Foco",
   "short_name": "FamíliaFoco",
   "description": "Gestão Familiar, Centro de Estudos, Finanças com Amortização e Compras Inteligentes",
-  "start_url": "/app_preview.html",
+  "start_url": "./index.html",
   "display": "standalone",
   "background_color": "#090D16",
   "theme_color": "#4F46E5",
