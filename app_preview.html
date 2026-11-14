@@ -435,7 +435,7 @@
     </aside>
 
     <!-- ÁREA DE CONTEÚDO DAS TELAS -->
-    <main class="flex-1 p-4 sm:p-6 lg:p-8 max-w-5xl pb-24 md:pb-8">
+    <main class="flex-1 p-3.5 sm:p-6 lg:p-8 max-w-5xl pb-24 md:pb-8 min-w-0 w-full max-w-full overflow-x-hidden">
 
       <!-- ================= BANNER PWA: TELA CHEIA NATIVA NO CELULAR ================= -->
       <div id="pwaInstallBanner" class="p-3.5 sm:p-4 rounded-3xl bg-gradient-to-r from-indigo-900/90 via-purple-900/90 to-slate-900 border border-indigo-400/40 text-white shadow-xl flex items-center justify-between gap-3 mb-5 transition-all">
@@ -533,26 +533,26 @@
           </div>
         </div>
 
-        <!-- ================= 6. NOVO GRÁFICO INTERATIVO DE EVOLUÇÃO NO DASHBOARD ================= -->
-        <div class="bg-white dark:bg-slate-900 rounded-3xl p-6 border border-slate-200 dark:border-slate-800 shadow-sm space-y-4">
-          <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
-            <div class="flex items-center space-x-3">
-              <span class="text-2xl p-2.5 rounded-2xl bg-indigo-50 dark:bg-indigo-950 text-indigo-600 dark:text-indigo-400">📈</span>
-              <div>
-                <h3 class="font-bold text-base text-slate-900 dark:text-white">Gráfico de Evolução & Progresso</h3>
-                <p class="text-xs text-slate-500 dark:text-slate-300">Acompanhe a curva de crescimento financeiro, saúde e consistência</p>
+        <!-- ================= 6. NOVO GRÁFICO INTERATIVO DE EVOLUÇÃO NO DASHBOARD (ANTI-CORTE MOBILE/TABLET/PC) ================= -->
+        <div class="bg-white dark:bg-slate-900 rounded-3xl p-4 sm:p-6 border border-slate-200 dark:border-slate-800 shadow-sm space-y-4 w-full max-w-full overflow-hidden">
+          <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 min-w-0">
+            <div class="flex items-center space-x-3 min-w-0">
+              <span class="text-2xl p-2 sm:p-2.5 rounded-2xl bg-indigo-50 dark:bg-indigo-950 text-indigo-600 dark:text-indigo-400 shrink-0">📈</span>
+              <div class="min-w-0">
+                <h3 class="font-bold text-sm sm:text-base text-slate-900 dark:text-white truncate">Gráfico de Evolução & Progresso</h3>
+                <p class="text-[11px] sm:text-xs text-slate-500 dark:text-slate-300 truncate">Curva de finanças, saúde e consistência</p>
               </div>
             </div>
-            <!-- Abas do Gráfico -->
-            <div class="flex p-1 rounded-2xl bg-slate-100 dark:bg-slate-800 text-xs font-bold">
-              <button onclick="switchEvolutionChartTab('finances')" id="chartBtnFinances" class="px-3 py-1.5 rounded-xl transition bg-white dark:bg-slate-900 text-indigo-600 dark:text-indigo-400 shadow-xs">💰 Finanças</button>
-              <button onclick="switchEvolutionChartTab('fitness')" id="chartBtnFitness" class="px-3 py-1.5 rounded-xl transition text-slate-500 dark:text-slate-300 hover:text-slate-900">💪 Fitness / Peso</button>
-              <button onclick="switchEvolutionChartTab('habits')" id="chartBtnHabits" class="px-3 py-1.5 rounded-xl transition text-slate-500 dark:text-slate-300 hover:text-slate-900">🎯 Hábitos</button>
+            <!-- Abas do Gráfico (Grid Responsivo em Celular, Flex em Tablet e PC) -->
+            <div class="grid grid-cols-3 sm:flex p-1 rounded-2xl bg-slate-100 dark:bg-slate-800 text-[11px] sm:text-xs font-bold w-full sm:w-auto shrink-0 gap-1">
+              <button onclick="switchEvolutionChartTab('finances')" id="chartBtnFinances" class="py-1.5 px-2 sm:px-3 rounded-xl transition bg-white dark:bg-slate-900 text-indigo-600 dark:text-indigo-400 shadow-xs text-center truncate">💰 <span class="hidden min-[380px]:inline">Finanças</span><span class="min-[380px]:hidden">Fin</span></button>
+              <button onclick="switchEvolutionChartTab('fitness')" id="chartBtnFitness" class="py-1.5 px-2 sm:px-3 rounded-xl transition text-slate-500 dark:text-slate-300 hover:text-slate-900 text-center truncate">💪 <span class="hidden min-[380px]:inline">Fitness</span><span class="min-[380px]:hidden">Fit</span></button>
+              <button onclick="switchEvolutionChartTab('habits')" id="chartBtnHabits" class="py-1.5 px-2 sm:px-3 rounded-xl transition text-slate-500 dark:text-slate-300 hover:text-slate-900 text-center truncate">🎯 <span class="hidden min-[380px]:inline">Hábitos</span><span class="min-[380px]:hidden">Háb</span></button>
             </div>
           </div>
 
-          <!-- Área do Gráfico SVG Responsivo -->
-          <div id="dashboardEvolutionChartContainer" class="pt-2">
+          <!-- Área do Gráfico SVG Responsivo sem corte horizontal -->
+          <div id="dashboardEvolutionChartContainer" class="pt-2 w-full max-w-full overflow-hidden">
             <!-- Renderizado dinamicamente via JS -->
           </div>
         </div>
@@ -8856,72 +8856,71 @@
 
       if (currentChartTab === 'finances') {
         container.innerHTML = `
-          <div class="space-y-2">
-            <div class="flex items-center justify-between text-xs text-slate-500 dark:text-slate-300 px-1">
-              <span>Evolução de Saldo & Economia (Últimos 6 meses)</span>
-              <strong class="text-emerald-600 dark:text-emerald-400">+28.4% de Reserva</strong>
+          <div class="space-y-2.5 w-full max-w-full overflow-hidden">
+            <div class="flex flex-wrap items-center justify-between gap-1 text-[11px] sm:text-xs text-slate-500 dark:text-slate-300 px-1">
+              <span class="truncate">Evolução de Saldo & Reserva</span>
+              <strong class="text-emerald-600 dark:text-emerald-400 font-black shrink-0">+28.4% no Semestre</strong>
             </div>
-            <div class="w-full h-40 bg-slate-50 dark:bg-slate-800/50 rounded-2xl p-3 flex items-end">
-              <svg viewBox="0 0 500 120" class="w-full h-full overflow-visible">
+            <div class="w-full h-36 sm:h-44 bg-slate-50 dark:bg-slate-800/50 rounded-2xl p-2.5 sm:p-4 flex items-end overflow-hidden">
+              <svg viewBox="0 0 520 120" preserveAspectRatio="none" class="w-full h-full overflow-hidden">
                 <defs>
                   <linearGradient id="finGrad" x1="0" y1="0" x2="0" y2="1">
                     <stop offset="0%" stop-color="#10B981" stop-opacity="0.35"/>
                     <stop offset="100%" stop-color="#10B981" stop-opacity="0.0"/>
                   </linearGradient>
                 </defs>
-                <path d="M 0,90 Q 100,75 200,60 T 350,35 T 500,15 L 500,120 L 0,120 Z" fill="url(#finGrad)"/>
-                <path d="M 0,90 Q 100,75 200,60 T 350,35 T 500,15" fill="none" stroke="#10B981" stroke-width="3" stroke-linecap="round"/>
-                <circle cx="200" cy="60" r="5" fill="#10B981" class="animate-ping"/>
-                <circle cx="200" cy="60" r="4" fill="#10B981"/>
-                <circle cx="500" cy="15" r="5" fill="#10B981"/>
+                <path d="M 15,95 Q 110,80 210,65 T 360,40 T 505,18 L 505,120 L 15,120 Z" fill="url(#finGrad)"/>
+                <path d="M 15,95 Q 110,80 210,65 T 360,40 T 505,18" fill="none" stroke="#10B981" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"/>
+                <circle cx="210" cy="65" r="4.5" fill="#10B981"/>
+                <circle cx="505" cy="18" r="5" fill="#10B981" stroke="#ffffff" stroke-width="2"/>
               </svg>
             </div>
-            <div class="flex justify-between text-[11px] text-slate-400 font-bold px-2">
-              <span>Jun</span><span>Jul</span><span>Ago</span><span>Set</span><span>Out</span><span>Nov (Atual)</span>
+            <div class="flex justify-between text-[10px] sm:text-xs text-slate-400 font-bold px-2 sm:px-3">
+              <span>Jun</span><span>Jul</span><span>Ago</span><span>Set</span><span>Out</span><span class="text-emerald-600 dark:text-emerald-400 font-black">Nov <span class="hidden sm:inline">(Atual)</span></span>
             </div>
           </div>
         `;
       } else if (currentChartTab === 'fitness') {
         container.innerHTML = `
-          <div class="space-y-2">
-            <div class="flex items-center justify-between text-xs text-slate-500 dark:text-slate-300 px-1">
-              <span>Progresso de Carga & Ganho Muscular (Bíceps)</span>
-              <strong class="text-indigo-600 dark:text-indigo-400">+2.5 cm Ganho</strong>
+          <div class="space-y-2.5 w-full max-w-full overflow-hidden">
+            <div class="flex flex-wrap items-center justify-between gap-1 text-[11px] sm:text-xs text-slate-500 dark:text-slate-300 px-1">
+              <span class="truncate">Hipertrofia & Força (Bíceps)</span>
+              <strong class="text-indigo-600 dark:text-indigo-400 font-black shrink-0">+2.5 cm Ganho</strong>
             </div>
-            <div class="w-full h-40 bg-slate-50 dark:bg-slate-800/50 rounded-2xl p-3 flex items-end">
-              <svg viewBox="0 0 500 120" class="w-full h-full overflow-visible">
+            <div class="w-full h-36 sm:h-44 bg-slate-50 dark:bg-slate-800/50 rounded-2xl p-2.5 sm:p-4 flex items-end overflow-hidden">
+              <svg viewBox="0 0 520 120" preserveAspectRatio="none" class="w-full h-full overflow-hidden">
                 <defs>
                   <linearGradient id="fitGrad" x1="0" y1="0" x2="0" y2="1">
                     <stop offset="0%" stop-color="#6366F1" stop-opacity="0.35"/>
                     <stop offset="100%" stop-color="#6366F1" stop-opacity="0.0"/>
                   </linearGradient>
                 </defs>
-                <path d="M 0,105 Q 120,80 250,55 T 500,20 L 500,120 L 0,120 Z" fill="url(#fitGrad)"/>
-                <path d="M 0,105 Q 120,80 250,55 T 500,20" fill="none" stroke="#6366F1" stroke-width="3" stroke-linecap="round"/>
-                <circle cx="250" cy="55" r="4" fill="#6366F1"/>
-                <circle cx="500" cy="20" r="5" fill="#6366F1"/>
+                <path d="M 15,105 Q 130,80 260,58 T 505,22 L 505,120 L 15,120 Z" fill="url(#fitGrad)"/>
+                <path d="M 15,105 Q 130,80 260,58 T 505,22" fill="none" stroke="#6366F1" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"/>
+                <circle cx="260" cy="58" r="4.5" fill="#6366F1"/>
+                <circle cx="505" cy="22" r="5" fill="#6366F1" stroke="#ffffff" stroke-width="2"/>
               </svg>
             </div>
-            <div class="flex justify-between text-[11px] text-slate-400 font-bold px-2">
-              <span>Início (35.5cm)</span><span>Semana 4</span><span>Semana 8</span><span>Hoje (38.0cm)</span>
+            <div class="flex justify-between text-[10px] sm:text-xs text-slate-400 font-bold px-2 sm:px-3">
+              <span>Início</span><span>Sem 4</span><span>Sem 8</span><span class="text-indigo-600 dark:text-indigo-400 font-black">Hoje (38cm)</span>
             </div>
           </div>
         `;
       } else {
         container.innerHTML = `
-          <div class="space-y-2">
-            <div class="flex items-center justify-between text-xs text-slate-500 dark:text-slate-300 px-1">
-              <span>Taxa de Cumprimento de Hábitos na Semana</span>
-              <strong class="text-purple-600 dark:text-purple-400">92% Consistência</strong>
+          <div class="space-y-2.5 w-full max-w-full overflow-hidden">
+            <div class="flex flex-wrap items-center justify-between gap-1 text-[11px] sm:text-xs text-slate-500 dark:text-slate-300 px-1">
+              <span class="truncate">Taxa de Hábitos Semanais</span>
+              <strong class="text-purple-600 dark:text-purple-400 font-black shrink-0">92% Concluído</strong>
             </div>
-            <div class="grid grid-cols-7 gap-2 h-40 items-end bg-slate-50 dark:bg-slate-800/50 rounded-2xl p-4">
-              <div class="flex flex-col items-center gap-1.5 h-full justify-end"><div class="w-full bg-purple-500 rounded-lg h-[80%]"></div><span class="text-[10px] text-slate-400 font-bold">Seg</span></div>
-              <div class="flex flex-col items-center gap-1.5 h-full justify-end"><div class="w-full bg-purple-500 rounded-lg h-[100%]"></div><span class="text-[10px] text-slate-400 font-bold">Ter</span></div>
-              <div class="flex flex-col items-center gap-1.5 h-full justify-end"><div class="w-full bg-purple-500 rounded-lg h-[90%]"></div><span class="text-[10px] text-slate-400 font-bold">Qua</span></div>
-              <div class="flex flex-col items-center gap-1.5 h-full justify-end"><div class="w-full bg-purple-500 rounded-lg h-[85%]"></div><span class="text-[10px] text-slate-400 font-bold">Qui</span></div>
-              <div class="flex flex-col items-center gap-1.5 h-full justify-end"><div class="w-full bg-purple-500 rounded-lg h-[95%]"></div><span class="text-[10px] text-slate-400 font-bold">Sex</span></div>
-              <div class="flex flex-col items-center gap-1.5 h-full justify-end"><div class="w-full bg-indigo-400 rounded-lg h-[75%]"></div><span class="text-[10px] text-slate-400 font-bold">Sáb</span></div>
-              <div class="flex flex-col items-center gap-1.5 h-full justify-end"><div class="w-full bg-indigo-500 rounded-lg h-[90%]"></div><span class="text-[10px] text-slate-400 font-bold">Dom</span></div>
+            <div class="grid grid-cols-7 gap-1.5 sm:gap-3 h-36 sm:h-44 items-end bg-slate-50 dark:bg-slate-800/50 rounded-2xl p-2.5 sm:p-4 w-full overflow-hidden">
+              <div class="flex flex-col items-center gap-1.5 h-full justify-end min-w-0"><div class="w-full max-w-[28px] sm:max-w-[40px] bg-purple-500 rounded-lg h-[80%]"></div><span class="text-[9px] sm:text-[11px] text-slate-400 font-bold">Seg</span></div>
+              <div class="flex flex-col items-center gap-1.5 h-full justify-end min-w-0"><div class="w-full max-w-[28px] sm:max-w-[40px] bg-purple-500 rounded-lg h-[100%]"></div><span class="text-[9px] sm:text-[11px] text-slate-400 font-bold">Ter</span></div>
+              <div class="flex flex-col items-center gap-1.5 h-full justify-end min-w-0"><div class="w-full max-w-[28px] sm:max-w-[40px] bg-purple-500 rounded-lg h-[90%]"></div><span class="text-[9px] sm:text-[11px] text-slate-400 font-bold">Qua</span></div>
+              <div class="flex flex-col items-center gap-1.5 h-full justify-end min-w-0"><div class="w-full max-w-[28px] sm:max-w-[40px] bg-purple-500 rounded-lg h-[85%]"></div><span class="text-[9px] sm:text-[11px] text-slate-400 font-bold">Qui</span></div>
+              <div class="flex flex-col items-center gap-1.5 h-full justify-end min-w-0"><div class="w-full max-w-[28px] sm:max-w-[40px] bg-purple-500 rounded-lg h-[95%]"></div><span class="text-[9px] sm:text-[11px] text-slate-400 font-bold">Sex</span></div>
+              <div class="flex flex-col items-center gap-1.5 h-full justify-end min-w-0"><div class="w-full max-w-[28px] sm:max-w-[40px] bg-indigo-400 rounded-lg h-[75%]"></div><span class="text-[9px] sm:text-[11px] text-slate-400 font-bold">Sáb</span></div>
+              <div class="flex flex-col items-center gap-1.5 h-full justify-end min-w-0"><div class="w-full max-w-[28px] sm:max-w-[40px] bg-indigo-500 rounded-lg h-[90%]"></div><span class="text-[9px] sm:text-[11px] text-slate-400 font-bold">Dom</span></div>
             </div>
           </div>
         `;
@@ -10322,7 +10321,7 @@ Todos os recursos avançados estão disponíveis para você:
     // Registro de Service Worker para PWA Offline e Instalação Nativa
     if ('serviceWorker' in navigator) {
       window.addEventListener('load', () => {
-        navigator.serviceWorker.register('./sw.js?v=3.9', { updateViaCache: 'none' })
+        navigator.serviceWorker.register('./sw.js?v=4.0', { updateViaCache: 'none' })
           .then((reg) => {
             reg.update();
           })
