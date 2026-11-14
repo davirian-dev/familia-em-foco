@@ -13,6 +13,35 @@
     .modal-backdrop.active { display: flex !important; }
     .imc-badge-good { background-color: #d1fae5; color: #065f46; border: 1px solid #6ee7b7; }
     .imc-badge-warn { background-color: #fef3c7; color: #92400e; border: 1px solid #fcd34d; }
+    
+    /* RESPONSIVIDADE AVANÇADA (CELULAR, TABLET & COMPUTADOR) */
+    @media (max-width: 640px) {
+      .mobile-touch-target { min-height: 44px; }
+      .mobile-safe-bottom { padding-bottom: calc(5.5rem + env(safe-area-inset-bottom)) !important; }
+      .mobile-card-compact { padding: 1rem !important; }
+    }
+
+    @media (min-width: 641px) and (max-width: 1024px) {
+      /* Estilos para Tablet (iPad, Galaxy Tab, etc) */
+      .tablet-grid-balanced { grid-template-columns: repeat(2, minmax(0, 1fr)) !important; }
+      .tablet-padding { padding: 1.5rem !important; }
+      aside { width: 14rem !important; }
+    }
+
+    @media (min-width: 1025px) {
+      /* Estilos para Desktop / Computador */
+      .desktop-spacious { max-width: 80rem; }
+    }
+
+    .hero-glow {
+      background: radial-gradient(circle at 50% 0%, rgba(99, 102, 241, 0.35) 0%, rgba(15, 23, 42, 0) 70%);
+    }
+
+    .glass-card {
+      background: rgba(255, 255, 255, 0.08);
+      backdrop-filter: blur(12px);
+      border: 1px solid rgba(255, 255, 255, 0.15);
+    }
   </style>
 </head>
 <body class="bg-slate-50 dark:bg-slate-950 text-slate-900 dark:text-slate-100 antialiased min-h-screen flex flex-col font-sans transition-colors duration-200">
@@ -51,6 +80,12 @@
         <!-- Botão Novo Membro -->
         <button onclick="openMemberModal()" class="p-2 rounded-xl text-indigo-600 dark:text-indigo-400 hover:bg-indigo-50 dark:hover:bg-slate-800 transition-colors" title="Cadastrar Novo Filho / Membro">
           👤➕
+        </button>
+
+        <!-- Botão Busca Rápida (Ctrl+K) -->
+        <button onclick="openSearchModal()" class="flex items-center space-x-1.5 p-2 sm:px-2.5 sm:py-1.5 rounded-xl text-slate-500 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors text-xs font-semibold" title="Buscar em todo o app (Ctrl+K)">
+          <span>🔍</span>
+          <span class="hidden md:inline text-slate-400 text-[10px] bg-slate-200 dark:bg-slate-700 px-1.5 py-0.5 rounded font-mono">Ctrl K</span>
         </button>
 
         <!-- Sino de Notificações Inteligentes -->
@@ -185,14 +220,113 @@
     <!-- ÁREA DE CONTEÚDO DAS TELAS -->
     <main class="flex-1 p-4 sm:p-6 lg:p-8 max-w-5xl pb-24 md:pb-8">
 
-      <!-- ================= 1. DASHBOARD ================= -->
-      <section id="tab-dashboard" class="space-y-6">
-        <div class="rounded-3xl bg-gradient-to-r from-indigo-600 via-indigo-700 to-purple-800 text-white p-6 sm:p-8 shadow-xl">
-          <span class="inline-block px-3 py-1 rounded-full bg-white/20 text-xs font-bold mb-2">Painel de Crescimento Familiar Integrado</span>
-          <h2 class="text-2xl sm:text-3xl font-black">Família Davi & Marina</h2>
-          <p class="text-indigo-100 text-xs sm:text-sm mt-1 max-w-xl">
-            Acompanhe a faculdade dos pais, a evolução escolar de Benjamin e Iris, os estímulos do Theo, biometria (IMC) e agenda familiar.
-          </p>
+      <!-- ================= 1. DASHBOARD COM CAPA DO APLICATIVO ================= -->
+      <section id="tab-dashboard" class="space-y-6 mobile-safe-bottom">
+        
+        <!-- ================= CAPA DO APLICATIVO (APP COVER SHOWCASE) ================= -->
+        <div id="appCoverBanner" class="relative overflow-hidden rounded-3xl bg-gradient-to-br from-indigo-950 via-slate-900 to-purple-950 border border-indigo-500/30 text-white p-6 sm:p-8 shadow-2xl transition-all">
+          <div class="absolute inset-0 hero-glow pointer-events-none"></div>
+          
+          <div class="relative z-10 flex flex-col lg:flex-row lg:items-center justify-between gap-6">
+            <div class="space-y-3 max-w-2xl">
+              <div class="flex flex-wrap items-center gap-2">
+                <span class="px-3 py-1 rounded-full bg-indigo-500/20 border border-indigo-400/30 text-indigo-300 font-black text-[11px] tracking-wide uppercase flex items-center gap-1.5">
+                  <span>✨</span> Edição Oficial da Família • Versão 2.5
+                </span>
+                <span class="px-2.5 py-0.5 rounded-full bg-emerald-500/20 border border-emerald-400/30 text-emerald-300 font-bold text-[10px]">
+                  ✓ Multi-dispositivo (Web • Celular • Tablet)
+                </span>
+              </div>
+
+              <h2 class="text-3xl sm:text-4xl lg:text-5xl font-black tracking-tight leading-tight">
+                Família em Foco <span class="text-indigo-400 text-2xl sm:text-3xl font-light block sm:inline">• Davi & Marina</span>
+              </h2>
+
+              <p class="text-slate-300 text-xs sm:text-sm leading-relaxed max-w-xl">
+                O ecossistema definitivo de crescimento familiar: acompanhe a <strong>faculdade dos pais</strong>, a <strong>escola das crianças</strong>, as <strong>finanças estratégicas</strong> e o <strong>desenvolvimento do Theo</strong>.
+              </p>
+
+              <!-- Avatares dos 5 Membros com Badges de Destaque -->
+              <div class="flex flex-wrap items-center gap-2 pt-1">
+                <div class="flex items-center space-x-1.5 px-2.5 py-1 rounded-xl bg-white/10 backdrop-blur-md border border-white/15 text-xs">
+                  <span>👨‍💻</span><span class="font-bold">Davi</span><span class="text-[10px] text-indigo-300">(26a • Dev & Corrida)</span>
+                </div>
+                <div class="flex items-center space-x-1.5 px-2.5 py-1 rounded-xl bg-white/10 backdrop-blur-md border border-white/15 text-xs">
+                  <span>👩‍💼</span><span class="font-bold">Marina</span><span class="text-[10px] text-emerald-300">(26a • Gestão & Pilates)</span>
+                </div>
+                <div class="flex items-center space-x-1.5 px-2.5 py-1 rounded-xl bg-white/10 backdrop-blur-md border border-white/15 text-xs">
+                  <span>👦</span><span class="font-bold">Benjamin</span><span class="text-[10px] text-amber-300">(8a • 3º Ano)</span>
+                </div>
+                <div class="flex items-center space-x-1.5 px-2.5 py-1 rounded-xl bg-white/10 backdrop-blur-md border border-white/15 text-xs">
+                  <span>👧</span><span class="font-bold">Iris</span><span class="text-[10px] text-pink-300">(5a • Pré-escola)</span>
+                </div>
+                <div class="flex items-center space-x-1.5 px-2.5 py-1 rounded-xl bg-white/10 backdrop-blur-md border border-white/15 text-xs">
+                  <span>👶</span><span class="font-bold">Theo</span><span class="text-[10px] text-cyan-300">(2a • Puericultura)</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- Coluna de Ações Rápidas da Capa -->
+            <div class="flex flex-col sm:flex-row lg:flex-col gap-2.5 shrink-0">
+              <button onclick="navigate('pomodoro')" class="px-5 py-3 rounded-2xl bg-indigo-600 hover:bg-indigo-500 text-white font-bold text-xs shadow-lg shadow-indigo-600/30 flex items-center justify-center space-x-2 transition transform active:scale-95">
+                <span>⏱️</span><span>Iniciar Sessão de Foco</span>
+              </button>
+              <button onclick="navigate('mural')" class="px-5 py-3 rounded-2xl bg-white/10 hover:bg-white/20 text-white font-bold text-xs backdrop-blur-md border border-white/15 flex items-center justify-center space-x-2 transition">
+                <span>💌</span><span>Abrir Mural da Família</span>
+              </button>
+              <button onclick="toggleAppCover()" id="btnToggleCover" class="text-slate-400 hover:text-white text-[11px] text-center pt-1 underline">
+                Recolher Capa ▲
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- ================= WIDGET "HOJE NA FAMÍLIA" (CENTRAL DIÁRIA) ================= -->
+        <div class="bg-gradient-to-r from-amber-500/10 via-indigo-500/10 to-purple-500/10 border border-indigo-500/20 dark:border-indigo-500/30 rounded-3xl p-5 shadow-sm">
+          <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-4">
+            <div class="flex items-center space-x-2.5">
+              <span class="text-2xl">☀️</span>
+              <div>
+                <h3 class="font-bold text-base text-slate-900 dark:text-white">Hoje na Família • Rotina do Dia</h3>
+                <p class="text-xs text-slate-500">Ações prioritárias para manter a harmonia e o desenvolvimento de todos</p>
+              </div>
+            </div>
+            <div class="flex items-center space-x-2">
+              <span class="text-xs font-bold text-indigo-600 dark:text-indigo-400 bg-indigo-50 dark:bg-indigo-950/60 px-3 py-1 rounded-full border border-indigo-200 dark:border-indigo-800 flex items-center gap-1">
+                <span>🏆</span> Harmonia Familiar: <strong id="harmonyScore">94%</strong>
+              </span>
+            </div>
+          </div>
+
+          <!-- Cards Rápidos do Dia -->
+          <div class="grid grid-cols-1 sm:grid-cols-3 gap-3" id="todayHighlightsGrid">
+            <div class="p-3.5 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 flex items-start space-x-3">
+              <span class="text-2xl">🏃</span>
+              <div class="flex-1 min-w-0">
+                <span class="text-[10px] font-bold text-indigo-600 uppercase tracking-wide">Saúde Davi</span>
+                <h5 class="text-xs font-bold text-slate-900 dark:text-white truncate">Treino Corrida 10km</h5>
+                <p class="text-[11px] text-slate-500">Meta hidratação 3L ativa</p>
+              </div>
+            </div>
+
+            <div class="p-3.5 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 flex items-start space-x-3">
+              <span class="text-2xl">🎒</span>
+              <div class="flex-1 min-w-0">
+                <span class="text-[10px] font-bold text-amber-600 uppercase tracking-wide">Escola Benjamin</span>
+                <h5 class="text-xs font-bold text-slate-900 dark:text-white truncate">Tabuada do 8 e Lição</h5>
+                <p class="text-[11px] text-slate-500">140 moedas conquistadas</p>
+              </div>
+            </div>
+
+            <div class="p-3.5 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 flex items-start space-x-3">
+              <span class="text-2xl">🍼</span>
+              <div class="flex-1 min-w-0">
+                <span class="text-[10px] font-bold text-cyan-600 uppercase tracking-wide">Puericultura Theo</span>
+                <h5 class="text-xs font-bold text-slate-900 dark:text-white truncate">Frutas & Sono 20h30</h5>
+                <p class="text-[11px] text-slate-500">Desfralde em progresso</p>
+              </div>
+            </div>
+          </div>
         </div>
 
         <!-- Estatísticas da Família -->
@@ -1186,6 +1320,27 @@
           <button type="submit" class="px-5 py-2 bg-indigo-600 hover:bg-indigo-700 text-white font-bold text-xs rounded-xl shadow-md">Salvar</button>
         </div>
       </form>
+    </div>
+  </div>
+
+  <!-- ================= MODAL DE BUSCA GLOBAL (SPOTLIGHT / CTRL+K) ================= -->
+  <div id="searchModal" class="modal-backdrop">
+    <div class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-3xl max-w-lg w-full p-6 shadow-2xl relative space-y-4">
+      <div class="flex items-center space-x-2 border-b border-slate-200 dark:border-slate-800 pb-3">
+        <span class="text-xl">🔍</span>
+        <input
+          type="text"
+          id="globalSearchInput"
+          oninput="handleGlobalSearch(this.value)"
+          placeholder="Buscar matérias, compras, finanças, hábitos, consultas..."
+          class="flex-1 bg-transparent text-sm font-semibold text-slate-900 dark:text-white outline-none"
+        />
+        <button onclick="closeSearchModal()" class="text-slate-400 hover:text-slate-600 text-xs p-1">ESC</button>
+      </div>
+
+      <div class="space-y-1.5 max-h-72 overflow-y-auto pr-1" id="searchResultsContainer">
+        <p class="text-xs text-slate-400 text-center py-6">Digite qualquer palavra para encontrar rapidamente no aplicativo.</p>
+      </div>
     </div>
   </div>
 
@@ -4324,6 +4479,150 @@
       saveState();
       closeOnboardingModal();
       location.reload();
+    }
+
+    // ================= CONTROLE DA CAPA DO APLICATIVO =================
+    let isCoverExpanded = true;
+    function toggleAppCover() {
+      const banner = document.getElementById('appCoverBanner');
+      const btn = document.getElementById('btnToggleCover');
+      isCoverExpanded = !isCoverExpanded;
+      if (isCoverExpanded) {
+        banner.style.maxHeight = '800px';
+        banner.style.padding = '2rem';
+        btn.textContent = 'Recolher Capa ▲';
+      } else {
+        banner.style.maxHeight = '90px';
+        banner.style.padding = '1rem 2rem';
+        btn.textContent = 'Expandir Capa ▼';
+      }
+    }
+
+    // ================= BUSCA GLOBAL RÁPIDA (SPOTLIGHT / CTRL+K) =================
+    function openSearchModal() {
+      const modal = document.getElementById('searchModal');
+      modal.classList.add('active');
+      const input = document.getElementById('globalSearchInput');
+      input.value = '';
+      input.focus();
+      handleGlobalSearch('');
+    }
+
+    function closeSearchModal() {
+      document.getElementById('searchModal').classList.remove('active');
+    }
+
+    // Atalho de teclado Ctrl+K ou Cmd+K
+    window.addEventListener('keydown', (e) => {
+      if ((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === 'k') {
+        e.preventDefault();
+        openSearchModal();
+      }
+      if (e.key === 'Escape') {
+        closeSearchModal();
+      }
+    });
+
+    function handleGlobalSearch(query) {
+      const container = document.getElementById('searchResultsContainer');
+      const q = query.toLowerCase().trim();
+      
+      if (!q) {
+        container.innerHTML = `<p class="text-xs text-slate-400 text-center py-6">Digite palavras como "leite", "estudo", "fii", "vacina", "benjamin"...</p>`;
+        return;
+      }
+
+      const results = [];
+
+      // 1. Estudos
+      (state.studies || []).forEach(s => {
+        if (s.subject.toLowerCase().includes(q) || (s.topics && s.topics.toLowerCase().includes(q))) {
+          results.push({
+            icon: '🎓',
+            title: s.subject,
+            subtitle: `${s.memberName} • Assuntos: ${s.topics ? s.topics.slice(0, 35) + '...' : ''}`,
+            tab: 'studies'
+          });
+        }
+      });
+
+      // 2. Compras
+      (state.shoppingItems || []).forEach(i => {
+        if (i.title.toLowerCase().includes(q) || i.category.toLowerCase().includes(q)) {
+          results.push({
+            icon: '🛒',
+            title: i.title,
+            subtitle: `Compras (${i.type}) • R$ ${i.price ? i.price.toFixed(2) : '0.00'}`,
+            tab: 'shopping'
+          });
+        }
+      });
+
+      // 3. Finanças (Investimentos & Dívidas)
+      (state.investments || []).forEach(inv => {
+        if (inv.name.toLowerCase().includes(q) || (inv.institution && inv.institution.toLowerCase().includes(q))) {
+          results.push({
+            icon: '📈',
+            title: inv.name,
+            subtitle: `Investimento • R$ ${inv.currentAmount.toLocaleString('pt-BR')}`,
+            tab: 'finances'
+          });
+        }
+      });
+
+      (state.debts || []).forEach(d => {
+        if (d.name.toLowerCase().includes(q) || (d.institution && d.institution.toLowerCase().includes(q))) {
+          results.push({
+            icon: '💳',
+            title: d.name,
+            subtitle: `Financiamento • Saldo devedor: R$ ${d.currentBalance.toLocaleString('pt-BR')}`,
+            tab: 'finances'
+          });
+        }
+      });
+
+      // 4. Agenda
+      (state.calendarEvents || []).forEach(ev => {
+        if (ev.title.toLowerCase().includes(q) || (ev.location && ev.location.toLowerCase().includes(q))) {
+          results.push({
+            icon: '📅',
+            title: ev.title,
+            subtitle: `${ev.date} às ${ev.time} • ${ev.memberName}`,
+            tab: 'calendar'
+          });
+        }
+      });
+
+      // 5. Hábitos
+      (state.habits || []).forEach(h => {
+        if (h.title.toLowerCase().includes(q) || h.member.toLowerCase().includes(q)) {
+          results.push({
+            icon: '🎯',
+            title: h.title,
+            subtitle: `Hábito de ${h.member} • Ofensiva: ${h.streak} dias`,
+            tab: 'habits-goals'
+          });
+        }
+      });
+
+      if (results.length === 0) {
+        container.innerHTML = `<p class="text-xs text-slate-400 text-center py-6">Nenhum resultado encontrado para "${query}".</p>`;
+        return;
+      }
+
+      container.innerHTML = results.map(r => `
+        <button
+          onclick="navigate('${r.tab}'); closeSearchModal();"
+          class="w-full flex items-center space-x-3 p-2.5 rounded-2xl hover:bg-slate-100 dark:hover:bg-slate-800 text-left transition group"
+        >
+          <span class="text-xl p-1.5 rounded-xl bg-slate-100 dark:bg-slate-800 group-hover:bg-indigo-100 dark:group-hover:bg-indigo-950 transition">${r.icon}</span>
+          <div class="flex-1 min-w-0">
+            <h5 class="text-xs font-bold text-slate-900 dark:text-white truncate group-hover:text-indigo-600 transition">${r.title}</h5>
+            <p class="text-[11px] text-slate-400 truncate">${r.subtitle}</p>
+          </div>
+          <span class="text-slate-400 text-xs">Ir →</span>
+        </button>
+      `).join('');
     }
 
     // Inicialização Completa
