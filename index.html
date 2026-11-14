@@ -2789,12 +2789,31 @@
         </div>
       </div>
 
+      <!-- Seção: Cupom de Desconto Especial -->
+      <div class="my-3 p-3.5 rounded-2xl bg-amber-500/10 dark:bg-amber-950/30 border border-amber-300 dark:border-amber-700/60 transition">
+        <div class="flex items-center justify-between mb-2">
+          <span class="text-xs font-bold text-amber-950 dark:text-amber-200 flex items-center gap-1.5">
+            <span>🏷️</span> Possui um Cupom de Desconto?
+          </span>
+          <span id="couponSuccessBadge" class="hidden text-[10px] font-black px-2.5 py-0.5 rounded-full bg-emerald-500 text-white animate-pulse">50% OFF ATIVADO!</span>
+        </div>
+        <div class="flex gap-2">
+          <input type="text" id="couponInput" placeholder="Ex: Digite seu cupom" class="flex-1 px-3 py-2 rounded-xl border border-amber-300 dark:border-amber-700 bg-white dark:bg-slate-900 text-xs uppercase font-mono font-bold tracking-wider outline-none text-slate-900 dark:text-white focus:ring-2 focus:ring-amber-400">
+          <button type="button" onclick="applyDiscountCoupon()" class="px-4 py-2 rounded-xl bg-gradient-to-r from-amber-500 to-yellow-500 hover:from-amber-600 hover:to-yellow-600 text-slate-950 font-black text-xs shadow-xs transition">
+            Aplicar
+          </button>
+        </div>
+        <p id="couponFeedbackMsg" class="text-[11px] font-semibold mt-1.5 hidden"></p>
+      </div>
+
       <!-- Tabela de Opções de Preço -->
       <div class="grid grid-cols-2 gap-3 my-4">
         <!-- Opção 1: Mensal -->
         <div onclick="selectPricingOption('monthly')" id="priceCardMonthly" class="p-3.5 rounded-2xl border-2 border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 cursor-pointer hover:border-indigo-500 transition text-center">
           <span class="text-[10px] font-bold text-slate-400 uppercase block">Mensal</span>
-          <div class="text-xl font-black text-slate-900 dark:text-white my-0.5">R$ 19,90<span class="text-xs font-normal text-slate-400">/mês</span></div>
+          <div id="priceAmountMonthly" class="text-xl font-black text-slate-900 dark:text-white my-0.5">
+            R$ 19,90<span class="text-xs font-normal text-slate-400">/mês</span>
+          </div>
           <span class="text-[10px] text-slate-500 block">Cancele quando quiser</span>
         </div>
 
@@ -2802,30 +2821,56 @@
         <div onclick="selectPricingOption('lifetime')" id="priceCardLifetime" class="p-3.5 rounded-2xl border-2 border-amber-500 bg-amber-50/50 dark:bg-amber-950/20 cursor-pointer transition text-center relative shadow-sm">
           <span class="absolute -top-2.5 right-3 px-2 py-0.5 rounded-full bg-gradient-to-r from-amber-500 to-yellow-500 text-white font-black text-[9px] uppercase tracking-wider">Mais Popular 🔥</span>
           <span class="text-[10px] font-bold text-amber-700 dark:text-amber-400 uppercase block">Acesso Vitalício</span>
-          <div class="text-xl font-black text-slate-900 dark:text-white my-0.5">R$ 97,00<span class="text-xs font-normal text-slate-400"> único</span></div>
+          <div id="priceAmountLifetime" class="text-xl font-black text-slate-900 dark:text-white my-0.5">
+            R$ 97,00<span class="text-xs font-normal text-slate-400"> único</span>
+          </div>
           <span class="text-[10px] text-emerald-600 dark:text-emerald-400 font-bold block">Sem mensalidade • Para Sempre</span>
         </div>
       </div>
 
-      <!-- Botão de Ação de Pagamento -->
-      <div class="space-y-2">
-        <button onclick="handlePaymentCheckout()" class="w-full py-3.5 rounded-2xl bg-gradient-to-r from-amber-500 via-yellow-500 to-amber-600 hover:from-amber-600 hover:to-yellow-600 text-white font-black text-sm shadow-lg shadow-amber-500/25 flex items-center justify-center space-x-2 transition">
-          <span>🚀</span>
-          <span id="btnPaymentLabel">Desbloquear Plano PRO Agora (PIX / Cartão)</span>
-        </button>
-        <p class="text-[10px] text-center text-slate-400">🔒 Pagamento 100% Seguro com Liberação Imediata</p>
+      <!-- Detalhes do Pagamento PIX Integrado -->
+      <div id="pixCheckoutContainer" class="p-4 rounded-2xl bg-slate-50 dark:bg-slate-800/80 border-2 border-emerald-500/50 dark:border-emerald-500/30 space-y-3">
+        <div class="flex items-center justify-between">
+          <div class="flex items-center space-x-2">
+            <span class="text-lg">⚡</span>
+            <div>
+              <h5 class="text-xs font-black text-slate-900 dark:text-white uppercase tracking-wider">Pagar via PIX com Liberação Rápida</h5>
+              <p class="text-[10px] text-slate-500">Valor a transferir: <strong id="pixCheckoutFinalValue" class="text-emerald-600 dark:text-emerald-400 text-xs font-black">R$ 97,00</strong></p>
+            </div>
+          </div>
+          <span id="pixDiscountTag" class="hidden text-[9px] font-black px-2 py-0.5 rounded-md bg-emerald-100 text-emerald-800 dark:bg-emerald-950 dark:text-emerald-300">50% OFF</span>
+        </div>
+
+        <!-- Chave PIX e Copiar -->
+        <div class="flex items-center gap-2">
+          <div class="flex-1 bg-white dark:bg-slate-900 border border-slate-300 dark:border-slate-700 rounded-xl px-3 py-2 font-mono text-xs font-bold text-slate-900 dark:text-white select-all overflow-hidden text-ellipsis">
+            <span id="pixCheckoutKeyDisplay">71981223348</span>
+          </div>
+          <button onclick="copyPixCheckoutKey()" class="px-3.5 py-2 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-xs shadow-xs transition flex items-center gap-1.5 flex-shrink-0">
+            <span>📋</span>
+            <span id="btnCopyPixCheckoutText">Copiar PIX</span>
+          </button>
+        </div>
+
+        <!-- Botão WhatsApp para Envio do Comprovante -->
+        <div class="flex flex-col sm:flex-row gap-2 pt-1">
+          <a id="btnWhatsAppConfirm" href="https://wa.me/5571981223348?text=Ol%C3%A1%20Davi!%20Fiz%20o%20PIX%20do%20Plano%20PRO%20do%20Fam%C3%ADlia%20em%20Foco.%20Segue%20o%20comprovante%20para%20minha%20chave%20de%20ativa%C3%A7%C3%A3o!" target="_blank" rel="noopener noreferrer" class="flex-1 py-2.5 px-3 rounded-xl bg-emerald-500 hover:bg-emerald-600 text-white font-bold text-xs flex items-center justify-center gap-2 shadow-xs transition text-center">
+            <span>💬</span>
+            <span>Confirmar no WhatsApp (Receber Chave)</span>
+          </a>
+        </div>
       </div>
 
-      <!-- Seção: Já pagou? Ativar por Código VIP / Chave de Acesso -->
-      <div class="mt-5 pt-4 border-t border-slate-100 dark:border-slate-800">
+      <!-- Seção: Já realizou o pagamento ou tem uma Chave de Liberação? -->
+      <div class="mt-4 pt-4 border-t border-slate-100 dark:border-slate-800">
         <div class="bg-indigo-50/70 dark:bg-indigo-950/40 border border-indigo-200 dark:border-indigo-900/60 rounded-2xl p-4">
           <div class="flex items-center space-x-2 mb-2">
             <span class="text-base">🔑</span>
-            <h5 class="text-xs font-bold text-indigo-950 dark:text-indigo-200">Já realizou o pagamento ou tem um Código VIP?</h5>
+            <h5 class="text-xs font-bold text-indigo-950 dark:text-indigo-200">Já realizou o pagamento ou possui uma Chave de Liberação?</h5>
           </div>
           <p class="text-[11px] text-slate-500 mb-3">Digite a sua chave de ativação para desbloquear instantaneamente todos os recursos:</p>
           <div class="flex gap-2">
-            <input type="text" id="vipCodeInput" placeholder="Ex: PRO-2026" class="flex-1 px-3 py-2 rounded-xl border border-indigo-200 dark:border-indigo-800 bg-white dark:bg-slate-900 text-xs uppercase font-mono font-bold tracking-wider outline-none text-slate-900 dark:text-white">
+            <input type="text" id="vipCodeInput" placeholder="Digite sua chave de liberação" class="flex-1 px-3 py-2 rounded-xl border border-indigo-200 dark:border-indigo-800 bg-white dark:bg-slate-900 text-xs uppercase font-mono font-bold tracking-wider outline-none text-slate-900 dark:text-white focus:ring-2 focus:ring-indigo-500">
             <button onclick="redeemVipCode()" class="px-4 py-2 rounded-xl bg-indigo-600 hover:bg-indigo-700 text-white font-bold text-xs shadow-xs transition">
               Ativar
             </button>
@@ -9174,11 +9219,13 @@
 
     
     // ==========================================
-    // SISTEMA DE MONETIZAÇÃO E FREEMIUM (PRO vs FREE)
+    // SISTEMA DE MONETIZAÇÃO, CUPONS E FREEMIUM (PRO vs FREE)
     // ==========================================
     let currentSelectedPlan = 'lifetime'; // 'monthly' ou 'lifetime'
+    let appliedDiscountPercent = 0; // 0 ou 50
+    let appliedCouponCode = '';
 
-    // Códigos VIP válidos para ativação instantânea
+    // Chaves secretas de ativação interna (não expostas na interface)
     const VALID_VIP_CODES = [
       'PRO-2026',
       'VIP-DAVI',
@@ -9213,6 +9260,16 @@
         if (subtitle) subtitle.textContent = 'Evolua seu corpo, finanças e rotina familiar sem limitações.';
       }
 
+      // Se houver cupom salvo no localStorage, reativa
+      const savedCoupon = localStorage.getItem('family_app_applied_coupon');
+      if (savedCoupon === 'AMIGOSDEDAVI') {
+        const inp = document.getElementById('couponInput');
+        if (inp) inp.value = 'AMIGOSDEDAVI';
+        applyDiscountCoupon(true);
+      } else {
+        renderPricingDisplay();
+      }
+
       updateAdminVipShortcut();
       if (modal) modal.classList.add('active');
     }
@@ -9222,48 +9279,162 @@
       if (modal) modal.classList.remove('active');
     }
 
+    // Aplicação do Cupom de Desconto de 50%
+    function applyDiscountCoupon(silent = false) {
+      const input = document.getElementById('couponInput');
+      const badge = document.getElementById('couponSuccessBadge');
+      const feedback = document.getElementById('couponFeedbackMsg');
+      const rawCode = (input?.value || '').trim().toUpperCase();
+
+      if (!rawCode) {
+        if (feedback) {
+          feedback.textContent = 'Por favor, informe o código do cupom.';
+          feedback.className = 'text-[11px] font-semibold mt-1.5 text-amber-600 dark:text-amber-400 block';
+        }
+        return;
+      }
+
+      if (rawCode === 'AMIGOSDEDAVI') {
+        appliedDiscountPercent = 50;
+        appliedCouponCode = 'AMIGOSDEDAVI';
+        localStorage.setItem('family_app_applied_coupon', 'AMIGOSDEDAVI');
+
+        if (badge) badge.classList.remove('hidden');
+        if (feedback) {
+          feedback.textContent = '🎉 Cupom AMIGOSDEDAVI ativado! 50% de desconto aplicado com sucesso.';
+          feedback.className = 'text-[11px] font-bold mt-1.5 text-emerald-600 dark:text-emerald-400 block';
+        }
+        if (!silent) {
+          showToast('Cupom AMIGOSDEDAVI ativado! 50% OFF aplicado.', '🏷️');
+        }
+      } else {
+        appliedDiscountPercent = 0;
+        appliedCouponCode = '';
+        localStorage.removeItem('family_app_applied_coupon');
+
+        if (badge) badge.classList.add('hidden');
+        if (feedback) {
+          feedback.textContent = '❌ Cupom inválido ou expirado. Verifique se digitou corretamente.';
+          feedback.className = 'text-[11px] font-bold mt-1.5 text-rose-500 block';
+        }
+      }
+
+      renderPricingDisplay();
+    }
+
+    function renderPricingDisplay() {
+      const monthlyBox = document.getElementById('priceAmountMonthly');
+      const lifetimeBox = document.getElementById('priceAmountLifetime');
+      const pixValue = document.getElementById('pixCheckoutFinalValue');
+      const pixDiscountTag = document.getElementById('pixDiscountTag');
+      const btnWhatsApp = document.getElementById('btnWhatsAppConfirm');
+
+      let valorFinal = '';
+      let planoDesc = '';
+
+      if (appliedDiscountPercent === 50) {
+        if (monthlyBox) {
+          monthlyBox.innerHTML = `<span class="line-through text-slate-400 text-xs font-normal mr-1">R$ 19,90</span><span class="text-emerald-600 dark:text-emerald-400 font-black">R$ 9,95</span><span class="text-xs font-normal text-slate-400">/mês</span>`;
+        }
+        if (lifetimeBox) {
+          lifetimeBox.innerHTML = `<span class="line-through text-amber-700/60 dark:text-amber-500/50 text-xs font-normal mr-1">R$ 97,00</span><span class="text-emerald-600 dark:text-emerald-400 font-black">R$ 48,50</span><span class="text-xs font-normal text-slate-400"> único</span>`;
+        }
+        if (pixDiscountTag) pixDiscountTag.classList.remove('hidden');
+
+        if (currentSelectedPlan === 'monthly') {
+          valorFinal = 'R$ 9,95 (Mensal com 50% OFF)';
+          planoDesc = 'Mensal (R$ 9,95 - Cupom AMIGOSDEDAVI)';
+        } else {
+          valorFinal = 'R$ 48,50 (Vitalício com 50% OFF)';
+          planoDesc = 'Vitalício (R$ 48,50 - Cupom AMIGOSDEDAVI)';
+        }
+      } else {
+        if (monthlyBox) {
+          monthlyBox.innerHTML = `R$ 19,90<span class="text-xs font-normal text-slate-400">/mês</span>`;
+        }
+        if (lifetimeBox) {
+          lifetimeBox.innerHTML = `R$ 97,00<span class="text-xs font-normal text-slate-400"> único</span>`;
+        }
+        if (pixDiscountTag) pixDiscountTag.classList.add('hidden');
+
+        if (currentSelectedPlan === 'monthly') {
+          valorFinal = 'R$ 19,90 (Mensal)';
+          planoDesc = 'Mensal (R$ 19,90)';
+        } else {
+          valorFinal = 'R$ 97,00 (Acesso Vitalício)';
+          planoDesc = 'Vitalício (R$ 97,00)';
+        }
+      }
+
+      if (pixValue) pixValue.textContent = valorFinal;
+
+      if (btnWhatsApp) {
+        const msg = encodeURIComponent(`Olá Davi! Realizei o PIX para o Plano PRO do Família em Foco no plano ${planoDesc}. Segue o comprovante para liberação da minha chave de ativação!`);
+        btnWhatsApp.href = `https://wa.me/5571981223348?text=${msg}`;
+      }
+    }
+
     function selectPricingOption(type) {
       currentSelectedPlan = type;
       const cardM = document.getElementById('priceCardMonthly');
       const cardL = document.getElementById('priceCardLifetime');
-      const btn = document.getElementById('btnPaymentLabel');
 
       if (type === 'monthly') {
         if (cardM) { cardM.className = 'p-3.5 rounded-2xl border-2 border-indigo-500 bg-indigo-50/40 dark:bg-indigo-950/20 cursor-pointer transition text-center shadow-xs'; }
         if (cardL) { cardL.className = 'p-3.5 rounded-2xl border-2 border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 cursor-pointer hover:border-amber-500 transition text-center'; }
-        if (btn) btn.textContent = 'Assinar Plano Mensal (R$ 19,90/mês)';
       } else {
         if (cardL) { cardL.className = 'p-3.5 rounded-2xl border-2 border-amber-500 bg-amber-50/50 dark:bg-amber-950/20 cursor-pointer transition text-center relative shadow-sm'; }
         if (cardM) { cardM.className = 'p-3.5 rounded-2xl border-2 border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 cursor-pointer hover:border-indigo-500 transition text-center'; }
-        if (btn) btn.textContent = 'Desbloquear Acesso Vitalício (R$ 97,00 Único)';
+      }
+
+      renderPricingDisplay();
+    }
+
+    function copyPixCheckoutKey() {
+      const key = '71981223348';
+      const btn = document.getElementById('btnCopyPixCheckoutText');
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(key).then(() => {
+          if (btn) {
+            btn.textContent = 'Copiado! ✓';
+            setTimeout(() => { if (btn) btn.textContent = 'Copiar PIX'; }, 2500);
+          }
+          showToast('Chave PIX 71981223348 copiada com sucesso!', '⚡');
+        }).catch(() => {
+          fallbackCheckoutCopy(key, btn);
+        });
+      } else {
+        fallbackCheckoutCopy(key, btn);
       }
     }
 
-    function handlePaymentCheckout() {
-      const valor = currentSelectedPlan === 'monthly' ? 'R$ 19,90' : 'R$ 97,00';
-      const planoNome = currentSelectedPlan === 'monthly' ? 'Mensal' : 'Vitalício';
-      
-      const resposta = prompt(`💎 INSTRUÇÃO DE PAGAMENTO:
-
-Para ativar o seu Plano ${planoNome} (${valor}):
-
-1. Faça o PIX ou realize o pagamento pelo link da plataforma.
-2. Após o pagamento, você receberá a sua Chave VIP de Ativação (Ex: PRO-2026).
-
-Você já efetuou o pagamento e possui sua chave? Digite OK para inserir a chave agora ou digite o código VIP direto aqui:`, 'PRO-2026');
-
-      if (resposta) {
-        const cod = resposta.trim().toUpperCase();
-        if (VALID_VIP_CODES.includes(cod) || cod === 'OK') {
-          if (cod !== 'OK') {
-            activateProAccount(cod);
-          } else {
-            document.getElementById('vipCodeInput')?.focus();
-          }
-        } else {
-          alert('Chave de ativação inválida ou não reconhecida. Verifique se digitou corretamente.');
+    function fallbackCheckoutCopy(key, btn) {
+      const el = document.createElement('textarea');
+      el.value = key;
+      document.body.appendChild(el);
+      el.select();
+      try {
+        document.execCommand('copy');
+        if (btn) {
+          btn.textContent = 'Copiado! ✓';
+          setTimeout(() => { if (btn) btn.textContent = 'Copiar PIX'; }, 2500);
         }
+        showToast('Chave PIX 71981223348 copiada!', '⚡');
+      } catch(e) {
+        prompt('Copie a chave PIX celular abaixo:', key);
       }
+      document.body.removeChild(el);
+    }
+
+    function handlePaymentCheckout() {
+      // Direciona a atenção para o container do PIX integrado
+      const pixBox = document.getElementById('pixCheckoutContainer');
+      if (pixBox) {
+        pixBox.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        pixBox.classList.add('ring-4', 'ring-emerald-400');
+        setTimeout(() => pixBox.classList.remove('ring-4', 'ring-emerald-400'), 2000);
+      }
+      copyPixCheckoutKey();
     }
 
     function redeemVipCode() {
@@ -9273,7 +9444,7 @@ Você já efetuou o pagamento e possui sua chave? Digite OK para inserir a chave
 
       if (!code) {
         if (err) {
-          err.textContent = 'Por favor, digite uma chave de ativação.';
+          err.textContent = 'Por favor, digite a sua chave de liberação.';
           err.classList.remove('hidden');
         }
         return;
@@ -9284,7 +9455,7 @@ Você já efetuou o pagamento e possui sua chave? Digite OK para inserir a chave
         activateProAccount(code);
       } else {
         if (err) {
-          err.textContent = 'Código VIP inválido. Verifique sua chave ou realize a assinatura.';
+          err.textContent = 'Chave de ativação inválida ou não reconhecida. Verifique se digitou corretamente.';
           err.classList.remove('hidden');
         }
       }
@@ -9300,9 +9471,9 @@ Você já efetuou o pagamento e possui sua chave? Digite OK para inserir a chave
 
       alert(`🎉 PARABÉNS! ASSINATURA PRO ATIVADA COM SUCESSO!
 
-Sua chave VIP "${codeUsed}" foi validada com sucesso.
-Todos os recursos avançados estão desbloqueados para você:
-- Fotos de Antes & Depois
+Sua chave de liberação foi validada com sucesso.
+Todos os recursos avançados estão disponíveis para você:
+- Fotos de Antes & Depois com Comparador
 - Fichas de Treino Ilimitadas
 - Mural de Troféus com Fotos
 - Todos os Membros da Família!`);
