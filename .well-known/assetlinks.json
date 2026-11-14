@@ -1,0 +1,8 @@
+[{
+      "relation": ["delegate_permission/common.handle_all_urls"],
+      "target": {
+        "namespace": "android_app",
+        "package_name": "io.github.davirian_dev.familiaemfoco",
+        "sha256_cert_fingerprints": ["A2:65:E6:93:9A:8B:D5:92:0F:BB:2E:E9:46:53:39:98:32:40:03:10:42:F6:6A:59:93:23:20:2B:9D:C1:1B:3E"]
+      }
+    }]
