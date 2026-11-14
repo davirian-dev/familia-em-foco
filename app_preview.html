@@ -1344,54 +1344,204 @@
     </div>
   </div>
 
-  <!-- ================= MODAL DE BOAS-VINDAS / ONBOARDING PARA NOVOS USUÁRIOS ================= -->
-  <div id="onboardingModal" class="modal-backdrop">
-    <div class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-3xl max-w-lg w-full p-6 sm:p-8 shadow-2xl relative text-center space-y-6 animate-fade-in">
+  <!-- ================= MODAL DE AUTENTICAÇÃO UNIFICADA (E-MAIL + SENHA, GOOGLE E BACKUP) ================= -->
+  <div id="unifiedAuthModal" class="modal-backdrop">
+    <div class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-3xl max-w-lg w-full p-6 sm:p-8 shadow-2xl relative animate-fade-in max-h-[92vh] overflow-y-auto">
       
-      <div class="w-16 h-16 rounded-3xl bg-indigo-600 text-white text-3xl flex items-center justify-center mx-auto shadow-lg shadow-indigo-600/30">
-        👨‍👩‍👧‍👦
-      </div>
+      <button onclick="closeUnifiedAuthModal()" class="absolute top-5 right-5 p-2 rounded-xl text-slate-400 hover:text-slate-600 dark:hover:text-slate-200 transition">✕</button>
 
-      <div>
-        <span class="inline-block px-3 py-1 rounded-full bg-indigo-50 dark:bg-indigo-950/60 text-indigo-600 dark:text-indigo-400 font-bold text-xs mb-2">
-          Bem-vindo ao Família em Foco!
-        </span>
-        <h3 class="text-2xl font-black text-slate-900 dark:text-white">Como deseja começar?</h3>
-        <p class="text-xs text-slate-500 max-w-sm mx-auto mt-1">
-          Seus dados são 100% privados e salvos apenas no seu celular ou na sua própria conta Google.
+      <!-- Cabeçalho do Modal -->
+      <div class="text-center mb-6">
+        <div class="w-14 h-14 rounded-2xl bg-indigo-600 text-white text-2xl flex items-center justify-center mx-auto mb-3 shadow-lg shadow-indigo-600/30">
+          👨‍👩‍👧‍👦
+        </div>
+        <h3 class="text-xl sm:text-2xl font-black text-slate-900 dark:text-white" id="unifiedAuthTitle">Minha Conta Familiar</h3>
+        <p class="text-xs text-slate-500 max-w-xs mx-auto mt-1" id="unifiedAuthSubtitle">
+          Crie sua conta para fazer backup dos seus dados na nuvem ou entre para acessar de qualquer celular.
         </p>
       </div>
 
-      <div class="space-y-3 text-left">
-        <!-- Opção 1: Começar do Zero (Privado para o amigo) -->
-        <button onclick="startFreshFamily()" class="w-full p-4 rounded-2xl border-2 border-indigo-500/40 hover:border-indigo-600 bg-indigo-50/40 dark:bg-slate-800/80 hover:bg-indigo-50 transition flex items-center space-x-3.5 group">
-          <span class="text-3xl p-2 rounded-xl bg-indigo-100 dark:bg-indigo-950/80">🌱</span>
-          <div class="flex-1 min-w-0">
-            <h4 class="font-bold text-sm text-slate-900 dark:text-white group-hover:text-indigo-600">Começar do Zero (Minha Família)</h4>
-            <p class="text-xs text-slate-500">Crie seu aplicativo limpo para cadastrar você, seu cônjuge e seus filhos.</p>
-          </div>
-          <span class="text-indigo-600 font-bold text-sm">Criar →</span>
+      <!-- Abas de Autenticação -->
+      <div class="flex p-1 rounded-2xl bg-slate-100 dark:bg-slate-800 mb-5 text-xs font-bold">
+        <button id="tabBtnRegister" onclick="switchAuthTab('register')" class="flex-1 py-2 rounded-xl transition bg-white dark:bg-slate-900 text-indigo-600 dark:text-indigo-400 shadow-xs">
+          ✍️ Criar Conta
         </button>
-
-        <!-- Opção 2: Sou o Davi / Família Oficial -->
-        <button onclick="loadDaviFamilyData()" class="w-full p-4 rounded-2xl border border-slate-200 dark:border-slate-700 hover:border-slate-400 bg-white dark:bg-slate-800 transition flex items-center space-x-3.5 group">
-          <span class="text-3xl p-2 rounded-xl bg-slate-100 dark:bg-slate-700">👨‍💻</span>
-          <div class="flex-1 min-w-0">
-            <h4 class="font-bold text-sm text-slate-900 dark:text-white">Sou o Davi (Família Davi & Marina)</h4>
-            <p class="text-xs text-slate-500">Carregar os dados oficiais de Davi, Marina, Benjamin, Iris e Theo.</p>
-          </div>
-          <span class="text-slate-400 group-hover:text-slate-600 text-xs font-bold">Acessar →</span>
+        <button id="tabBtnLogin" onclick="switchAuthTab('login')" class="flex-1 py-2 rounded-xl transition text-slate-500 hover:text-slate-900 dark:hover:text-white">
+          🔑 Já Tenho Conta
+        </button>
+        <button id="tabBtnGoogle" onclick="switchAuthTab('google')" class="flex-1 py-2 rounded-xl transition text-slate-500 hover:text-slate-900 dark:hover:text-white">
+          🌐 Google
         </button>
       </div>
 
-      <div class="pt-2 border-t border-slate-100 dark:border-slate-800 flex items-center justify-between text-xs text-slate-400">
-        <span>🔒 Privacidade Garantida</span>
-        <button onclick="closeOnboardingModal()" class="text-slate-400 hover:text-slate-600 underline text-[11px]">Fechar e ver prévia</button>
+      <!-- PAINEL 1: CRIAR CONTA COM EMAIL E SENHA -->
+      <div id="authPanelRegister" class="space-y-4">
+        <div class="p-3 rounded-2xl bg-indigo-50 dark:bg-indigo-950/40 border border-indigo-100 dark:border-indigo-900/60 text-xs text-indigo-700 dark:text-indigo-300">
+          🛡️ <strong>100% Privado e Seguro:</strong> Seus dados de compras, finanças, hábitos e estudos pertencerão apenas a você e sua família.
+        </div>
+
+        <form onsubmit="handleUserRegistration(event)" class="space-y-3">
+          <div>
+            <label class="block text-xs font-bold text-slate-700 dark:text-slate-300 mb-1">Nome da sua Família *</label>
+            <input type="text" id="regFamilyName" required placeholder="Ex: Família Silva, Família Santos..." class="w-full px-3.5 py-2.5 rounded-xl border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 text-xs sm:text-sm outline-none focus:border-indigo-500">
+          </div>
+
+          <div>
+            <label class="block text-xs font-bold text-slate-700 dark:text-slate-300 mb-1">Seu E-mail (para backup e login) *</label>
+            <input type="email" id="regEmail" required placeholder="seuemail@exemplo.com" class="w-full px-3.5 py-2.5 rounded-xl border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 text-xs sm:text-sm outline-none focus:border-indigo-500">
+          </div>
+
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+            <div>
+              <label class="block text-xs font-bold text-slate-700 dark:text-slate-300 mb-1">Crie uma Senha *</label>
+              <input type="password" id="regPassword" required minlength="4" placeholder="Mínimo 4 caracteres" class="w-full px-3.5 py-2.5 rounded-xl border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 text-xs sm:text-sm outline-none focus:border-indigo-500">
+            </div>
+            <div>
+              <label class="block text-xs font-bold text-slate-700 dark:text-slate-300 mb-1">Como começar?</label>
+              <select id="regInitialChoice" class="w-full px-3 py-2.5 rounded-xl border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 text-xs sm:text-sm outline-none font-bold">
+                <option value="empty">🌱 Começar 100% Zerado</option>
+                <option value="didatic">💡 Manter Exemplos Didáticos</option>
+              </select>
+            </div>
+          </div>
+
+          <button type="submit" class="w-full py-3 rounded-2xl bg-indigo-600 hover:bg-indigo-700 text-white font-bold text-sm shadow-lg shadow-indigo-600/30 transition flex items-center justify-center space-x-2">
+            <span>🚀 Criar Minha Conta & Salvar Dados</span>
+          </button>
+        </form>
+      </div>
+
+      <!-- PAINEL 2: ENTRAR COM EMAIL E SENHA -->
+      <div id="authPanelLogin" class="space-y-4" style="display: none;">
+        <form onsubmit="handleUserLogin(event)" class="space-y-3">
+          <div>
+            <label class="block text-xs font-bold text-slate-700 dark:text-slate-300 mb-1">Seu E-mail *</label>
+            <input type="email" id="loginEmail" required placeholder="seuemail@exemplo.com" class="w-full px-3.5 py-2.5 rounded-xl border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 text-xs sm:text-sm outline-none focus:border-indigo-500">
+          </div>
+
+          <div>
+            <label class="block text-xs font-bold text-slate-700 dark:text-slate-300 mb-1">Sua Senha *</label>
+            <input type="password" id="loginPassword" required placeholder="Sua senha cadastrada" class="w-full px-3.5 py-2.5 rounded-xl border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 text-xs sm:text-sm outline-none focus:border-indigo-500">
+          </div>
+
+          <button type="submit" class="w-full py-3 rounded-2xl bg-indigo-600 hover:bg-indigo-700 text-white font-bold text-sm shadow-lg shadow-indigo-600/30 transition flex items-center justify-center space-x-2">
+            <span>🔑 Entrar na Minha Família</span>
+          </button>
+        </form>
+
+        <div class="p-3 rounded-2xl bg-slate-50 dark:bg-slate-800/80 border border-slate-200 dark:border-slate-700 text-center">
+          <p class="text-xs text-slate-500">Ainda não tem conta? <button onclick="switchAuthTab('register')" class="text-indigo-600 dark:text-indigo-400 font-bold hover:underline">Cadastre-se grátis</button></p>
+        </div>
+      </div>
+
+      <!-- PAINEL 3: CONECTAR COM GOOGLE -->
+      <div id="authPanelGoogle" class="space-y-4" style="display: none;">
+        <p class="text-xs text-slate-500 text-center">
+          Faça login com sua conta do Google / Gmail para ter sincronização automática entre múltiplos dispositivos.
+        </p>
+
+        <div class="space-y-2">
+          <!-- Botão Davi (Acesso rápido se for o Davi) -->
+          <button onclick="loginWithGoogleAccount('daviemari@gmail.com', 'Davi & Marina (Oficial)', '👨‍💻')" class="w-full flex items-center justify-between p-3 rounded-2xl border border-slate-200 dark:border-slate-700 hover:border-indigo-500 hover:bg-indigo-50/50 dark:hover:bg-slate-800 transition text-left">
+            <div class="flex items-center space-x-3">
+              <div class="w-10 h-10 rounded-full bg-blue-100 dark:bg-blue-950 flex items-center justify-center text-lg">👨‍💻</div>
+              <div>
+                <p class="text-xs font-bold text-slate-900 dark:text-white">Davi (Administrador)</p>
+                <p class="text-[11px] text-slate-500">daviemari@gmail.com</p>
+              </div>
+            </div>
+            <span class="text-xs font-bold text-indigo-600 dark:text-indigo-400">Entrar →</span>
+          </button>
+
+          <!-- Botão Marina -->
+          <button onclick="loginWithGoogleAccount('marina.familia@gmail.com', 'Marina', '👩‍💼')" class="w-full flex items-center justify-between p-3 rounded-2xl border border-slate-200 dark:border-slate-700 hover:border-indigo-500 hover:bg-indigo-50/50 dark:hover:bg-slate-800 transition text-left">
+            <div class="flex items-center space-x-3">
+              <div class="w-10 h-10 rounded-full bg-emerald-100 dark:bg-emerald-950 flex items-center justify-center text-lg">👩‍💼</div>
+              <div>
+                <p class="text-xs font-bold text-slate-900 dark:text-white">Marina</p>
+                <p class="text-[11px] text-slate-500">marina.familia@gmail.com</p>
+              </div>
+            </div>
+            <span class="text-xs font-bold text-indigo-600 dark:text-indigo-400">Entrar →</span>
+          </button>
+        </div>
+
+        <div class="pt-3 border-t border-slate-200 dark:border-slate-800">
+          <label class="block text-xs font-bold text-slate-700 dark:text-slate-300 mb-1">Ou use outro e-mail do Gmail:</label>
+          <div class="flex gap-2">
+            <input type="email" id="customGmailInputModal" placeholder="seu-email@gmail.com" class="flex-1 px-3 py-2 rounded-xl border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 text-xs outline-none">
+            <button onclick="loginWithCustomGmailModal()" class="px-4 py-2 bg-indigo-600 hover:bg-indigo-700 text-white font-bold text-xs rounded-xl shadow-md">
+              Conectar
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Rodapé com Opção Offline e Atalho Davi -->
+      <div class="mt-6 pt-4 border-t border-slate-100 dark:border-slate-800 space-y-2">
+        <button onclick="continueAsGuestOffline()" class="w-full py-2.5 rounded-xl border border-slate-200 dark:border-slate-700 hover:bg-slate-50 dark:hover:bg-slate-800 text-xs font-bold text-slate-600 dark:text-slate-300 transition flex items-center justify-center space-x-2">
+          <span>📱 Continuar sem Conta (Salvar apenas neste celular / Offline)</span>
+        </button>
+
+        <div class="flex items-center justify-between text-[11px] text-slate-400 pt-1">
+          <span>🔒 Criptografia Local</span>
+          <button onclick="quickLoadDaviFamily()" class="text-slate-400 hover:text-indigo-600 hover:underline">👑 Sou o Davi</button>
+        </div>
       </div>
 
     </div>
   </div>
 
+  <!-- ================= MODAL / MENU DE GERENCIAMENTO DA CONTA ATIVA ================= -->
+  <div id="accountManagerModal" class="modal-backdrop">
+    <div class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-3xl max-w-sm w-full p-6 shadow-2xl relative text-center">
+      <button onclick="closeAccountManagerModal()" class="absolute top-5 right-5 p-1.5 rounded-xl text-slate-400 hover:text-slate-600">✕</button>
+
+      <div class="w-16 h-16 rounded-full bg-gradient-to-tr from-indigo-500 to-purple-600 text-white text-2xl font-bold flex items-center justify-center mx-auto mb-3 shadow-md" id="accModalAvatar">
+        👤
+      </div>
+
+      <h4 class="font-bold text-base text-slate-900 dark:text-white" id="accModalName">Minha Família</h4>
+      <p class="text-xs text-slate-500" id="accModalEmail">visitante@local</p>
+
+      <div class="my-4 p-3 rounded-2xl bg-emerald-50 dark:bg-emerald-950/40 border border-emerald-200 dark:border-emerald-800 text-left text-xs space-y-1">
+        <div class="flex items-center text-emerald-700 dark:text-emerald-300 font-bold">
+          <span class="w-2 h-2 rounded-full bg-emerald-500 mr-1.5 animate-pulse"></span>
+          <span id="accSyncStatus">Backup & Sincronização Ativa</span>
+        </div>
+        <p class="text-[11px] text-slate-500" id="accModalLastSync">Último salvamento: Agora</p>
+      </div>
+
+      <div class="space-y-2 text-left">
+        <button onclick="syncWithCloudNow()" class="w-full flex items-center justify-between p-2.5 rounded-xl bg-slate-100 dark:bg-slate-800 text-xs font-bold text-slate-700 dark:text-slate-200 hover:bg-slate-200 transition">
+          <span class="flex items-center space-x-2"><span>🔄</span><span>Salvar & Sincronizar Agora</span></span>
+          <span class="text-indigo-600 font-bold">OK</span>
+        </button>
+
+        <button onclick="exportBackupJson()" class="w-full flex items-center justify-between p-2.5 rounded-xl bg-slate-100 dark:bg-slate-800 text-xs font-bold text-slate-700 dark:text-slate-200 hover:bg-slate-200 transition">
+          <span class="flex items-center space-x-2"><span>💾</span><span>Baixar Backup Completo (JSON)</span></span>
+          <span class="text-slate-400">Download</span>
+        </button>
+
+        <label class="w-full flex items-center justify-between p-2.5 rounded-xl bg-slate-100 dark:bg-slate-800 text-xs font-bold text-slate-700 dark:text-slate-200 hover:bg-slate-200 transition cursor-pointer">
+          <span class="flex items-center space-x-2"><span>📂</span><span>Restaurar Backup Anterior</span></span>
+          <input type="file" id="backupFileInputUnified" accept=".json" onchange="importBackupJson(event)" class="hidden">
+          <span class="text-slate-400">Abrir</span>
+        </label>
+
+        <button onclick="resetToDidaticData()" class="w-full flex items-center justify-between p-2.5 rounded-xl bg-amber-50 dark:bg-amber-950/30 text-amber-800 dark:text-amber-300 text-xs font-bold hover:bg-amber-100 transition">
+          <span class="flex items-center space-x-2"><span>💡</span><span>Recarregar Exemplos Didáticos</span></span>
+          <span class="text-amber-600">Reset</span>
+        </button>
+      </div>
+
+      <div class="mt-5 pt-4 border-t border-slate-100 dark:border-slate-800">
+        <button onclick="handleLogout()" class="w-full py-2.5 text-xs font-bold text-rose-600 hover:bg-rose-50 dark:hover:bg-rose-950/40 rounded-xl transition flex items-center justify-center space-x-1.5">
+          <span>🚪</span><span>Sair desta Conta / Trocar de Família</span>
+        </button>
+      </div>
+    </div>
+  </div>
   <!-- ================= MODAL DE INVESTIMENTO (NOVO!) ================= -->
   <div id="investmentModal" class="modal-backdrop">
     <div class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-3xl max-w-md w-full p-6 shadow-2xl relative max-h-[90vh] overflow-y-auto">
@@ -2084,7 +2234,279 @@
       ]
     };
 
-    // Template Limpo para novos amigos/usuários que baixarem o app
+
+    // =========================================================================
+    // TEMPLATE DIDÁTICO / EXEMPLOS EDUCATIVOS PARA AMIGOS E NOVOS USUÁRIOS
+    // (Garante 100% de privacidade: NENHUM dado pessoal do Davi é exibido)
+    // =========================================================================
+    const didaticTemplateData = {
+      familyName: 'Minha Família (Exemplo Demonstrativo)',
+      activeMemberId: 'demo-user-1',
+      activeChildId: 'demo-child-1',
+      habitFilter: 'all',
+      calendarFilter: 'all',
+      studiesFilter: 'all',
+      googleAuth: { 
+        isLoggedIn: false,
+        accountType: 'guest' // 'guest', 'custom_email', 'google', 'davi_admin'
+      },
+      members: [
+        {
+          id: 'demo-user-1',
+          name: 'Você (Pai/Mãe) [Exemplo]',
+          role: 'parent',
+          profession: 'Administrador(a) da Família',
+          age: 32,
+          avatar: '👤',
+          theme: '#4F46E5',
+          points: 0,
+          bio: '💡 Dica: Você pode editar este perfil clicando nele. Cadastre seus objetivos pessoais, saúde e estudos.',
+          heightCm: 172,
+          weightKg: 70.0,
+          growthHistory: [
+            { date: '2026-11-01', heightCm: 172, weightKg: 70.0, note: 'Exemplo: Peso inicial de acompanhamento' }
+          ]
+        },
+        {
+          id: 'demo-user-2',
+          name: 'Cônjuge [Exemplo]',
+          role: 'parent',
+          profession: 'Gestão & Família',
+          age: 30,
+          avatar: '👩‍💼',
+          theme: '#10B981',
+          points: 0,
+          bio: '💡 Dica: Adicione seu cônjuge para alinharem tarefas, finanças e a rotina da casa juntos.',
+          heightCm: 164,
+          weightKg: 58.0,
+          growthHistory: []
+        },
+        {
+          id: 'demo-child-1',
+          name: 'Filho(a) [Exemplo]',
+          role: 'child',
+          profession: 'Estudante do Ensino Fundamental',
+          age: 7,
+          avatar: '🧒',
+          theme: '#F59E0B',
+          points: 45,
+          bio: '💡 Dica: As crianças ganham moedas ao cumprirem tarefas e hábitos, trocando por recompensas saudáveis!',
+          heightCm: 122,
+          weightKg: 23.5,
+          growthHistory: [
+            { date: '2026-06-15', heightCm: 119, weightKg: 22.0, note: 'Medição escolar' },
+            { date: '2026-11-14', heightCm: 122, weightKg: 23.5, note: 'Crescendo com saúde!' }
+          ]
+        }
+      ],
+      studies: [
+        {
+          id: 'demo-std-1',
+          memberId: 'demo-user-1',
+          memberName: 'Você (Pai/Mãe)',
+          subject: 'Exemplo: Minha Faculdade / Pós-Graduação ou Curso Tech',
+          code: 'CURSO-101',
+          institution: 'Universidade / Plataforma Online',
+          semesterYear: '2026.2',
+          status: 'em_andamento',
+          progressPct: 65,
+          nextExamDate: '2026-12-05',
+          topics: 'Módulo 1: Fundamentos • Módulo 2: Trabalhos Práticos • Módulo 3: Revisão da Prova',
+          notes: '💡 DICA: Aqui você anota suas matérias da faculdade, especialização ou concurso para acompanhar seu progresso!'
+        },
+        {
+          id: 'demo-std-2',
+          memberId: 'demo-child-1',
+          memberName: 'Filho(a) [Exemplo]',
+          subject: 'Exemplo: Lição da Escola & Alfabetização',
+          code: 'ESC-2ºANO',
+          institution: 'Escola Municipal / Colégio',
+          semesterYear: 'Ano Letivo 2026',
+          status: 'em_andamento',
+          progressPct: 80,
+          nextExamDate: '2026-11-28',
+          topics: 'Tabuada do 2 ao 5 • Leitura de Histórias • Feira de Ciências',
+          notes: '💡 DICA: Acompanhe o aprendizado dos seus filhos e veja se estão evoluindo nas matérias da escola.'
+        }
+      ],
+      debts: [
+        {
+          id: 'demo-debt-1',
+          name: 'Exemplo: Financiamento Imobiliário ou Auto',
+          category: 'financiamento',
+          institution: 'Banco Exemplo',
+          originalAmount: 85000,
+          currentBalance: 42000,
+          installmentValue: 820,
+          totalInstallments: 120,
+          remainingInstallments: 52,
+          dueDateDay: 10,
+          interestRate: '9.5% a.a.',
+          amortizedCount: 6,
+          notes: '💡 TESTE A AMORTIZAÇÃO: Clique no botão [⚡ Amortizar Parcela] para ver o saldo diminuir na hora!'
+        }
+      ],
+      investments: [
+        {
+          id: 'demo-inv-1',
+          name: 'Exemplo: Reserva de Emergência (Tesouro Selic / CDB 100%)',
+          category: 'reserva',
+          institution: 'Banco Digital ou Corretora',
+          currentAmount: 9500,
+          targetAmount: 25000,
+          monthlyContribution: 600,
+          returnRate: '100% do CDI',
+          notes: '💡 DICA FINANCEIRA: Guarde de 3 a 6 meses do custo mensal da família antes de arriscar na bolsa.'
+        },
+        {
+          id: 'demo-inv-2',
+          name: 'Exemplo: Poupança / Futuro dos Filhos',
+          category: 'filhos',
+          institution: 'Investimentos',
+          currentAmount: 3200,
+          targetAmount: 30000,
+          monthlyContribution: 200,
+          returnRate: 'IPCA + 6%',
+          notes: '💡 DICA: Invista um pequeno valor mensal para pagar a faculdade ou intercâmbio do seu filho no futuro.'
+        }
+      ],
+      shoppingItems: [
+        {
+          id: 'demo-sp-1',
+          title: 'Exemplo: Fraldas / Remédios / Gás de Cozinha',
+          category: 'Essencial',
+          type: 'preciso',
+          price: 110.00,
+          urgent: true,
+          bought: false,
+          notes: '💡 Aba "Preciso Comprar": Itens emergenciais que não podem faltar em casa hoje.'
+        },
+        {
+          id: 'demo-sp-2',
+          title: 'Exemplo: Pão na Padaria, Ovos e Frutas da Feira',
+          category: 'Alimentação',
+          type: 'dia_a_dia',
+          price: 45.00,
+          urgent: false,
+          bought: false,
+          notes: '💡 Aba "Dia a Dia": Compras rotineiras de supermercado, padaria e açougue.'
+        },
+        {
+          id: 'demo-sp-3',
+          title: 'Exemplo: Fritadeira Sem Óleo (Airfryer) ou Tênis Novo',
+          category: 'Conforto',
+          type: 'quero',
+          price: 299.00,
+          urgent: false,
+          bought: false,
+          notes: '💡 Aba "Quero Comprar": Desejos de consumo para planejar com calma e evitar dívidas por impulso.'
+        }
+      ],
+      habits: [
+        {
+          id: 'demo-h-1',
+          title: 'Exemplo: Beber 2 Litros de Água por Dia',
+          member: 'Você (Pai/Mãe)',
+          category: 'Saúde',
+          streak: 4,
+          targetDays: 7,
+          completedToday: false
+        },
+        {
+          id: 'demo-h-2',
+          title: 'Exemplo: 20 Minutos de Leitura com os Filhos',
+          member: 'Família',
+          category: 'Educação',
+          streak: 6,
+          targetDays: 7,
+          completedToday: true
+        }
+      ],
+      goals: [
+        {
+          id: 'demo-g-1',
+          title: 'Exemplo: Criar nossa Reserva de Emergência Familiar',
+          category: 'Finanças',
+          currentProgress: 38,
+          deadline: '2026-12-31'
+        }
+      ],
+      tasks: [
+        {
+          id: 'demo-tk-1',
+          title: 'Exemplo: Guardar os brinquedos no baú após brincar',
+          childId: 'demo-child-1',
+          rewardCoins: 15,
+          completed: false,
+          category: 'Organização'
+        },
+        {
+          id: 'demo-tk-2',
+          title: 'Exemplo: Fazer o dever de casa da escola antes da TV',
+          childId: 'demo-child-1',
+          rewardCoins: 20,
+          completed: true,
+          category: 'Estudo'
+        }
+      ],
+      milestones: [
+        {
+          id: 'demo-ms-1',
+          childId: 'demo-child-1',
+          title: 'Exemplo: Aprendeu a ler o primeiro livro sozinho!',
+          date: '2026-10-15',
+          category: 'cognitivo',
+          notes: 'Momento emocionante com toda a família reunida na sala.'
+        }
+      ],
+      rewards: [
+        { id: 'demo-rw-1', title: 'Exemplo: Escolher o filme e a pizza da sexta-feira', cost: 50, icon: '🍕', tag: 'Família' },
+        { id: 'demo-rw-2', title: 'Exemplo: 1 Hora Extra de Videogame / Brincadeira', cost: 40, icon: '🎮', tag: 'Crianças' },
+        { id: 'demo-rw-3', title: 'Exemplo: Passeio no Parque com Picolé Especial', cost: 80, icon: '🍦', tag: 'Especial' }
+      ],
+      calendarEvents: [
+        {
+          id: 'demo-ev-1',
+          title: 'Exemplo: Reunião Pedagógica na Escola',
+          date: '2026-11-22',
+          time: '18:30',
+          memberName: 'Você (Pai/Mãe)',
+          category: 'Escola',
+          location: 'Auditório Escolar'
+        },
+        {
+          id: 'demo-ev-2',
+          title: 'Exemplo: Consulta de Rotina no Pediatra / Dentista',
+          date: '2026-11-26',
+          time: '14:00',
+          memberName: 'Filho(a) [Exemplo]',
+          category: 'Saúde',
+          location: 'Clínica Médica'
+        }
+      ],
+      muralNotes: [
+        {
+          id: 'demo-nt-1',
+          authorId: 'demo-user-1',
+          authorName: 'Você (Pai/Mãe)',
+          authorAvatar: '👤',
+          date: 'Hoje',
+          color: 'indigo',
+          text: '💡 Bem-vindo ao Família em Foco! Este mural serve para deixar recados de amor, avisos rápidos e combinar a rotina da casa.',
+          likes: 3
+        }
+      ],
+      pomodoro: {
+        studentId: 'demo-user-1',
+        subject: 'Foco nos Estudos / Leitura',
+        minutes: 25,
+        secondsLeft: 1500,
+        isRunning: false,
+        completedSessionsToday: 0
+      }
+    };
+
+    // Template 100% Zerado (para quem cria conta limpa do absoluto zero)
     const emptyFamilyData = {
       familyName: 'Minha Família',
       activeMemberId: 'user-1',
@@ -2092,7 +2514,7 @@
       habitFilter: 'all',
       calendarFilter: 'all',
       studiesFilter: 'all',
-      googleAuth: { isLoggedIn: false },
+      googleAuth: { isLoggedIn: false, accountType: 'guest' },
       members: [
         {
           id: 'user-1',
@@ -2103,8 +2525,8 @@
           avatar: '👤',
           theme: '#4F46E5',
           points: 0,
-          bio: 'Adicione as metas, hábitos, estudos e membros da sua família.',
-          heightCm: 172,
+          bio: 'Edite seu perfil para começar a organizar sua família.',
+          heightCm: 170,
           weightKg: 68.0,
           growthHistory: []
         }
@@ -2118,6 +2540,7 @@
       tasks: [],
       milestones: [],
       rewards: [],
+      calendarEvents: [],
       muralNotes: [
         {
           id: 'note-welcome',
@@ -2126,7 +2549,7 @@
           authorAvatar: '👤',
           date: 'Hoje',
           color: 'indigo',
-          text: 'Bem-vindo ao seu aplicativo familiar! Cadastre seu cônjuge e seus filhos para começar a organizar sua rotina.',
+          text: 'Seja bem-vindo ao seu aplicativo familiar! Cadastre seu cônjuge, filhos e finanças para começar.',
           likes: 1
         }
       ],
@@ -2140,20 +2563,75 @@
       }
     };
 
-    // Identificar se é primeira vez do usuário
-    let isFirstTimeUser = false;
-
-    // Carregar do localStorage
-    let state = (() => {
-      const saved = localStorage.getItem('family_app_full_state_v4');
-      if (saved) {
-        try { return JSON.parse(saved); } catch(e) {}
+    // =========================================================================
+    // BANCO DE DADOS LOCAL DE CONTAS & PRIVACIDADE ABSOLUTA
+    // =========================================================================
+    function getAccountsDB() {
+      const db = localStorage.getItem('family_app_accounts_db_v1');
+      if (db) {
+        try { return JSON.parse(db); } catch(e) {}
       }
-      // Se não há dados salvos e não está no domínio local de dev, marcar como novo usuário
-      isFirstTimeUser = true;
-      return initialFamilyData; // Carrega dados iniciais até o usuário escolher no modal
+      return {
+        // Conta padrão do Davi (Protegida)
+        'daviemari@gmail.com': {
+          email: 'daviemari@gmail.com',
+          password: 'davi',
+          name: 'Davi & Marina (Oficial)',
+          isAdmin: true,
+          data: JSON.parse(JSON.stringify(initialFamilyData))
+        }
+      };
+    }
+
+    function saveAccountsDB(db) {
+      localStorage.setItem('family_app_accounts_db_v1', JSON.stringify(db));
+    }
+
+    // Identificar sessão atual
+    let currentSessionUser = localStorage.getItem('family_app_current_session_email') || null;
+
+    // CARREGAMENTO SEGURO DO ESTADO:
+    // Se não há usuário logado e não há estado salvo para visitante, CARREGA O DIDÁTICO!
+    // NUNCA CARREGA DADOS DO DAVI PARA AMIGOS!
+    let state = (() => {
+      // 1. Se estiver logado em uma conta específica
+      if (currentSessionUser) {
+        const db = getAccountsDB();
+        if (db[currentSessionUser] && db[currentSessionUser].data) {
+          return db[currentSessionUser].data;
+        }
+      }
+
+      // 2. Se houver um estado de visitante/amigo salvo localmente neste celular
+      const guestSaved = localStorage.getItem('family_app_guest_state_v5');
+      if (guestSaved) {
+        try { return JSON.parse(guestSaved); } catch(e) {}
+      }
+
+      // 3. PADRÃO ABSOLUTO PARA QUALQUER NOVO VISITANTE: Dados Demonstrativos e Didáticos!
+      return JSON.parse(JSON.stringify(didaticTemplateData));
     })();
 
+    // Salvar estado com isolamento estrito
+    function saveState() {
+      if (currentSessionUser) {
+        // Salva na conta do usuário logado
+        const db = getAccountsDB();
+        if (!db[currentSessionUser]) {
+          db[currentSessionUser] = { email: currentSessionUser, name: state.familyName || currentSessionUser, data: state };
+        } else {
+          db[currentSessionUser].data = state;
+        }
+        saveAccountsDB(db);
+      } else {
+        // Salva no armazenamento local do visitante (celular dele)
+        localStorage.setItem('family_app_guest_state_v5', JSON.stringify(state));
+      }
+
+      updateCounts();
+      updateHeaderSelectors();
+      updateGoogleAuthHeader();
+    }
     function saveState() {
       localStorage.setItem('family_app_full_state_v4', JSON.stringify(state));
       updateCounts();
@@ -4449,39 +4927,280 @@
       }
     }
 
-    // ================= CONTROLE DE ONBOARDING & PRIVACIDADE =================
-    function checkFirstTimeUser() {
-      const hasChosen = localStorage.getItem('family_app_configured_v1');
-      if (!hasChosen) {
-        // Se ainda não escolheu, exibe o modal para decidir se quer começar do zero ou carregar Davi
-        setTimeout(() => {
-          document.getElementById('onboardingModal').classList.add('active');
-        }, 600);
+    // ================= CONTROLE DE AUTENTICAÇÃO UNIFICADA & PRIVACIDADE =================
+    function switchAuthTab(tab) {
+      document.getElementById('authPanelRegister').style.display = (tab === 'register') ? 'block' : 'none';
+      document.getElementById('authPanelLogin').style.display = (tab === 'login') ? 'block' : 'none';
+      document.getElementById('authPanelGoogle').style.display = (tab === 'google') ? 'block' : 'none';
+
+      const btnR = document.getElementById('tabBtnRegister');
+      const btnL = document.getElementById('tabBtnLogin');
+      const btnG = document.getElementById('tabBtnGoogle');
+
+      const activeClass = ['bg-white', 'dark:bg-slate-900', 'text-indigo-600', 'dark:text-indigo-400', 'shadow-xs'];
+      const inactiveClass = ['text-slate-500'];
+
+      [btnR, btnL, btnG].forEach(b => {
+        b.classList.remove(...activeClass);
+        b.classList.add(...inactiveClass);
+      });
+
+      if (tab === 'register') {
+        btnR.classList.add(...activeClass);
+        btnR.classList.remove(...inactiveClass);
+      } else if (tab === 'login') {
+        btnL.classList.add(...activeClass);
+        btnL.classList.remove(...inactiveClass);
+      } else if (tab === 'google') {
+        btnG.classList.add(...activeClass);
+        btnG.classList.remove(...inactiveClass);
       }
     }
 
-    function closeOnboardingModal() {
-      document.getElementById('onboardingModal').classList.remove('active');
-      localStorage.setItem('family_app_configured_v1', 'true');
+    function openUnifiedAuthModal() {
+      document.getElementById('unifiedAuthModal').classList.add('active');
     }
 
-    function startFreshFamily() {
-      state = JSON.parse(JSON.stringify(emptyFamilyData));
-      localStorage.setItem('family_app_configured_v1', 'true');
+    function closeUnifiedAuthModal() {
+      document.getElementById('unifiedAuthModal').classList.remove('active');
+    }
+
+    function openAccountManagerModal() {
+      const isLogged = currentSessionUser || (state.googleAuth && state.googleAuth.isLoggedIn);
+      const email = currentSessionUser || (state.googleAuth && state.googleAuth.email) || 'visitante@local';
+      const name = state.familyName || (state.googleAuth && state.googleAuth.name) || 'Minha Família';
+      const avatar = (state.members && state.members[0] ? state.members[0].avatar : '👤');
+
+      document.getElementById('accModalAvatar').textContent = avatar;
+      document.getElementById('accModalName').textContent = name;
+      document.getElementById('accModalEmail').textContent = isLogged ? email : 'Modo Visitante (Offline)';
+      
+      const lastSyncDate = new Date();
+      document.getElementById('accModalLastSync').textContent = `Salvo: Hoje às ${lastSyncDate.toLocaleTimeString('pt-BR', {hour: '2-digit', minute: '2-digit'})}`;
+      
+      document.getElementById('accountManagerModal').classList.add('active');
+    }
+
+    function closeAccountManagerModal() {
+      document.getElementById('accountManagerModal').classList.remove('active');
+    }
+
+    // 1. CRIAR CONTA COM EMAIL E SENHA
+    function handleUserRegistration(e) {
+      e.preventDefault();
+      const familyName = document.getElementById('regFamilyName').value.trim();
+      const email = document.getElementById('regEmail').value.trim().toLowerCase();
+      const password = document.getElementById('regPassword').value;
+      const initialChoice = document.getElementById('regInitialChoice').value;
+
+      if (!email || !password || !familyName) {
+        alert('Por favor, preencha todos os campos obrigatórios.');
+        return;
+      }
+
+      const db = getAccountsDB();
+      if (db[email]) {
+        alert('Este e-mail já possui uma conta cadastrada! Por favor, utilize a aba "Já Tenho Conta".');
+        switchAuthTab('login');
+        document.getElementById('loginEmail').value = email;
+        return;
+      }
+
+      // Monta nova base para este usuário
+      let newUserData;
+      if (initialChoice === 'empty') {
+        newUserData = JSON.parse(JSON.stringify(emptyFamilyData));
+      } else {
+        newUserData = JSON.parse(JSON.stringify(didaticTemplateData));
+      }
+      newUserData.familyName = familyName;
+      newUserData.members[0].name = `Você (${familyName})`;
+      newUserData.googleAuth = {
+        isLoggedIn: true,
+        email: email,
+        name: familyName,
+        accountType: 'custom_email',
+        lastSync: new Date().toISOString()
+      };
+
+      // Salva no banco de contas
+      db[email] = {
+        email: email,
+        password: password,
+        name: familyName,
+        isAdmin: false,
+        data: newUserData
+      };
+      saveAccountsDB(db);
+
+      // Define como sessão ativa
+      currentSessionUser = email;
+      localStorage.setItem('family_app_current_session_email', email);
+      state = newUserData;
       saveState();
-      closeOnboardingModal();
+
+      closeUnifiedAuthModal();
+      alert(`🎉 Parabéns! Conta criada com sucesso para a ${familyName}!
+
+Seus dados estão salvos e 100% isolados. Você pode fazer login a qualquer momento com ${email}.`);
       location.reload();
     }
 
-    function loadDaviFamilyData() {
+    // 2. ENTRAR COM EMAIL E SENHA
+    function handleUserLogin(e) {
+      e.preventDefault();
+      const email = document.getElementById('loginEmail').value.trim().toLowerCase();
+      const password = document.getElementById('loginPassword').value;
+
+      // Se for o Davi tentando entrar
+      if (email === 'daviemari@gmail.com' || (email === 'davi' && password === 'davi')) {
+        quickLoadDaviFamily();
+        return;
+      }
+
+      const db = getAccountsDB();
+      const user = db[email];
+
+      if (!user) {
+        alert('Conta não encontrada para este e-mail. Crie sua conta na aba "Criar Conta" em poucos segundos!');
+        return;
+      }
+
+      if (user.password !== password) {
+        alert('Senha incorreta! Verifique os dados digitados.');
+        return;
+      }
+
+      // Sessão válida!
+      currentSessionUser = email;
+      localStorage.setItem('family_app_current_session_email', email);
+      state = user.data || JSON.parse(JSON.stringify(emptyFamilyData));
+      saveState();
+
+      closeUnifiedAuthModal();
+      alert(`Bem-vindo de volta! Dados da sua família carregados com sucesso.`);
+      location.reload();
+    }
+
+    // 3. CONTINUAR COMO CONVIDADO OFFLINE
+    function continueAsGuestOffline() {
+      currentSessionUser = null;
+      localStorage.removeItem('family_app_current_session_email');
+      closeUnifiedAuthModal();
+      alert('📱 Modo Convidado ativado!
+Seus dados serão salvos localmente na memória deste celular/navegador.');
+    }
+
+    // 4. ATALHO DO DAVI (Carregar Família Davi & Marina com Segurança)
+    function quickLoadDaviFamily() {
+      currentSessionUser = 'daviemari@gmail.com';
+      localStorage.setItem('family_app_current_session_email', 'daviemari@gmail.com');
       state = JSON.parse(JSON.stringify(initialFamilyData));
-      localStorage.setItem('family_app_configured_v1', 'true');
+      state.googleAuth = {
+        isLoggedIn: true,
+        email: 'daviemari@gmail.com',
+        name: 'Davi & Marina (Oficial)',
+        avatar: '👨‍💻',
+        accountType: 'davi_admin',
+        lastSync: new Date().toISOString()
+      };
       saveState();
-      closeOnboardingModal();
+      closeUnifiedAuthModal();
+      alert('👑 Família Davi & Marina carregada com sucesso!');
       location.reload();
     }
 
-    // ================= CONTROLE DA CAPA DO APLICATIVO =================
+    // 5. RESTAURAR PARA EXEMPLOS DIDÁTICOS
+    function resetToDidaticData() {
+      if (confirm('Deseja recarregar os exemplos didáticos e educativos demonstrativos?')) {
+        state = JSON.parse(JSON.stringify(didaticTemplateData));
+        saveState();
+        closeAccountManagerModal();
+        alert('Exemplos didáticos recarregados com sucesso!');
+        location.reload();
+      }
+    }
+
+    // 6. LOGOUT
+    function handleLogout() {
+      if (confirm('Deseja realmente sair desta conta?')) {
+        currentSessionUser = null;
+        localStorage.removeItem('family_app_current_session_email');
+        // Ao deslogar, volta para o template demonstrativo limpo
+        state = JSON.parse(JSON.stringify(didaticTemplateData));
+        localStorage.removeItem('family_app_guest_state_v5');
+        closeAccountManagerModal();
+        alert('Você saiu da sua conta com segurança. O aplicativo voltou ao modo de demonstração.');
+        location.reload();
+      }
+    }
+
+    // Compatibilidade com funções antigas de login Google
+    function loginWithGoogleAccount(email, name, avatar) {
+      if (email === 'daviemari@gmail.com') {
+        quickLoadDaviFamily();
+        return;
+      }
+      currentSessionUser = email;
+      localStorage.setItem('family_app_current_session_email', email);
+      state.googleAuth = {
+        isLoggedIn: true,
+        email: email,
+        name: name,
+        avatar: avatar,
+        accountType: 'google',
+        lastSync: new Date().toISOString()
+      };
+      saveState();
+      closeUnifiedAuthModal();
+      alert(`🎉 Login realizado com sucesso via Google!
+Bem-vindo(a), ${name} (${email}).`);
+      location.reload();
+    }
+
+    function loginWithCustomGmailModal() {
+      const input = document.getElementById('customGmailInputModal');
+      const email = (input ? input.value : '').trim().toLowerCase();
+      if (!email || !email.includes('@')) {
+        alert('Por favor, informe um email válido do Google / Gmail.');
+        return;
+      }
+      const name = email.split('@')[0];
+      loginWithGoogleAccount(email, name.charAt(0).toUpperCase() + name.slice(1), '👤');
+    }
+
+    // Atualizar Botão do Cabeçalho de Autenticação
+    function updateGoogleAuthHeader() {
+      const container = document.getElementById('googleAuthContainer');
+      if (!container) return;
+
+      const isLogged = currentSessionUser || (state.googleAuth && state.googleAuth.isLoggedIn);
+      const email = currentSessionUser || (state.googleAuth && state.googleAuth.email);
+      const name = (state.googleAuth && state.googleAuth.name) || state.familyName || 'Minha Família';
+
+      if (isLogged) {
+        container.innerHTML = `
+          <button onclick="openAccountManagerModal()" class="flex items-center space-x-2 px-3 py-1.5 rounded-2xl bg-emerald-50 dark:bg-emerald-950/60 border border-emerald-300 dark:border-emerald-800 shadow-xs hover:shadow transition-all text-xs">
+            <span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
+            <div class="text-left hidden sm:block">
+              <span class="font-bold text-slate-800 dark:text-slate-200 block text-[11px] leading-tight truncate max-w-[120px]">${name}</span>
+              <span class="text-[9px] text-emerald-600 dark:text-emerald-400 font-bold block leading-tight">Salvo na Nuvem</span>
+            </div>
+            <span class="sm:hidden text-xs font-bold text-emerald-700 dark:text-emerald-300">Minha Conta</span>
+            <span class="text-slate-400 text-[10px]">▼</span>
+          </button>
+        `;
+      } else {
+        container.innerHTML = `
+          <button onclick="openUnifiedAuthModal()" class="flex items-center space-x-2 px-3 py-1.5 rounded-2xl bg-indigo-600 hover:bg-indigo-700 text-white shadow-xs hover:shadow transition-all text-xs font-bold">
+            <span>🔐</span>
+            <span class="hidden sm:inline">Criar Conta / Entrar</span>
+            <span class="sm:hidden">Entrar</span>
+          </button>
+        `;
+      }
+    }
+// ================= CONTROLE DA CAPA DO APLICATIVO =================
     let isCoverExpanded = true;
     function toggleAppCover() {
       const banner = document.getElementById('appCoverBanner');
@@ -4623,6 +5342,17 @@
           <span class="text-slate-400 text-xs">Ir →</span>
         </button>
       `).join('');
+    }
+
+
+    function checkFirstTimeUser() {
+      const hasSeenWelcome = localStorage.getItem('family_app_seen_welcome_v1');
+      if (!currentSessionUser && !hasSeenWelcome) {
+        setTimeout(() => {
+          openUnifiedAuthModal();
+          localStorage.setItem('family_app_seen_welcome_v1', 'true');
+        }, 800);
+      }
     }
 
     // Inicialização Completa
