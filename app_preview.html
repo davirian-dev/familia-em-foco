@@ -2,7 +2,7 @@
 <html lang="pt-BR">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, viewport-fit=cover">
   <title>Família em Foco | Gestão, Estudos & Crescimento</title>
   <!-- Open Graph & Prévia Visual nos Mensageiros (WhatsApp, Telegram, Facebook, Discord, iMessage) -->
   <meta property="og:type" content="website">
@@ -48,23 +48,71 @@
     .imc-badge-good { background-color: #d1fae5; color: #065f46; border: 1px solid #6ee7b7; }
     .imc-badge-warn { background-color: #fef3c7; color: #92400e; border: 1px solid #fcd34d; }
     
-    /* RESPONSIVIDADE AVANÇADA (CELULAR, TABLET & COMPUTADOR) */
-    @media (max-width: 640px) {
-      .mobile-touch-target { min-height: 44px; }
-      .mobile-safe-bottom { padding-bottom: calc(5.5rem + env(safe-area-inset-bottom)) !important; }
-      .mobile-card-compact { padding: 1rem !important; }
+    /* ========================================================== */
+    /* ENGENHARIA RESPONSIVA MULTI-DISPOSITIVO (ANDROID, TABLET, PC) */
+    /* ========================================================== */
+    html, body {
+      overflow-x: hidden;
+      width: 100%;
+      scroll-behavior: smooth;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
     }
 
-    @media (min-width: 641px) and (max-width: 1024px) {
-      /* Estilos para Tablet (iPad, Galaxy Tab, etc) */
-      .tablet-grid-balanced { grid-template-columns: repeat(2, minmax(0, 1fr)) !important; }
-      .tablet-padding { padding: 1.5rem !important; }
-      aside { width: 14rem !important; }
+    /* Scrollbar elegante e sutil */
+    ::-webkit-scrollbar { width: 6px; height: 6px; }
+    ::-webkit-scrollbar-track { background: transparent; }
+    ::-webkit-scrollbar-thumb { background: rgba(148, 163, 184, 0.4); border-radius: 9999px; }
+    ::-webkit-scrollbar-thumb:hover { background: rgba(100, 116, 139, 0.7); }
+
+    /* 1. OTIMIZAÇÕES PARA ANDROID & SMARTPHONES (< 768px) */
+    @media (max-width: 767px) {
+      /* Prevenir zoom forçado no teclado Android ao focar em inputs */
+      input, select, textarea {
+        font-size: 16px !important;
+      }
+      /* Área de segurança inferior para a barra de gestos do Android / iPhone */
+      .mobile-safe-bottom {
+        padding-bottom: calc(5.5rem + env(safe-area-inset-bottom, 0px)) !important;
+      }
+      /* Rolagem tátil suave sem travamentos */
+      .touch-scroll {
+        -webkit-overflow-scrolling: touch;
+      }
+      /* Modais com altura máxima confortável em telas pequenas */
+      .modal-card {
+        max-height: 85vh !important;
+        overflow-y: auto !important;
+        -webkit-overflow-scrolling: touch;
+      }
     }
 
+    /* 2. OTIMIZAÇÕES PARA TABLETS (768px a 1024px - iPad, Galaxy Tab, etc.) */
+    @media (min-width: 768px) and (max-width: 1024px) {
+      aside {
+        width: 15rem !important;
+        flex-shrink: 0 !important;
+      }
+      main {
+        padding: 1.5rem !important;
+      }
+      .tablet-grid-2col {
+        grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+      }
+    }
+
+    /* 3. OTIMIZAÇÕES PARA COMPUTADORES & MONITORES GRANDES (1025px+) */
     @media (min-width: 1025px) {
-      /* Estilos para Desktop / Computador */
-      .desktop-spacious { max-width: 80rem; }
+      aside {
+        width: 16.5rem !important;
+        position: sticky;
+        top: 4rem;
+        height: calc(100vh - 4rem);
+        overflow-y: auto;
+      }
+      .desktop-container {
+        max-width: 80rem;
+      }
     }
 
     .hero-glow {
@@ -1546,21 +1594,126 @@
     </main>
   </div>
 
-  <!-- NAVEGAÇÃO INFERIOR MOBILE -->
-  <nav class="md:hidden fixed bottom-0 left-0 right-0 z-40 bg-white/95 dark:bg-slate-900/95 backdrop-blur-lg border-t border-slate-200 dark:border-slate-800 flex justify-around py-2 overflow-x-auto">
-    <button onclick="navigate('dashboard')" class="flex flex-col items-center text-[10px] text-indigo-600 font-bold px-2"><span>📊</span><span>Início</span></button>
-    <button onclick="navigate('studies')" class="flex flex-col items-center text-[10px] text-slate-400 px-2"><span>🎓</span><span>Estudos</span></button>
-    <button onclick="navigate('pomodoro')" class="flex flex-col items-center text-[10px] text-slate-400 px-2"><span>⏱️</span><span>Foco</span></button>
-    <button onclick="navigate('mural')" class="flex flex-col items-center text-[10px] text-slate-400 px-2"><span>💌</span><span>Mural</span></button>
-    <button onclick="navigate('shopping')" class="flex flex-col items-center text-[10px] text-slate-400 px-2"><span>🛒</span><span>Compras</span></button>
-    <button onclick="navigate('finances')" class="flex flex-col items-center text-[10px] text-slate-400 px-2"><span>💰</span><span>Finanças</span></button>
-    <button onclick="navigate('calendar')" class="flex flex-col items-center text-[10px] text-slate-400 px-2"><span>📅</span><span>Agenda</span></button>
-    <button id="mobileNavKids" onclick="navigate('kids')" class="flex flex-col items-center text-[10px] text-slate-400 px-2"><span>⭐</span><span>Crianças</span></button>
-    <button onclick="navigate('developer')" class="flex flex-col items-center text-[10px] text-emerald-600 dark:text-emerald-400 font-black px-2"><span>💰</span><span>Apoio PIX</span></button>
-    <button onclick="openUnifiedAuthModal()" class="flex flex-col items-center text-[10px] text-indigo-600 dark:text-indigo-400 font-bold px-2 py-0.5 rounded-xl bg-indigo-50 dark:bg-indigo-950/50 border border-indigo-200 dark:border-indigo-800"><span>🔐</span><span>Login/Conta</span></button>
+  <!-- NAVEGAÇÃO INFERIOR MOBILE ERGONÔMICA (PADRÃO ANDROID / IOS) -->
+  <nav class="md:hidden fixed bottom-0 left-0 right-0 z-40 bg-white/95 dark:bg-slate-900/95 backdrop-blur-lg border-t border-slate-200 dark:border-slate-800 flex items-center justify-around py-1.5 px-2 shadow-lg" style="padding-bottom: max(0.5rem, env(safe-area-inset-bottom));">
+    <button onclick="navigate('dashboard')" id="mNav-dashboard" class="flex-1 flex flex-col items-center justify-center py-1 text-[10px] font-bold text-indigo-600 dark:text-indigo-400 transition">
+      <span class="text-xl">📊</span>
+      <span>Início</span>
+    </button>
+    <button onclick="navigate('fitness')" id="mNav-fitness" class="flex-1 flex flex-col items-center justify-center py-1 text-[10px] font-bold text-slate-500 dark:text-slate-400 hover:text-indigo-600 transition">
+      <span class="text-xl">🏋️</span>
+      <span>Fitness</span>
+    </button>
+    <button onclick="navigate('finances')" id="mNav-finances" class="flex-1 flex flex-col items-center justify-center py-1 text-[10px] font-bold text-slate-500 dark:text-slate-400 hover:text-indigo-600 transition">
+      <span class="text-xl">💰</span>
+      <span>Finanças</span>
+    </button>
+    <button onclick="navigate('habits-goals')" id="mNav-habits-goals" class="flex-1 flex flex-col items-center justify-center py-1 text-[10px] font-bold text-slate-500 dark:text-slate-400 hover:text-indigo-600 transition">
+      <span class="text-xl">🎯</span>
+      <span>Hábitos</span>
+    </button>
+    <button onclick="toggleMobileMoreMenu()" id="mNav-more" class="flex-1 flex flex-col items-center justify-center py-1 text-[10px] font-bold text-slate-500 dark:text-slate-400 hover:text-indigo-600 transition">
+      <span class="text-xl">☰</span>
+      <span>Mais</span>
+    </button>
   </nav>
 
-    <!-- ================= MODAL DE NOVA DIVISÃO DE TREINO PERSONALIZADA ================= -->
+  <!-- DRAWER DESLIZANTE MÓVEL COMPLETO (ABERTO PELO BOTÃO MAIS) -->
+  <div id="mobileMoreDrawer" class="modal-backdrop">
+    <div class="bg-white dark:bg-slate-900 border-t border-slate-200 dark:border-slate-800 rounded-t-3xl max-w-lg w-full p-6 shadow-2xl relative max-h-[85vh] overflow-y-auto mt-auto space-y-4">
+      <div class="flex items-center justify-between pb-3 border-b border-slate-100 dark:border-slate-800">
+        <div class="flex items-center space-x-2">
+          <span class="text-xl">📱</span>
+          <h4 class="font-bold text-base text-slate-900 dark:text-white">Todas as Ferramentas</h4>
+        </div>
+        <button onclick="toggleMobileMoreMenu()" class="p-1 text-slate-400 hover:text-slate-600 dark:hover:text-slate-200 text-lg">✕</button>
+      </div>
+
+      <div class="grid grid-cols-2 gap-2.5 text-xs font-bold">
+        <button onclick="navigate('studies'); toggleMobileMoreMenu();" class="p-3 rounded-2xl bg-slate-50 dark:bg-slate-800/70 border border-slate-200 dark:border-slate-700 flex items-center space-x-2.5 text-left hover:border-indigo-500 transition">
+          <span class="text-xl">🎓</span>
+          <div>
+            <div>Centro de Estudos</div>
+            <span class="text-[10px] text-slate-400 font-normal">Faculdade & Escola</span>
+          </div>
+        </button>
+
+        <button onclick="navigate('pomodoro'); toggleMobileMoreMenu();" class="p-3 rounded-2xl bg-slate-50 dark:bg-slate-800/70 border border-slate-200 dark:border-slate-700 flex items-center space-x-2.5 text-left hover:border-indigo-500 transition">
+          <span class="text-xl">⏱️</span>
+          <div>
+            <div>Foco & Pomodoro</div>
+            <span class="text-[10px] text-slate-400 font-normal">Sessões de 25 min</span>
+          </div>
+        </button>
+
+        <button onclick="navigate('shopping'); toggleMobileMoreMenu();" class="p-3 rounded-2xl bg-slate-50 dark:bg-slate-800/70 border border-slate-200 dark:border-slate-700 flex items-center space-x-2.5 text-left hover:border-indigo-500 transition">
+          <span class="text-xl">🛒</span>
+          <div>
+            <div>Lista de Compras</div>
+            <span class="text-[10px] text-slate-400 font-normal">Mercado & Farmácia</span>
+          </div>
+        </button>
+
+        <button onclick="navigate('calendar'); toggleMobileMoreMenu();" class="p-3 rounded-2xl bg-slate-50 dark:bg-slate-800/70 border border-slate-200 dark:border-slate-700 flex items-center space-x-2.5 text-left hover:border-indigo-500 transition">
+          <span class="text-xl">📅</span>
+          <div>
+            <div>Calendário</div>
+            <span class="text-[10px] text-slate-400 font-normal">Consultas & Provas</span>
+          </div>
+        </button>
+
+        <button onclick="navigate('trophies'); toggleMobileMoreMenu();" class="p-3 rounded-2xl bg-slate-50 dark:bg-slate-800/70 border border-slate-200 dark:border-slate-700 flex items-center space-x-2.5 text-left hover:border-indigo-500 transition">
+          <span class="text-xl">🏆</span>
+          <div>
+            <div>Troféus & Vitórias</div>
+            <span class="text-[10px] text-slate-400 font-normal">Medalhas com Fotos</span>
+          </div>
+        </button>
+
+        <button onclick="navigate('kids'); toggleMobileMoreMenu();" class="p-3 rounded-2xl bg-slate-50 dark:bg-slate-800/70 border border-slate-200 dark:border-slate-700 flex items-center space-x-2.5 text-left hover:border-indigo-500 transition">
+          <span class="text-xl">⭐</span>
+          <div>
+            <div>Missões Crianças</div>
+            <span class="text-[10px] text-slate-400 font-normal">Moedas & Tarefas</span>
+          </div>
+        </button>
+
+        <button onclick="navigate('rewards'); toggleMobileMoreMenu();" class="p-3 rounded-2xl bg-slate-50 dark:bg-slate-800/70 border border-slate-200 dark:border-slate-700 flex items-center space-x-2.5 text-left hover:border-indigo-500 transition">
+          <span class="text-xl">🎁</span>
+          <div>
+            <div>Recompensas</div>
+            <span class="text-[10px] text-slate-400 font-normal">Troca de moedas</span>
+          </div>
+        </button>
+
+        <button onclick="navigate('mural'); toggleMobileMoreMenu();" class="p-3 rounded-2xl bg-slate-50 dark:bg-slate-800/70 border border-slate-200 dark:border-slate-700 flex items-center space-x-2.5 text-left hover:border-indigo-500 transition">
+          <span class="text-xl">💌</span>
+          <div>
+            <div>Mural do Amor</div>
+            <span class="text-[10px] text-slate-400 font-normal">Recados da Família</span>
+          </div>
+        </button>
+
+        <button onclick="navigate('developer'); toggleMobileMoreMenu();" class="p-3 rounded-2xl bg-emerald-50 dark:bg-emerald-950/40 border border-emerald-300 dark:border-emerald-800 flex items-center space-x-2.5 text-left text-emerald-700 dark:text-emerald-300 transition">
+          <span class="text-xl">💰</span>
+          <div>
+            <div>Apoio Financeiro</div>
+            <span class="text-[10px] text-emerald-600 dark:text-emerald-400 font-normal">Doação PIX Direto</span>
+          </div>
+        </button>
+
+        <button onclick="openUnifiedAuthModal(); toggleMobileMoreMenu();" class="p-3 rounded-2xl bg-indigo-50 dark:bg-indigo-950/40 border border-indigo-300 dark:border-indigo-800 flex items-center space-x-2.5 text-left text-indigo-700 dark:text-indigo-300 transition">
+          <span class="text-xl">🔐</span>
+          <div>
+            <div>Minha Conta</div>
+            <span class="text-[10px] text-indigo-600 dark:text-indigo-400 font-normal">Login & Backup</span>
+          </div>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ================= MODAL DE NOVA DIVISÃO DE TREINO PERSONALIZADA ================= -->
   <div id=workoutDivisionModal class="modal-backdrop">
     <div class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-3xl max-w-md w-full p-6 shadow-2xl relative">
       <button onclick="closeWorkoutDivisionModal()" class="absolute top-5 right-5 p-1.5 rounded-xl text-slate-400 hover:text-slate-600">✕</button>
@@ -4448,6 +4601,7 @@
     window.deleteStreak = deleteStreak;
     window.renderStreaks = renderStreaks;
 
+    window.toggleMobileMoreMenu = toggleMobileMoreMenu;
     renderAll();
       showToast('👤 Demonstração de Pessoa Solteira carregada com sucesso!', '🚀', 4000);
     }
@@ -8712,6 +8866,38 @@
         `;
       }).join('');
     }
+
+    
+    // ==========================================
+    // NAVEGAÇÃO RESPONSIVA ANDROID & GAVETA MÓVEL
+    // ==========================================
+    function toggleMobileMoreMenu() {
+      const drawer = document.getElementById('mobileMoreDrawer');
+      if (drawer) drawer.classList.toggle('active');
+    }
+
+    // Atualizar destaque dos botões da barra móvel nativa ao navegar
+    const originalNavigateFn = window.navigate;
+    window.navigate = function(tabId) {
+      if (typeof originalNavigateFn === 'function') {
+        originalNavigateFn(tabId);
+      }
+      
+      const mNavs = ['dashboard', 'fitness', 'finances', 'habits-goals'];
+      mNavs.forEach(id => {
+        const btn = document.getElementById('mNav-' + id);
+        if (btn) {
+          if (id === tabId) {
+            btn.className = 'flex-1 flex flex-col items-center justify-center py-1 text-[10px] font-bold text-indigo-600 dark:text-indigo-400 transition';
+          } else {
+            btn.className = 'flex-1 flex flex-col items-center justify-center py-1 text-[10px] font-bold text-slate-500 dark:text-slate-400 hover:text-indigo-600 transition';
+          }
+        }
+      });
+      
+      // Rolar a tela para o topo ao trocar de aba
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    };
 
     function renderFitness() {
       updateOverallEvolutionBanner();
