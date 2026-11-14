@@ -2863,12 +2863,25 @@
           </div>
         </div>
 
-        <!-- Botão WhatsApp para Envio do Comprovante -->
+        <!-- Botões de Ação: WhatsApp & QR Code com Valor Exato -->
         <div class="flex flex-col sm:flex-row gap-2 pt-1">
           <a id="btnWhatsAppConfirm" href="https://wa.me/5571996815876?text=Ol%C3%A1%20Davi!%20Fiz%20o%20PIX%20do%20Plano%20PRO%20do%20Fam%C3%ADlia%20em%20Foco.%20Segue%20o%20comprovante%20para%20minha%20chave%20de%20ativa%C3%A7%C3%A3o!" target="_blank" rel="noopener noreferrer" class="flex-1 py-2.5 px-3 rounded-xl bg-emerald-500 hover:bg-emerald-600 text-white font-bold text-xs flex items-center justify-center gap-2 shadow-xs transition text-center">
             <span>💬</span>
             <span>Confirmar no WhatsApp (71 9681-5876)</span>
           </a>
+          <button type="button" onclick="toggleProCheckoutQrCode()" class="py-2.5 px-3 rounded-xl border border-emerald-500/50 bg-white dark:bg-slate-900 text-emerald-600 dark:text-emerald-400 hover:bg-emerald-50 dark:hover:bg-slate-800 font-bold text-xs flex items-center justify-center gap-1.5 transition">
+            <span>📷</span>
+            <span>Ver QR Code</span>
+          </button>
+        </div>
+
+        <!-- Box Retrátil do QR Code com Valor Exato -->
+        <div id="proCheckoutQrBox" class="hidden p-3 rounded-2xl bg-white dark:bg-slate-900 border border-emerald-200 dark:border-emerald-800 text-center space-y-2">
+          <p class="text-[11px] font-bold text-slate-700 dark:text-slate-300">Aponte o app do banco para o QR Code com valor exato já configurado:</p>
+          <div class="inline-block p-2 bg-white rounded-xl shadow-xs border border-slate-200">
+            <img id="proCheckoutQrCodeImg" src="https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=00020126580014BR.GOV.BCB.PIX01362036b759-ae21-4846-9f88-25256a51823a520400005303986540597.005802BR5925Davi%20Rian%20Nascimento%20Pere6009SAO%20PAULO62140510yGOUlGxzvX63040211" alt="QR Code PIX com Valor Exato" class="w-36 h-36 mx-auto object-contain">
+          </div>
+          <p class="text-[10px] text-slate-400">O valor exato virá preenchido no seu banco sem risco de digitar errado.</p>
         </div>
       </div>
 
@@ -9437,12 +9450,59 @@
       renderPricingDisplay();
     }
 
+    // Cálculo e Geração Dinâmica de Código PIX Copia e Cola Oficial (Padrão BACEN BR Code)
+    function calculatePixCRC16(payload) {
+      let crc = 0xFFFF;
+      for (let i = 0; i < payload.length; i++) {
+        crc ^= (payload.charCodeAt(i) << 8);
+        for (let j = 0; j < 8; j++) {
+          if ((crc & 0x8000) !== 0) {
+            crc = ((crc << 1) ^ 0x1021) & 0xFFFF;
+          } else {
+            crc = (crc << 1) & 0xFFFF;
+          }
+        }
+      }
+      return crc.toString(16).toUpperCase().padStart(4, '0');
+    }
+
+    function generateOfficialPixPayload(amount = null) {
+      let payload = '000201';
+      payload += '26580014BR.GOV.BCB.PIX01362036b759-ae21-4846-9f88-25256a51823a';
+      payload += '52040000';
+      payload += '5303986';
+      if (amount !== null && !isNaN(amount) && amount > 0) {
+        const amtStr = Number(amount).toFixed(2);
+        const lenStr = String(amtStr.length).padStart(2, '0');
+        payload += `54${lenStr}${amtStr}`;
+      }
+      payload += '5802BR';
+      payload += '5925Davi Rian Nascimento Pere';
+      payload += '6009SAO PAULO';
+      payload += '62140510yGOUlGxzvX';
+      payload += '6304';
+      return payload + calculatePixCRC16(payload);
+    }
+
+    function getCheckoutPixAmount() {
+      const base = (currentSelectedPlan === 'monthly') ? 19.90 : 97.00;
+      if (appliedDiscountPercent === 50) {
+        return (base * 0.5);
+      }
+      return base;
+    }
+
     function renderPricingDisplay() {
       const monthlyBox = document.getElementById('priceAmountMonthly');
       const lifetimeBox = document.getElementById('priceAmountLifetime');
       const pixValue = document.getElementById('pixCheckoutFinalValue');
       const pixDiscountTag = document.getElementById('pixDiscountTag');
       const btnWhatsApp = document.getElementById('btnWhatsAppConfirm');
+      const pixKeyDisplay = document.getElementById('pixCheckoutKeyDisplay');
+      const proQrImg = document.getElementById('proCheckoutQrCodeImg');
+
+      const amount = getCheckoutPixAmount();
+      const currentPixCode = generateOfficialPixPayload(amount);
 
       let valorFinal = '';
       let planoDesc = '';
@@ -9482,9 +9542,14 @@
       }
 
       if (pixValue) pixValue.textContent = valorFinal;
+      if (pixKeyDisplay) pixKeyDisplay.textContent = currentPixCode;
+
+      if (proQrImg) {
+        proQrImg.src = `https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=${encodeURIComponent(currentPixCode)}`;
+      }
 
       if (btnWhatsApp) {
-        const msg = encodeURIComponent(`Olá Davi! Realizei o PIX para o Plano PRO do Família em Foco no plano ${planoDesc}. Segue o comprovante para liberação da minha chave de ativação!`);
+        const msg = encodeURIComponent(`Olá Davi! Realizei o PIX no valor exato de R$ ${amount.toFixed(2).replace('.', ',')} para o Plano PRO do Família em Foco (${planoDesc}). Segue o comprovante para liberação da minha chave de ativação!`);
         btnWhatsApp.href = `https://wa.me/5571996815876?text=${msg}`;
       }
     }
@@ -9505,8 +9570,19 @@
       renderPricingDisplay();
     }
 
+        function toggleProCheckoutQrCode() {
+      const box = document.getElementById('proCheckoutQrBox');
+      if (box) {
+        box.classList.toggle('hidden');
+        if (!box.classList.contains('hidden')) {
+          box.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+        }
+      }
+    }
+
     function copyPixCheckoutKey() {
-      const key = '00020126580014BR.GOV.BCB.PIX01362036b759-ae21-4846-9f88-25256a51823a5204000053039865802BR5925Davi Rian Nascimento Pere6009SAO PAULO62140510yGOUlGxzvX63043796';
+      const amount = getCheckoutPixAmount();
+      const key = generateOfficialPixPayload(amount);
       const btn = document.getElementById('btnCopyPixCheckoutText');
       if (navigator.clipboard && navigator.clipboard.writeText) {
         navigator.clipboard.writeText(key).then(() => {
@@ -9514,7 +9590,7 @@
             btn.textContent = 'Copiado! ✓';
             setTimeout(() => { if (btn) btn.textContent = 'Copiar PIX'; }, 2500);
           }
-          showToast('Código PIX Copia e Cola copiado com sucesso!', '⚡');
+          showToast(`PIX com valor exato de R$ ${amount.toFixed(2).replace('.', ',')} copiado!`, '⚡');
         }).catch(() => {
           fallbackCheckoutCopy(key, btn);
         });
@@ -10232,7 +10308,7 @@ Todos os recursos avançados estão disponíveis para você:
     // Registro de Service Worker para PWA Offline e Instalação Nativa
     if ('serviceWorker' in navigator) {
       window.addEventListener('load', () => {
-        navigator.serviceWorker.register('./sw.js?v=3.5', { updateViaCache: 'none' })
+        navigator.serviceWorker.register('./sw.js?v=3.6', { updateViaCache: 'none' })
           .then((reg) => {
             reg.update();
           })
