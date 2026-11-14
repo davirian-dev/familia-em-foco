@@ -299,6 +299,17 @@
         </div>
       </button>
 
+      <button onclick="navigate('developer')" id="nav-developer" class="nav-btn w-full flex items-center space-x-3 px-3.5 py-2.5 rounded-2xl text-left text-sm transition-all hover:bg-rose-50 dark:hover:bg-rose-950/30 text-rose-600 dark:text-rose-400 border border-rose-200/50 dark:border-rose-900/40">
+        <span class="text-base">❤️</span>
+        <div class="flex-1">
+          <div class="font-bold flex items-center justify-between">
+            <span>Ajude o Desenvolvedor</span>
+            <span class="px-1.5 py-0.2 rounded-full bg-rose-100 dark:bg-rose-950 text-rose-600 dark:text-rose-300 text-[9px] font-black">PIX ☕</span>
+          </div>
+          <div class="text-[11px] text-slate-400">Apoie o projeto com um café</div>
+        </div>
+      </button>
+
       <div class="mt-auto pt-3 border-t border-slate-200 dark:border-slate-800 text-xs text-slate-400">
         <p class="font-semibold text-slate-700 dark:text-slate-300">Perfil Ativo:</p>
         <p id="footerMemberName" class="font-bold text-indigo-600 dark:text-indigo-400">Davi (Administrador)</p>
@@ -1083,6 +1094,158 @@
         </div>
       </section>
 
+
+      <!-- ================= 10. ABA AJUDE O DESENVOLVEDOR (APOIE O PROJETO) ================= -->
+      <section id="tab-developer" style="display: none;" class="space-y-6">
+        
+        <!-- Banner Principal de Apoio -->
+        <div class="p-6 sm:p-8 rounded-3xl text-white bg-gradient-to-r from-rose-600 via-pink-600 to-purple-700 shadow-xl relative overflow-hidden">
+          <div class="relative z-10 flex flex-col md:flex-row md:items-center justify-between gap-6">
+            <div class="space-y-2 max-w-xl">
+              <span class="px-3 py-1 rounded-full bg-white/20 backdrop-blur-md text-white font-black text-xs uppercase tracking-wide inline-flex items-center gap-1.5">
+                <span>☕</span> Desenvolvedor Independente
+              </span>
+              <h3 class="text-2xl sm:text-3xl font-black">Ajude a Manter este Projeto Vivo!</h3>
+              <p class="text-xs sm:text-sm text-pink-100 leading-relaxed">
+                Este aplicativo é desenvolvido e mantido com muito carinho e dedicação pessoal. Seu apoio voluntário garante novas funções, servidores rápidos e atualizações constantes para você e sua família.
+              </p>
+            </div>
+            <div class="text-5xl sm:text-6xl self-center md:self-auto p-4 rounded-3xl bg-white/10 backdrop-blur-md shadow-inner">
+              👨‍💻❤️
+            </div>
+          </div>
+        </div>
+
+        <!-- Mensagem Pessoal do Criador -->
+        <div class="bg-white dark:bg-slate-900 rounded-3xl p-6 border border-slate-200 dark:border-slate-800 shadow-sm space-y-3">
+          <div class="flex items-center space-x-3">
+            <div class="w-12 h-12 rounded-2xl bg-gradient-to-tr from-indigo-500 to-rose-500 text-white text-2xl flex items-center justify-center shadow-md">
+              💬
+            </div>
+            <div>
+              <h4 class="font-bold text-base text-slate-900 dark:text-white">Um Recado de Coração do Desenvolvedor</h4>
+              <p class="text-xs text-slate-500">Transparência, propósito e impacto real na sua vida</p>
+            </div>
+          </div>
+          <p class="text-xs sm:text-sm text-slate-600 dark:text-slate-300 leading-relaxed">
+            "Olá! Criei este aplicativo com o sonho de entregar uma solução completa que unisse tudo o que é essencial: <strong>evolução física com fotos de shape, musculação, metas com passos práticos, organização financeira e rotina familiar harmoniosa</strong>. Diferente de grandes corporações, este é um projeto independente. Qualquer quantia enviada pelo PIX faz uma diferença gigantesca e é reinvestida diretamente em melhorias no aplicativo."
+          </p>
+          <div class="pt-2 flex flex-wrap gap-2 text-xs font-bold text-slate-500">
+            <span class="px-2.5 py-1 rounded-xl bg-slate-100 dark:bg-slate-800">✨ 100% Livre de Anúncios Invasivos</span>
+            <span class="px-2.5 py-1 rounded-xl bg-slate-100 dark:bg-slate-800">🔒 Privacidade & Dados Seguros</span>
+            <span class="px-2.5 py-1 rounded-xl bg-slate-100 dark:bg-slate-800">⚡ Atualizações Frequentes</span>
+          </div>
+        </div>
+
+        <!-- Área de Apoio Rápido via PIX -->
+        <div class="bg-white dark:bg-slate-900 rounded-3xl p-6 border border-slate-200 dark:border-slate-800 shadow-sm space-y-5">
+          <div>
+            <span class="px-2.5 py-0.5 rounded-full bg-emerald-100 dark:bg-emerald-950 text-emerald-700 dark:text-emerald-300 font-bold text-xs">💸 Apoio Instantâneo</span>
+            <h4 class="font-bold text-lg text-slate-900 dark:text-white mt-1">Pague um Café para o Desenvolvedor ☕</h4>
+            <p class="text-xs text-slate-500">Escolha um valor simbólico ou apoie com qualquer quantia pelo PIX:</p>
+          </div>
+
+          <!-- Cards de Valores Sugeridos -->
+          <div class="grid grid-cols-2 sm:grid-cols-4 gap-3">
+            <div onclick="selectSupportAmount('5.00')" class="p-4 rounded-2xl border-2 border-slate-200 dark:border-slate-700 hover:border-rose-500 bg-slate-50 dark:bg-slate-800/60 cursor-pointer transition text-center group">
+              <span class="text-2xl block mb-1">☕</span>
+              <span class="text-xs font-bold text-slate-800 dark:text-slate-200 block">Um Cafezinho</span>
+              <div class="text-lg font-black text-rose-600 dark:text-rose-400">R$ 5,00</div>
+              <span class="text-[10px] text-slate-400">Mantém o dev acordado!</span>
+            </div>
+
+            <div onclick="selectSupportAmount('15.00')" class="p-4 rounded-2xl border-2 border-slate-200 dark:border-slate-700 hover:border-rose-500 bg-slate-50 dark:bg-slate-800/60 cursor-pointer transition text-center group">
+              <span class="text-2xl block mb-1">🍕</span>
+              <span class="text-xs font-bold text-slate-800 dark:text-slate-200 block">Um Lanche</span>
+              <div class="text-lg font-black text-rose-600 dark:text-rose-400">R$ 15,00</div>
+              <span class="text-[10px] text-slate-400">Energia para programar</span>
+            </div>
+
+            <div onclick="selectSupportAmount('30.00')" class="p-4 rounded-2xl border-2 border-rose-500 bg-rose-50/50 dark:bg-rose-950/20 cursor-pointer transition text-center shadow-xs">
+              <span class="text-2xl block mb-1">🚀</span>
+              <span class="text-xs font-bold text-rose-700 dark:text-rose-300 block">Super Apoiador</span>
+              <div class="text-lg font-black text-rose-600 dark:text-rose-400">R$ 30,00</div>
+              <span class="text-[10px] text-slate-400">Ajuda com os servidores</span>
+            </div>
+
+            <div onclick="selectSupportAmount('custom')" class="p-4 rounded-2xl border-2 border-slate-200 dark:border-slate-700 hover:border-purple-500 bg-slate-50 dark:bg-slate-800/60 cursor-pointer transition text-center group">
+              <span class="text-2xl block mb-1">💖</span>
+              <span class="text-xs font-bold text-slate-800 dark:text-slate-200 block">Valor Livre</span>
+              <div class="text-lg font-black text-purple-600 dark:text-purple-400">Qualquer R$</div>
+              <span class="text-[10px] text-slate-400">Você escolhe no banco</span>
+            </div>
+          </div>
+
+          <!-- Caixa da Chave PIX com Cópia Rápida -->
+          <div class="p-4 rounded-2xl bg-gradient-to-r from-emerald-50 to-teal-50 dark:from-emerald-950/30 dark:to-teal-950/30 border border-emerald-200 dark:border-emerald-800/60 space-y-3">
+            <div class="flex items-center justify-between">
+              <div class="flex items-center space-x-2">
+                <span class="text-emerald-600 font-bold text-xs uppercase tracking-wider">Chave PIX Oficial de Doação</span>
+                <span class="w-2 h-2 rounded-full bg-emerald-500 animate-ping"></span>
+              </div>
+              <span class="text-[10px] text-emerald-700 dark:text-emerald-300 font-bold">Aprovação Direta</span>
+            </div>
+
+            <div class="flex flex-col sm:flex-row gap-2">
+              <div class="flex-1 bg-white dark:bg-slate-900 border border-emerald-300 dark:border-emerald-700/80 rounded-xl px-3.5 py-2.5 font-mono text-xs font-bold text-slate-800 dark:text-slate-200 flex items-center justify-between select-all truncate">
+                <span id="devPixKeyText">daviemaridev@gmail.com</span>
+                <span class="text-[10px] text-slate-400 font-sans ml-2">(Chave E-mail)</span>
+              </div>
+              <button onclick="copyDevPixKey()" id="btnCopyPix" class="px-5 py-2.5 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-xs shadow-md transition flex items-center justify-center space-x-2">
+                <span>📋</span>
+                <span id="btnCopyPixText">Copiar Chave PIX</span>
+              </button>
+            </div>
+            <p id="pixCopySuccessMsg" class="text-xs font-bold text-emerald-600 dark:text-emerald-400 hidden">
+              ✓ Chave PIX copiada com sucesso! Abra o app do seu banco e cole na opção PIX. Muito obrigado pelo seu apoio! ❤️
+            </p>
+          </div>
+        </div>
+
+        <!-- Outras Formas Gratuitas de Apoiar -->
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <!-- Compartilhar no WhatsApp -->
+          <div class="bg-white dark:bg-slate-900 rounded-3xl p-5 border border-slate-200 dark:border-slate-800 shadow-sm space-y-3 flex flex-col justify-between">
+            <div class="space-y-1">
+              <div class="flex items-center space-x-2">
+                <span class="text-xl">📲</span>
+                <h4 class="font-bold text-sm text-slate-900 dark:text-white">Compartilhe com Amigos & Família</h4>
+              </div>
+              <p class="text-xs text-slate-500">A melhor forma gratuita de apoiar é fazer o aplicativo chegar a mais pessoas que querem organizar a vida.</p>
+            </div>
+            <button onclick="shareAppOnWhatsApp()" class="w-full py-2.5 rounded-xl bg-emerald-500 hover:bg-emerald-600 text-white font-bold text-xs shadow-sm flex items-center justify-center space-x-2 transition">
+              <span>💬</span>
+              <span>Recomendar no WhatsApp</span>
+            </button>
+          </div>
+
+          <!-- Enviar Sugestão / Feedback -->
+          <div class="bg-white dark:bg-slate-900 rounded-3xl p-5 border border-slate-200 dark:border-slate-800 shadow-sm space-y-3 flex flex-col justify-between">
+            <div class="space-y-1">
+              <div class="flex items-center space-x-2">
+                <span class="text-xl">💡</span>
+                <h4 class="font-bold text-sm text-slate-900 dark:text-white">Envie Sua Sugestão de Melhoria</h4>
+              </div>
+              <p class="text-xs text-slate-500">Tem alguma ideia incrível de nova ferramenta para o app? O desenvolvedor lê todas as mensagens.</p>
+            </div>
+            <button onclick="sendDeveloperSuggestion()" class="w-full py-2.5 rounded-xl bg-indigo-600 hover:bg-indigo-700 text-white font-bold text-xs shadow-sm flex items-center justify-center space-x-2 transition">
+              <span>✍️</span>
+              <span>Enviar Ideia ou Elogio</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- Mensagem de Agradecimento aos Apoiadores -->
+        <div class="p-6 rounded-3xl bg-slate-50 dark:bg-slate-800/40 border border-slate-200 dark:border-slate-800 text-center space-y-2">
+          <span class="text-3xl block">🌟</span>
+          <h4 class="font-bold text-base text-slate-900 dark:text-white">Mural de Gratidão</h4>
+          <p class="text-xs text-slate-500 max-w-md mx-auto">
+            A cada usuário que apoia, compartilha ou envia um feedback carinhoso, nosso mais sincero obrigado. Vocês são o motivo deste aplicativo continuar evoluindo todos os dias!
+          </p>
+        </div>
+
+      </section>
+
       <!-- ================= 9. LOJA DE RECOMPENSAS ================= -->
       <section id="tab-rewards" style="display: none;" class="space-y-6">
         <div class="p-6 rounded-3xl text-white bg-gradient-to-r from-pink-500 to-rose-600 shadow-lg flex justify-between items-center">
@@ -1116,6 +1279,7 @@
     <button onclick="navigate('finances')" class="flex flex-col items-center text-[10px] text-slate-400 px-2"><span>💰</span><span>Finanças</span></button>
     <button onclick="navigate('calendar')" class="flex flex-col items-center text-[10px] text-slate-400 px-2"><span>📅</span><span>Agenda</span></button>
     <button id="mobileNavKids" onclick="navigate('kids')" class="flex flex-col items-center text-[10px] text-slate-400 px-2"><span>⭐</span><span>Crianças</span></button>
+    <button onclick="navigate('developer')" class="flex flex-col items-center text-[10px] text-rose-500 font-bold px-2"><span>❤️</span><span>Apoiar</span></button>
     <button onclick="openUnifiedAuthModal()" class="flex flex-col items-center text-[10px] text-indigo-600 dark:text-indigo-400 font-bold px-2 py-0.5 rounded-xl bg-indigo-50 dark:bg-indigo-950/50 border border-indigo-200 dark:border-indigo-800"><span>🔐</span><span>Login/Conta</span></button>
   </nav>
 
@@ -3569,7 +3733,7 @@
 
     // NAVEGAÇÃO
     function navigate(tabId) {
-      const tabs = ['dashboard', 'studies', 'members', 'calendar', 'shopping', 'finances', 'pomodoro', 'mural', 'habits-goals', 'fitness', 'trophies', 'kids', 'milestones', 'rewards'];
+      const tabs = ['dashboard', 'studies', 'members', 'calendar', 'shopping', 'finances', 'pomodoro', 'mural', 'habits-goals', 'fitness', 'trophies', 'kids', 'milestones', 'rewards', 'developer'];
       tabs.forEach(t => {
         const sec = document.getElementById('tab-' + t);
         if (sec) sec.style.display = (t === tabId) ? 'block' : 'none';
@@ -3899,6 +4063,12 @@
     window.redeemVipCode = redeemVipCode;
     window.toggleAdminProSimulation = toggleAdminProSimulation;
     window.renderProUI = renderProUI;
+
+    
+    window.selectSupportAmount = selectSupportAmount;
+    window.copyDevPixKey = copyDevPixKey;
+    window.shareAppOnWhatsApp = shareAppOnWhatsApp;
+    window.sendDeveloperSuggestion = sendDeveloperSuggestion;
 
     renderAll();
       showToast('👤 Demonstração de Pessoa Solteira carregada com sucesso!', '🚀', 4000);
@@ -7264,6 +7434,70 @@
       const el = document.getElementById('workoutModal');
       if (el) el.classList.add('active');
     };
+
+    
+    // ==========================================
+    // ABA AJUDE O DESENVOLVEDOR (APOIE O PROJETO)
+    // ==========================================
+    function selectSupportAmount(amount) {
+      if (amount === 'custom') {
+        alert('💖 Muito obrigado pelo carinho! Você pode transferir qualquer quantia voluntária diretamente pela chave PIX.');
+      } else {
+        alert(`☕ Que generoso! Agradecemos demais pelo apoio de R$ ${amount}. A chave PIX já está pronta para cópia abaixo.`);
+      }
+      copyDevPixKey();
+    }
+
+    function copyDevPixKey() {
+      const pixKey = document.getElementById('devPixKeyText')?.textContent?.trim() || 'daviemaridev@gmail.com';
+      const msg = document.getElementById('pixCopySuccessMsg');
+      const btnText = document.getElementById('btnCopyPixText');
+
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(pixKey).then(() => {
+          showPixCopySuccess(btnText, msg);
+        }).catch(() => {
+          fallbackCopyText(pixKey, btnText, msg);
+        });
+      } else {
+        fallbackCopyText(pixKey, btnText, msg);
+      }
+    }
+
+    function fallbackCopyText(text, btnText, msg) {
+      const tempInput = document.createElement('input');
+      tempInput.value = text;
+      document.body.appendChild(tempInput);
+      tempInput.select();
+      try {
+        document.execCommand('copy');
+        showPixCopySuccess(btnText, msg);
+      } catch (err) {
+        prompt('Copie a chave PIX abaixo:', text);
+      }
+      document.body.removeChild(tempInput);
+    }
+
+    function showPixCopySuccess(btnText, msg) {
+      if (btnText) btnText.textContent = '✓ Chave Copiada!';
+      if (msg) msg.classList.remove('hidden');
+      setTimeout(() => {
+        if (btnText) btnText.textContent = 'Copiar Chave PIX';
+      }, 3000);
+    }
+
+    function shareAppOnWhatsApp() {
+      const shareUrl = window.location.href;
+      const text = encodeURIComponent(`🚀 Olá! Estou usando este aplicativo para organizar minha vida, rotina de treinos, evolução física com fotos e finanças. Dá uma olhada, é muito bom: ${shareUrl}`);
+      window.open(`https://api.whatsapp.com/send?text=${text}`, '_blank');
+    }
+
+    function sendDeveloperSuggestion() {
+      const sugestao = prompt('💡 Digite a sua ideia, sugestão de recurso ou mensagem para o desenvolvedor:');
+      if (sugestao && sugestao.trim()) {
+        alert('🎉 Mensagem recebida! Muito obrigado pela sua contribuição para tornar o aplicativo cada vez melhor.');
+      }
+    }
 
     function renderFitness() {
       // 1. Resumo das Medidas Atuais
