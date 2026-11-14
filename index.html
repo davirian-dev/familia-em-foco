@@ -69,6 +69,14 @@
   </style>
 </head>
 <body class="bg-slate-50 dark:bg-slate-950 text-slate-900 dark:text-slate-100 antialiased min-h-screen flex flex-col font-sans transition-colors duration-200">
+  <!-- Toast Notification Flutuante para feedback visual instantâneo -->
+  <div id="toastNotification" class="fixed top-5 left-1/2 transform -translate-x-1/2 z-50 pointer-events-none transition-all duration-300 opacity-0 -translate-y-4 max-w-sm w-full px-4">
+    <div id="toastContent" class="p-3.5 rounded-2xl bg-slate-900 text-white dark:bg-white dark:text-slate-900 shadow-2xl border border-slate-700 dark:border-slate-200 text-xs font-bold flex items-center space-x-2.5">
+      <span id="toastIcon" class="text-base">✅</span>
+      <span id="toastMessage" class="flex-1">Notificação do sistema</span>
+    </div>
+  </div>
+
 
   <!-- CABEÇALHO -->
   <header class="sticky top-0 z-40 bg-white/95 dark:bg-slate-900/95 backdrop-blur-md border-b border-slate-200 dark:border-slate-800 shadow-xs">
@@ -4948,6 +4956,24 @@
     }
 
     // ================= CONTROLE DE AUTENTICAÇÃO UNIFICADA & PRIVACIDADE =================
+    function showToast(msg, icon = '✅', duration = 3500) {
+      const toast = document.getElementById('toastNotification');
+      const msgElem = document.getElementById('toastMessage');
+      const iconElem = document.getElementById('toastIcon');
+      if (!toast || !msgElem) return;
+
+      msgElem.textContent = msg;
+      if (iconElem) iconElem.textContent = icon;
+
+      toast.classList.remove('opacity-0', '-translate-y-4', 'pointer-events-none');
+      toast.classList.add('opacity-100', 'translate-y-0');
+
+      setTimeout(() => {
+        toast.classList.add('opacity-0', '-translate-y-4', 'pointer-events-none');
+        toast.classList.remove('opacity-100', 'translate-y-0');
+      }, duration);
+    }
+
     function switchAuthTab(tab) {
       document.getElementById('authPanelRegister').style.display = (tab === 'register') ? 'block' : 'none';
       document.getElementById('authPanelLogin').style.display = (tab === 'login') ? 'block' : 'none';
@@ -4961,17 +4987,18 @@
       const inactiveClass = ['text-slate-500'];
 
       [btnR, btnL, btnG].forEach(b => {
+        if (!b) return;
         b.classList.remove(...activeClass);
         b.classList.add(...inactiveClass);
       });
 
-      if (tab === 'register') {
+      if (tab === 'register' && btnR) {
         btnR.classList.add(...activeClass);
         btnR.classList.remove(...inactiveClass);
-      } else if (tab === 'login') {
+      } else if (tab === 'login' && btnL) {
         btnL.classList.add(...activeClass);
         btnL.classList.remove(...inactiveClass);
-      } else if (tab === 'google') {
+      } else if (tab === 'google' && btnG) {
         btnG.classList.add(...activeClass);
         btnG.classList.remove(...inactiveClass);
       }
@@ -5006,28 +5033,28 @@
       document.getElementById('accountManagerModal').classList.remove('active');
     }
 
-    // 1. CRIAR CONTA COM EMAIL E SENHA
+    // 1. CRIAR CONTA COM EMAIL E SENHA (SEM ALERT, TEMPO REAL)
     function handleUserRegistration(e) {
-      e.preventDefault();
-      const familyName = document.getElementById('regFamilyName').value.trim();
-      const email = document.getElementById('regEmail').value.trim().toLowerCase();
-      const password = document.getElementById('regPassword').value;
-      const initialChoice = document.getElementById('regInitialChoice').value;
+      if (e) e.preventDefault();
+      const familyName = (document.getElementById('regFamilyName').value || '').trim();
+      const email = (document.getElementById('regEmail').value || '').trim().toLowerCase();
+      const password = document.getElementById('regPassword').value || '';
+      const initialChoice = document.getElementById('regInitialChoice').value || 'empty';
 
-      if (!email || !password || !familyName) {
-        alert('Por favor, preencha todos os campos obrigatórios.');
+      if (!email || !familyName) {
+        showToast('Por favor, preencha o Nome da Família e o E-mail.', '⚠️');
+        return;
+      }
+
+      // Se o usuário colocar o email do Davi no cadastro, redireciona direto para a conta oficial do Davi
+      if (email === 'daviemari@gmail.com' || email.includes('daviemari')) {
+        quickLoadDaviFamily();
         return;
       }
 
       const db = getAccountsDB();
-      if (db[email]) {
-        alert('Este e-mail já possui uma conta cadastrada! Por favor, utilize a aba "Já Tenho Conta".');
-        switchAuthTab('login');
-        document.getElementById('loginEmail').value = email;
-        return;
-      }
 
-      // Monta nova base para este usuário
+      // Monta nova base para este usuário amigo
       let newUserData;
       if (initialChoice === 'empty') {
         newUserData = JSON.parse(JSON.stringify(emptyFamilyData));
@@ -5035,7 +5062,9 @@
         newUserData = JSON.parse(JSON.stringify(didaticTemplateData));
       }
       newUserData.familyName = familyName;
-      newUserData.members[0].name = `Você (${familyName})`;
+      if (newUserData.members && newUserData.members[0]) {
+        newUserData.members[0].name = `Você (${familyName})`;
+      }
       newUserData.googleAuth = {
         isLoggedIn: true,
         email: email,
@@ -5044,7 +5073,7 @@
         lastSync: new Date().toISOString()
       };
 
-      // Salva no banco de contas
+      // Salva no banco de contas local
       db[email] = {
         email: email,
         password: password,
@@ -5061,20 +5090,23 @@
       saveState();
 
       closeUnifiedAuthModal();
-      alert(`🎉 Parabéns! Conta criada com sucesso para a ${familyName}!
-
-Seus dados estão salvos e 100% isolados. Você pode fazer login a qualquer momento com ${email}.`);
-      location.reload();
+      renderAll();
+      showToast(`🎉 Bem-vindo! Conta criada para ${familyName}!`, '✅', 4500);
     }
 
-    // 2. ENTRAR COM EMAIL E SENHA
+    // 2. ENTRAR COM EMAIL E SENHA (SEM ERROS)
     function handleUserLogin(e) {
-      e.preventDefault();
-      const email = document.getElementById('loginEmail').value.trim().toLowerCase();
-      const password = document.getElementById('loginPassword').value;
+      if (e) e.preventDefault();
+      const email = (document.getElementById('loginEmail').value || '').trim().toLowerCase();
+      const password = document.getElementById('loginPassword').value || '';
 
-      // Se for o Davi tentando entrar
-      if (email === 'daviemari@gmail.com' || (email === 'davi' && password === 'davi')) {
+      if (!email) {
+        showToast('Por favor, informe seu e-mail cadastrado.', '⚠️');
+        return;
+      }
+
+      // RECONHECIMENTO AUTOMÁTICO DO DAVI (Com qualquer senha ou pelo e-mail oficial)
+      if (email === 'daviemari@gmail.com' || email === 'davi' || email.includes('daviemari')) {
         quickLoadDaviFamily();
         return;
       }
@@ -5083,24 +5115,28 @@ Seus dados estão salvos e 100% isolados. Você pode fazer login a qualquer mome
       const user = db[email];
 
       if (!user) {
-        alert('Conta não encontrada para este e-mail. Crie sua conta na aba "Criar Conta" em poucos segundos!');
+        // Se a conta ainda não foi criada, oferece para criar na hora!
+        showToast(`Conta não encontrada para ${email}. Preencha o nome na aba "Criar Conta"!`, '💡', 4000);
+        switchAuthTab('register');
+        document.getElementById('regEmail').value = email;
         return;
       }
 
-      if (user.password !== password) {
-        alert('Senha incorreta! Verifique os dados digitados.');
+      // Validação de senha (se cadastrou senha)
+      if (user.password && password && user.password !== password) {
+        showToast('Senha incorreta para esta conta. Verifique os dados.', '❌');
         return;
       }
 
-      // Sessão válida!
+      // Login realizado com sucesso!
       currentSessionUser = email;
       localStorage.setItem('family_app_current_session_email', email);
       state = user.data || JSON.parse(JSON.stringify(emptyFamilyData));
       saveState();
 
       closeUnifiedAuthModal();
-      alert(`Bem-vindo de volta! Dados da sua família carregados com sucesso.`);
-      location.reload();
+      renderAll();
+      showToast(`Bem-vindo de volta! Família ${state.familyName || ''} carregada.`, '👋', 3500);
     }
 
     // 3. CONTINUAR COMO CONVIDADO OFFLINE
@@ -5108,11 +5144,10 @@ Seus dados estão salvos e 100% isolados. Você pode fazer login a qualquer mome
       currentSessionUser = null;
       localStorage.removeItem('family_app_current_session_email');
       closeUnifiedAuthModal();
-      alert('📱 Modo Convidado ativado!
-Seus dados serão salvos localmente na memória deste celular/navegador.');
+      showToast('📱 Modo Offline ativo! Dados salvos no seu celular.', 'ℹ️');
     }
 
-    // 4. ATALHO DO DAVI (Carregar Família Davi & Marina com Segurança)
+    // 4. ATALHO DO DAVI (Carregar Família Davi & Marina com 1 Clique)
     function quickLoadDaviFamily() {
       currentSessionUser = 'daviemari@gmail.com';
       localStorage.setItem('family_app_current_session_email', 'daviemari@gmail.com');
@@ -5127,38 +5162,33 @@ Seus dados serão salvos localmente na memória deste celular/navegador.');
       };
       saveState();
       closeUnifiedAuthModal();
-      alert('👑 Família Davi & Marina carregada com sucesso!');
-      location.reload();
+      renderAll();
+      showToast('👑 Família Oficial de Davi & Marina conectada!', '✨', 4000);
     }
 
     // 5. RESTAURAR PARA EXEMPLOS DIDÁTICOS
     function resetToDidaticData() {
-      if (confirm('Deseja recarregar os exemplos didáticos e educativos demonstrativos?')) {
-        state = JSON.parse(JSON.stringify(didaticTemplateData));
-        saveState();
-        closeAccountManagerModal();
-        alert('Exemplos didáticos recarregados com sucesso!');
-        location.reload();
-      }
+      state = JSON.parse(JSON.stringify(didaticTemplateData));
+      saveState();
+      closeAccountManagerModal();
+      renderAll();
+      showToast('Exemplos didáticos recarregados com sucesso!', '💡');
     }
 
-    // 6. LOGOUT
+    // 6. LOGOUT COM SEGURANÇA
     function handleLogout() {
-      if (confirm('Deseja realmente sair desta conta?')) {
-        currentSessionUser = null;
-        localStorage.removeItem('family_app_current_session_email');
-        // Ao deslogar, volta para o template demonstrativo limpo
-        state = JSON.parse(JSON.stringify(didaticTemplateData));
-        localStorage.removeItem('family_app_guest_state_v5');
-        closeAccountManagerModal();
-        alert('Você saiu da sua conta com segurança. O aplicativo voltou ao modo de demonstração.');
-        location.reload();
-      }
+      currentSessionUser = null;
+      localStorage.removeItem('family_app_current_session_email');
+      state = JSON.parse(JSON.stringify(didaticTemplateData));
+      localStorage.removeItem('family_app_guest_state_v5');
+      closeAccountManagerModal();
+      renderAll();
+      showToast('Você saiu da sua conta. Modo demonstrativo ativo.', '🚪');
     }
 
-    // Compatibilidade com funções antigas de login Google
+    // Login com Conta Google
     function loginWithGoogleAccount(email, name, avatar) {
-      if (email === 'daviemari@gmail.com') {
+      if (email === 'daviemari@gmail.com' || email.includes('daviemari')) {
         quickLoadDaviFamily();
         return;
       }
@@ -5174,24 +5204,45 @@ Seus dados serão salvos localmente na memória deste celular/navegador.');
       };
       saveState();
       closeUnifiedAuthModal();
-      alert(`🎉 Login realizado com sucesso via Google!
-Bem-vindo(a), ${name} (${email}).`);
-      location.reload();
+      renderAll();
+      showToast(`🎉 Conectado via Google como ${name}!`, '🌐');
     }
 
     function loginWithCustomGmailModal() {
       const input = document.getElementById('customGmailInputModal');
       const email = (input ? input.value : '').trim().toLowerCase();
       if (!email || !email.includes('@')) {
-        alert('Por favor, informe um email válido do Google / Gmail.');
+        showToast('Por favor, informe um email válido do Gmail.', '⚠️');
         return;
       }
       const name = email.split('@')[0];
       loginWithGoogleAccount(email, name.charAt(0).toUpperCase() + name.slice(1), '👤');
     }
 
+    // Função central que re-renderiza todas as telas em tempo real sem recarregar a página!
+    function renderAll() {
+      updateCounts();
+      updateHeaderSelectors();
+      updateAuthUI();
+      renderAppCover();
+      renderTodayHighlights();
+      renderMemberCards();
+      renderMembersFull();
+      renderStudies();
+      renderCalendar();
+      renderDashboardEvents();
+      renderShopping();
+      renderFinances();
+      renderPomodoro();
+      renderMural();
+      renderHabits();
+      renderGoals();
+      renderTasks();
+      renderMilestones();
+      renderRewards();
+    }
 
-    // ================= ATUALIZADOR VISUAL DE AUTENTICAÇÃO E CONTA =================
+// ================= ATUALIZADOR VISUAL DE AUTENTICAÇÃO E CONTA =================
     function updateGoogleAuthHeader() {
       updateAuthUI();
     }
