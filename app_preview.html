@@ -7289,6 +7289,10 @@
 
     // 2. Metas com Submetas e Data Limite
     function openAdvancedGoalModal(goalId = null) {
+      if (!goalId && !isUserPro() && (state.goals || []).length >= 2) {
+        openUpgradeModal('Metas e Submetas Ilimitadas');
+        return;
+      }
       const modal = document.getElementById('advancedGoalModal');
       const container = document.getElementById('goalSubtasksInputsContainer');
       container.innerHTML = '';
@@ -7399,6 +7403,10 @@
 
     // 3. Hábitos com Frequência Personalizada
     function openAdvancedHabitModal() {
+      if (!isUserPro() && (state.habits || []).length >= 3) {
+        openUpgradeModal('Hábitos e Rotinas Ilimitadas');
+        return;
+      }
       document.getElementById('ahab-title').value = '';
       document.getElementById('ahab-freq').value = 'daily';
       document.getElementById('advancedHabitModal').classList.add('active');
@@ -8016,6 +8024,10 @@
     // RECURSO PRO: RELATÓRIO DE EVOLUÇÃO FÍSICA E SAÚDE EM PDF / IMPRESSÃO
     // ==========================================
     function printFitnessReport() {
+      if (!isUserPro()) {
+        openUpgradeModal('Relatório Completo de Saúde & Performance em PDF');
+        return;
+      }
       const measures = state.bodyMeasures || [];
       const workouts = state.workouts || [];
       const sups = state.supplements || [];
