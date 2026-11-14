@@ -9595,32 +9595,57 @@ Todos os recursos avançados estão disponíveis para você:
     }
 
     function toggleAdminProSimulation() {
-      if (state.plan === 'pro') {
-        state.plan = 'free';
-        state.isProActive = false;
-        localStorage.removeItem('family_app_pro_unlocked');
-        alert('Modo Simulação FREE ativado! Agora você pode navegar exatamente como um visitante gratuito para testar os bloqueios e vendas.');
+      // Proteção rigorosa: exige PIN mestre de administrador (1234)
+      if (typeof openAdminPinModal === 'function') {
+        openAdminPinModal(() => {
+          if (state.plan === 'pro') {
+            state.plan = 'free';
+            state.isProActive = false;
+            localStorage.removeItem('family_app_pro_unlocked');
+            showToast('Simulação gratuita ativada para testes.', '🧪');
+          } else {
+            state.plan = 'pro';
+            state.isProActive = true;
+            localStorage.setItem('family_app_pro_unlocked', 'true');
+            showToast('Modo PRO ativado com sucesso!', '👑');
+          }
+          saveState();
+          updateAuthUI();
+          closeUpgradeModal();
+        }, 'Acesso Administrativo (Davi)');
       } else {
-        state.plan = 'pro';
-        state.isProActive = true;
-        localStorage.setItem('family_app_pro_unlocked', 'true');
-        alert('Modo PRO Restaurado! Todos os recursos estão desbloqueados.');
+        alert('Acesso restrito apenas ao Administrador com PIN.');
       }
-      saveState();
-      updateAuthUI();
-      closeUpgradeModal();
     }
 
     function updateAdminVipShortcut() {
       const container = document.getElementById('adminVipShortcut');
       if (!container) return;
       const isPro = isUserPro();
+
+      // Para quem NÃO pagou: NUNCA exibe botão de ativar modo PRO instantâneo
+      if (!isPro) {
+        container.innerHTML = `
+          <div class="flex items-center justify-between text-[11px] text-slate-500">
+            <span>Status Atual: <strong class="text-slate-600 dark:text-slate-400 font-bold">⭐ Visitante Gratuito</strong></span>
+            <span class="text-[10px] text-slate-400">Liberação somente via Chave ou PIX</span>
+          </div>
+        `;
+        return;
+      }
+
+      // Para quem JÁ É PRO (pagou ou tem chave ativa)
+      const isAdmin = currentSessionUser && (currentSessionUser.includes('davi') || currentSessionUser.includes('admin'));
       container.innerHTML = `
         <div class="flex items-center justify-between text-[11px] text-slate-500">
-          <span>Status Atual: <strong class="${isPro ? 'text-amber-500' : 'text-slate-600'}">${isPro ? '👑 Assinante PRO Ativo' : '⭐ Visitante Gratuito'}</strong></span>
-          <button onclick="toggleAdminProSimulation()" class="text-indigo-600 dark:text-indigo-400 font-bold hover:underline">
-            ${isPro ? 'Simular Modo Grátis' : 'Ativar Modo PRO Instantâneo'}
-          </button>
+          <span>Status Atual: <strong class="text-amber-500 font-bold">👑 Assinante PRO Ativo</strong></span>
+          ${isAdmin ? `
+            <button onclick="toggleAdminProSimulation()" class="text-[10px] text-slate-400 hover:text-slate-600 dark:hover:text-slate-200 underline">
+              Simular Modo Grátis (Admin)
+            </button>
+          ` : `
+            <span class="px-2.5 py-0.5 rounded-full bg-amber-100 dark:bg-amber-950/80 text-amber-700 dark:text-amber-300 font-bold text-[10px]">Acesso Vitalício Liberado</span>
+          `}
         </div>
       `;
     }
@@ -10207,7 +10232,7 @@ Todos os recursos avançados estão disponíveis para você:
     // Registro de Service Worker para PWA Offline e Instalação Nativa
     if ('serviceWorker' in navigator) {
       window.addEventListener('load', () => {
-        navigator.serviceWorker.register('./sw.js?v=3.4', { updateViaCache: 'none' })
+        navigator.serviceWorker.register('./sw.js?v=3.5', { updateViaCache: 'none' })
           .then((reg) => {
             reg.update();
           })
