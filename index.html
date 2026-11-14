@@ -2658,8 +2658,13 @@
           </div>
 
           <div>
-            <label class="block text-xs font-bold text-slate-700 dark:text-slate-300 mb-1">Sua Senha *</label>
-            <input type="password" id="loginPassword" required placeholder="Sua senha cadastrada" class="w-full px-3.5 py-2.5 rounded-xl border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 text-xs sm:text-sm outline-none focus:border-indigo-500">
+            <div class="flex items-center justify-between mb-1">
+              <label class="block text-xs font-bold text-slate-700 dark:text-slate-300">Sua Senha *</label>
+              <button type="button" onclick="switchAuthTab('forgot')" class="text-[11px] font-bold text-indigo-600 dark:text-indigo-400 hover:underline">
+                Esqueceu a senha?
+              </button>
+            </div>
+            <input type="password" id="loginPassword" required placeholder="Sua senha cadastrada" class="w-full px-3.5 py-2.5 rounded-xl border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 text-xs sm:text-sm outline-none focus:border-indigo-500 text-slate-900 dark:text-white">
           </div>
 
           <button type="submit" class="w-full py-3 rounded-2xl bg-indigo-600 hover:bg-indigo-700 text-white font-bold text-sm shadow-lg shadow-indigo-600/30 transition flex items-center justify-center space-x-2">
@@ -2669,6 +2674,40 @@
 
         <div class="p-3 rounded-2xl bg-slate-50 dark:bg-slate-800/80 border border-slate-200 dark:border-slate-700 text-center">
           <p class="text-xs text-slate-500">Ainda não tem conta? <button onclick="switchAuthTab('register')" class="text-indigo-600 dark:text-indigo-400 font-bold hover:underline">Cadastre-se grátis</button></p>
+        </div>
+      </div>
+
+      <!-- PAINEL 4: RECUPERAR / REDEFINIR SENHA -->
+      <div id="authPanelForgot" class="space-y-4" style="display: none;">
+        <div class="p-3 rounded-2xl bg-amber-50 dark:bg-amber-950/40 border border-amber-200 dark:border-amber-900/60 text-xs text-amber-800 dark:text-amber-200">
+          🔄 <strong>Recuperação de Acesso:</strong> Informe seu e-mail cadastrado e defina uma nova senha para entrar na sua conta.
+        </div>
+
+        <form onsubmit="handlePasswordReset(event)" class="space-y-3">
+          <div>
+            <label class="block text-xs font-bold text-slate-700 dark:text-slate-300 mb-1">Seu E-mail Cadastrado *</label>
+            <input type="email" id="resetEmail" required placeholder="seuemail@exemplo.com" class="w-full px-3.5 py-2.5 rounded-xl border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 text-xs sm:text-sm outline-none focus:border-indigo-500 text-slate-900 dark:text-white">
+          </div>
+
+          <div>
+            <label class="block text-xs font-bold text-slate-700 dark:text-slate-300 mb-1">Nova Senha *</label>
+            <input type="password" id="resetNewPassword" required minlength="4" placeholder="Mínimo 4 caracteres" class="w-full px-3.5 py-2.5 rounded-xl border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 text-xs sm:text-sm outline-none focus:border-indigo-500 text-slate-900 dark:text-white">
+          </div>
+
+          <div>
+            <label class="block text-xs font-bold text-slate-700 dark:text-slate-300 mb-1">Confirme a Nova Senha *</label>
+            <input type="password" id="resetConfirmPassword" required minlength="4" placeholder="Repita a nova senha" class="w-full px-3.5 py-2.5 rounded-xl border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 text-xs sm:text-sm outline-none focus:border-indigo-500 text-slate-900 dark:text-white">
+          </div>
+
+          <button type="submit" class="w-full py-3 rounded-2xl bg-gradient-to-r from-amber-500 to-indigo-600 hover:from-amber-600 hover:to-indigo-700 text-white font-bold text-sm shadow-lg shadow-indigo-500/25 transition flex items-center justify-center space-x-2">
+            <span>🔄 Salvar Nova Senha e Entrar</span>
+          </button>
+        </form>
+
+        <div class="text-center pt-1">
+          <button type="button" onclick="switchAuthTab('login')" class="text-xs font-bold text-slate-500 hover:text-indigo-600 hover:underline">
+            ← Voltar para a tela de login
+          </button>
         </div>
       </div>
 
@@ -2995,6 +3034,11 @@
           <input type="file" id="backupFileInputUnified" accept=".json" onchange="importBackupJson(event)" class="hidden">
           <span class="text-slate-400">Abrir</span>
         </label>
+
+        <button onclick="promptChangePasswordLoggedIn()" class="w-full flex items-center justify-between p-2.5 rounded-xl bg-slate-100 dark:bg-slate-800 text-xs font-bold text-slate-700 dark:text-slate-200 hover:bg-slate-200 transition">
+          <span class="flex items-center space-x-2"><span>🔑</span><span>Trocar / Atualizar Senha</span></span>
+          <span class="text-indigo-600 font-bold">Alterar</span>
+        </button>
 
         <!-- Alternador Rápido de Estrutura Familiar -->
         <div class="p-2.5 rounded-xl bg-slate-100 dark:bg-slate-800 text-left">
@@ -6385,12 +6429,14 @@
     function exportBackupJson() {
       const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(state, null, 2));
       const downloadAnchor = document.createElement('a');
-      const filename = `backup-familia-davi-marina-${new Date().toISOString().split('T')[0]}.json`;
+      const safeName = (state.familyName || 'meus-dados').replace(/[^a-zA-Z0-9]/g, '-').toLowerCase();
+      const filename = `backup-familia-em-foco-${safeName}-${new Date().toISOString().split('T')[0]}.json`;
       downloadAnchor.setAttribute("href", dataStr);
       downloadAnchor.setAttribute("download", filename);
       document.body.appendChild(downloadAnchor);
       downloadAnchor.click();
       downloadAnchor.remove();
+      showToast('Arquivo de backup baixado com sucesso! Guarde com segurança.', '💾', 4000);
     }
 
     function importBackupJson(event) {
@@ -6400,16 +6446,18 @@
       reader.onload = function(e) {
         try {
           const parsed = JSON.parse(e.target.result);
-          if (parsed.members && parsed.habits) {
+          if (parsed.members || parsed.habits || parsed.studies) {
             state = parsed;
             saveState();
+            closeAccountManagerModal();
             closeGoogleAccountModal();
-            location.reload();
+            renderAll();
+            showToast('🎉 Todos os dados e arquivos foram restaurados com sucesso!', '📂', 4000);
           } else {
-            alert('Arquivo de backup inválido.');
+            alert('Arquivo de backup inválido ou corrompido.');
           }
         } catch(err) {
-          alert('Erro ao processar arquivo de backup.');
+          alert('Erro ao processar o arquivo de backup.');
         }
       };
       reader.readAsText(file);
@@ -7173,6 +7221,8 @@
       document.getElementById('authPanelRegister').style.display = (tab === 'register') ? 'block' : 'none';
       document.getElementById('authPanelLogin').style.display = (tab === 'login') ? 'block' : 'none';
       document.getElementById('authPanelGoogle').style.display = (tab === 'google') ? 'block' : 'none';
+      const forgotPanel = document.getElementById('authPanelForgot');
+      if (forgotPanel) forgotPanel.style.display = (tab === 'forgot') ? 'block' : 'none';
 
       const btnR = document.getElementById('tabBtnRegister');
       const btnL = document.getElementById('tabBtnLogin');
@@ -7196,6 +7246,84 @@
       } else if (tab === 'google' && btnG) {
         btnG.classList.add(...activeClass);
         btnG.classList.remove(...inactiveClass);
+      }
+    }
+
+    // Redefinição e Troca de Senha
+    function handlePasswordReset(e) {
+      if (e) e.preventDefault();
+      const email = (document.getElementById('resetEmail')?.value || '').trim().toLowerCase();
+      const newPass = document.getElementById('resetNewPassword')?.value || '';
+      const confirmPass = document.getElementById('resetConfirmPassword')?.value || '';
+
+      if (!email || !newPass) {
+        showToast('Preencha o e-mail e a nova senha.', '⚠️');
+        return;
+      }
+
+      if (newPass !== confirmPass) {
+        showToast('As duas senhas não coincidem. Digite novamente.', '❌');
+        return;
+      }
+
+      // Se for a conta do Davi, exige o PIN de administrador antes de alterar a senha
+      if (email === 'daviemari@gmail.com' || email.includes('daviemari')) {
+        openAdminPinModal(() => {
+          executePasswordReset(email, newPass);
+        }, 'Confirmação do Administrador', 'Digite o PIN de 4 dígitos para autorizar a nova senha');
+        return;
+      }
+
+      const db = getAccountsDB();
+      if (!db[email]) {
+        showToast('Nenhuma conta encontrada com este e-mail. Crie uma conta na aba "Criar Conta".', '⚠️');
+        return;
+      }
+
+      executePasswordReset(email, newPass);
+    }
+
+    function executePasswordReset(email, newPassword) {
+      const db = getAccountsDB();
+      if (db[email]) {
+        db[email].password = newPassword;
+        saveAccountsDB(db);
+      }
+      currentSessionUser = email;
+      localStorage.setItem('family_app_current_session_email', email);
+      if (db[email] && db[email].data) {
+        state = db[email].data;
+        saveState();
+      }
+      closeUnifiedAuthModal();
+      renderAll();
+      showToast('🎉 Senha redefinida com sucesso! Você já está conectado.', '✅', 4000);
+    }
+
+    function promptChangePasswordLoggedIn() {
+      const email = currentSessionUser;
+      if (!email) {
+        showToast('Você está navegando em modo visitante. Crie uma conta para ter senha.', 'ℹ️');
+        return;
+      }
+
+      if (email === 'daviemari@gmail.com' || email.includes('daviemari')) {
+        openAdminPinModal(() => {
+          const newPass = prompt('Digite a sua NOVA senha:');
+          if (newPass && newPass.length >= 4) {
+            executePasswordReset(email, newPass);
+          } else if (newPass) {
+            alert('A senha deve ter no mínimo 4 caracteres.');
+          }
+        }, 'Trocar Senha de Administrador', 'Digite o PIN de 4 dígitos');
+        return;
+      }
+
+      const newPass = prompt('Digite sua NOVA senha (mínimo 4 caracteres):');
+      if (newPass && newPass.length >= 4) {
+        executePasswordReset(email, newPass);
+      } else if (newPass) {
+        alert('A senha deve ter no mínimo 4 caracteres.');
       }
     }
 
