@@ -2386,42 +2386,16 @@
         <p class="text-xs text-slate-500 mt-1">Conecte sua conta do Gmail para salvar e sincronizar todos os dados da família na nuvem</p>
       </div>
 
-      <!-- Contas Salvas de Acesso Rápido -->
-      <div class="space-y-2 mb-4">
-        <p class="text-[11px] font-bold uppercase tracking-wider text-slate-400">Escolha uma conta para continuar:</p>
-        
-        <button onclick="loginWithGoogleAccount('daviemari@gmail.com', 'Davi & Marina', '👨‍💻')" class="w-full flex items-center justify-between p-3 rounded-2xl border border-slate-200 dark:border-slate-700 hover:border-indigo-500 hover:bg-indigo-50/50 dark:hover:bg-slate-800 transition text-left">
-          <div class="flex items-center space-x-3">
-            <div class="w-10 h-10 rounded-full bg-blue-100 dark:bg-blue-950 flex items-center justify-center text-lg">👨‍💻</div>
-            <div>
-              <p class="text-sm font-bold text-slate-900 dark:text-white">Davi (Administrador)</p>
-              <p class="text-xs text-slate-500">daviemari@gmail.com</p>
-            </div>
-          </div>
-          <span class="text-xs font-bold text-indigo-600 dark:text-indigo-400">Entrar →</span>
-        </button>
-
-        <button onclick="loginWithGoogleAccount('marina.familia@gmail.com', 'Marina', '👩‍💼')" class="w-full flex items-center justify-between p-3 rounded-2xl border border-slate-200 dark:border-slate-700 hover:border-indigo-500 hover:bg-indigo-50/50 dark:hover:bg-slate-800 transition text-left">
-          <div class="flex items-center space-x-3">
-            <div class="w-10 h-10 rounded-full bg-emerald-100 dark:bg-emerald-950 flex items-center justify-center text-lg">👩‍💼</div>
-            <div>
-              <p class="text-sm font-bold text-slate-900 dark:text-white">Marina (Administradora)</p>
-              <p class="text-xs text-slate-500">marina.familia@gmail.com</p>
-            </div>
-          </div>
-          <span class="text-xs font-bold text-indigo-600 dark:text-indigo-400">Entrar →</span>
-        </button>
-      </div>
-
-      <!-- Ou Digitar Qualquer Email do Gmail -->
-      <div class="border-t border-slate-200 dark:border-slate-800 pt-3">
-        <label class="block text-xs font-bold text-slate-700 dark:text-slate-300 mb-1">Ou use outro email do Google:</label>
+      <!-- Formulário Seguro de Conexão com Google / Gmail -->
+      <div class="space-y-3 my-4">
+        <label class="block text-xs font-bold text-slate-700 dark:text-slate-300">Digite seu e-mail do Gmail:</label>
         <div class="flex gap-2">
-          <input type="email" id="customGmailInput" placeholder="seu-email@gmail.com" class="flex-1 px-3 py-2 rounded-xl border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 text-xs sm:text-sm outline-none">
-          <button onclick="loginWithCustomGmail()" class="px-4 py-2 bg-indigo-600 hover:bg-indigo-700 text-white font-bold text-xs rounded-xl shadow-md">
+          <input type="email" id="customGmailInput" placeholder="seu-email@gmail.com" class="flex-1 px-3.5 py-2.5 rounded-xl border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 text-xs sm:text-sm outline-none focus:border-indigo-500 text-slate-900 dark:text-white">
+          <button onclick="loginWithCustomGmail()" class="px-5 py-2.5 bg-indigo-600 hover:bg-indigo-700 text-white font-bold text-xs rounded-xl shadow-md transition">
             Conectar
           </button>
         </div>
+        <p class="text-[11px] text-slate-500">Seus dados ficam armazenados de forma privada e sincronizados com a nuvem na sua conta.</p>
       </div>
 
       <div class="mt-4 pt-3 border-t border-slate-100 dark:border-slate-800 flex justify-between items-center text-[11px] text-slate-400">
@@ -2691,10 +2665,6 @@
           <button type="submit" class="w-full py-3 rounded-2xl bg-indigo-600 hover:bg-indigo-700 text-white font-bold text-sm shadow-lg shadow-indigo-600/30 transition flex items-center justify-center space-x-2">
             <span>🔑 Entrar na Minha Família</span>
           </button>
-
-          <button type="button" onclick="quickLoadDaviFamily()" class="w-full py-2.5 px-3 rounded-2xl bg-gradient-to-r from-amber-500/15 via-orange-500/15 to-yellow-500/15 border border-amber-400/40 hover:border-amber-500 text-amber-800 dark:text-amber-200 text-xs font-bold flex items-center justify-center space-x-2 transition shadow-xs">
-            <span>👑</span><span>Sou o Davi (Entrar na Família Oficial com 1 Clique)</span>
-          </button>
         </form>
 
         <div class="p-3 rounded-2xl bg-slate-50 dark:bg-slate-800/80 border border-slate-200 dark:border-slate-700 text-center">
@@ -2705,55 +2675,28 @@
       <!-- PAINEL 3: CONECTAR COM GOOGLE -->
       <div id="authPanelGoogle" class="space-y-4" style="display: none;">
         <p class="text-xs text-slate-500 text-center">
-          Faça login com sua conta do Google / Gmail para ter sincronização automática entre múltiplos dispositivos.
+          Conecte sua conta do Google / Gmail para ter sincronização automática entre múltiplos dispositivos.
         </p>
 
         <div class="space-y-2">
-          <!-- Botão Davi (Acesso rápido se for o Davi) -->
-          <button onclick="loginWithGoogleAccount('daviemari@gmail.com', 'Davi & Marina (Oficial)', '👨‍💻')" class="w-full flex items-center justify-between p-3 rounded-2xl border border-slate-200 dark:border-slate-700 hover:border-indigo-500 hover:bg-indigo-50/50 dark:hover:bg-slate-800 transition text-left">
-            <div class="flex items-center space-x-3">
-              <div class="w-10 h-10 rounded-full bg-blue-100 dark:bg-blue-950 flex items-center justify-center text-lg">👨‍💻</div>
-              <div>
-                <p class="text-xs font-bold text-slate-900 dark:text-white">Davi (Administrador)</p>
-                <p class="text-[11px] text-slate-500">daviemari@gmail.com</p>
-              </div>
-            </div>
-            <span class="text-xs font-bold text-indigo-600 dark:text-indigo-400">Entrar →</span>
-          </button>
-
-          <!-- Botão Marina -->
-          <button onclick="loginWithGoogleAccount('marina.familia@gmail.com', 'Marina', '👩‍💼')" class="w-full flex items-center justify-between p-3 rounded-2xl border border-slate-200 dark:border-slate-700 hover:border-indigo-500 hover:bg-indigo-50/50 dark:hover:bg-slate-800 transition text-left">
-            <div class="flex items-center space-x-3">
-              <div class="w-10 h-10 rounded-full bg-emerald-100 dark:bg-emerald-950 flex items-center justify-center text-lg">👩‍💼</div>
-              <div>
-                <p class="text-xs font-bold text-slate-900 dark:text-white">Marina</p>
-                <p class="text-[11px] text-slate-500">marina.familia@gmail.com</p>
-              </div>
-            </div>
-            <span class="text-xs font-bold text-indigo-600 dark:text-indigo-400">Entrar →</span>
-          </button>
-        </div>
-
-        <div class="pt-3 border-t border-slate-200 dark:border-slate-800">
-          <label class="block text-xs font-bold text-slate-700 dark:text-slate-300 mb-1">Ou use outro e-mail do Gmail:</label>
+          <label class="block text-xs font-bold text-slate-700 dark:text-slate-300">Seu e-mail do Gmail:</label>
           <div class="flex gap-2">
-            <input type="email" id="customGmailInputModal" placeholder="seu-email@gmail.com" class="flex-1 px-3 py-2 rounded-xl border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 text-xs outline-none">
-            <button onclick="loginWithCustomGmailModal()" class="px-4 py-2 bg-indigo-600 hover:bg-indigo-700 text-white font-bold text-xs rounded-xl shadow-md">
+            <input type="email" id="customGmailInputModal" placeholder="seu-email@gmail.com" class="flex-1 px-3.5 py-2.5 rounded-xl border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 text-xs sm:text-sm outline-none focus:border-indigo-500 text-slate-900 dark:text-white">
+            <button onclick="loginWithCustomGmailModal()" class="px-5 py-2.5 bg-indigo-600 hover:bg-indigo-700 text-white font-bold text-xs rounded-xl shadow-md transition">
               Conectar
             </button>
           </div>
         </div>
       </div>
 
-      <!-- Rodapé com Opção Offline e Atalho Davi -->
+      <!-- Rodapé com Opção Offline -->
       <div class="mt-6 pt-4 border-t border-slate-100 dark:border-slate-800 space-y-2">
         <button onclick="continueAsGuestOffline()" class="w-full py-2.5 rounded-xl border border-slate-200 dark:border-slate-700 hover:bg-slate-50 dark:hover:bg-slate-800 text-xs font-bold text-slate-600 dark:text-slate-300 transition flex items-center justify-center space-x-2">
           <span>📱 Continuar sem Conta (Salvar apenas neste celular / Offline)</span>
         </button>
 
-        <div class="flex items-center justify-between text-[11px] text-slate-400 pt-1">
-          <span>🔒 Criptografia Local</span>
-          <button onclick="quickLoadDaviFamily()" class="text-slate-400 hover:text-indigo-600 hover:underline">👑 Sou o Davi</button>
+        <div class="flex items-center justify-center text-[11px] text-slate-400 pt-1">
+          <span>🔒 Criptografia e Armazenamento Local Seguro</span>
         </div>
       </div>
 
@@ -2876,9 +2819,9 @@
 
         <!-- Botão WhatsApp para Envio do Comprovante -->
         <div class="flex flex-col sm:flex-row gap-2 pt-1">
-          <a id="btnWhatsAppConfirm" href="https://wa.me/5571981223348?text=Ol%C3%A1%20Davi!%20Fiz%20o%20PIX%20do%20Plano%20PRO%20do%20Fam%C3%ADlia%20em%20Foco.%20Segue%20o%20comprovante%20para%20minha%20chave%20de%20ativa%C3%A7%C3%A3o!" target="_blank" rel="noopener noreferrer" class="flex-1 py-2.5 px-3 rounded-xl bg-emerald-500 hover:bg-emerald-600 text-white font-bold text-xs flex items-center justify-center gap-2 shadow-xs transition text-center">
+          <a id="btnWhatsAppConfirm" href="https://wa.me/5571996815876?text=Ol%C3%A1%20Davi!%20Fiz%20o%20PIX%20do%20Plano%20PRO%20do%20Fam%C3%ADlia%20em%20Foco.%20Segue%20o%20comprovante%20para%20minha%20chave%20de%20ativa%C3%A7%C3%A3o!" target="_blank" rel="noopener noreferrer" class="flex-1 py-2.5 px-3 rounded-xl bg-emerald-500 hover:bg-emerald-600 text-white font-bold text-xs flex items-center justify-center gap-2 shadow-xs transition text-center">
             <span>💬</span>
-            <span>Confirmar no WhatsApp (Receber Chave)</span>
+            <span>Confirmar no WhatsApp (71 9681-5876)</span>
           </a>
         </div>
       </div>
@@ -6373,17 +6316,26 @@
     }
 
     function loginWithGoogleAccount(email, name, avatar) {
+      if (email === 'daviemari@gmail.com' || email.includes('daviemari')) {
+        openAdminPinModal(() => {
+          unlockDaviAdminSession();
+        }, 'Acesso do Administrador', 'Digite o PIN de 4 dígitos para confirmar que é o Davi');
+        return;
+      }
       state.googleAuth = {
         isLoggedIn: true,
         email: email,
         name: name,
-        avatar: avatar,
+        avatar: avatar || '👤',
+        accountType: 'google',
         lastSync: new Date().toISOString()
       };
+      currentSessionUser = email;
+      localStorage.setItem('family_app_current_session_email', email);
       saveState();
       updateGoogleAuthHeader();
       closeGoogleAuthModal();
-      alert(`🎉 Login realizado com sucesso via Google!\nBem-vindo(a), ${name} (${email}).\nSeus dados agora são sincronizados automaticamente.`);
+      showToast(`🎉 Conectado via Google como ${name}!`, '🌐');
     }
 
     function loginWithCustomGmail() {
@@ -7296,9 +7248,11 @@
         return;
       }
 
-      // Se o usuário colocar o email do Davi no cadastro, redireciona direto para a conta oficial do Davi
+      // Proteção de Identidade: Não permite que terceiros se cadastrem se passando pelo Davi
       if (email === 'daviemari@gmail.com' || email.includes('daviemari')) {
-        quickLoadDaviFamily();
+        openAdminPinModal(() => {
+          unlockDaviAdminSession();
+        }, 'Identidade do Administrador', 'Digite o PIN de 4 dígitos para confirmar que é o Davi');
         return;
       }
 
@@ -7406,9 +7360,11 @@
         return;
       }
 
-      // RECONHECIMENTO AUTOMÁTICO DO DAVI (Com qualquer senha ou pelo e-mail oficial)
+      // Proteção de Identidade: Não permite que terceiros entrem como Davi sem digitar o PIN
       if (email === 'daviemari@gmail.com' || email === 'davi' || email.includes('daviemari')) {
-        quickLoadDaviFamily();
+        openAdminPinModal(() => {
+          unlockDaviAdminSession();
+        }, 'Acesso do Administrador', 'Digite o PIN de 4 dígitos para confirmar que é o Davi');
         return;
       }
 
@@ -7448,23 +7404,25 @@
       showToast('📱 Modo Offline ativo! Dados salvos no seu celular.', 'ℹ️');
     }
 
-    // 4. ATALHO DO DAVI (Carregar Família Davi & Marina com 1 Clique)
-    function quickLoadDaviFamily() {
+    // 4. ACESSO SEGURO DO ADMINISTRADOR (LIBERADO EXCLUSIVAMENTE COM O PIN 1234)
+    function unlockDaviAdminSession() {
       currentSessionUser = 'daviemari@gmail.com';
       localStorage.setItem('family_app_current_session_email', 'daviemari@gmail.com');
       state = JSON.parse(JSON.stringify(initialFamilyData));
       state.googleAuth = {
         isLoggedIn: true,
         email: 'daviemari@gmail.com',
-        name: 'Davi & Marina (Oficial)',
+        name: 'Davi (Administrador)',
         avatar: '👨‍💻',
         accountType: 'davi_admin',
         lastSync: new Date().toISOString()
       };
+      isAdminUnlocked = true;
       saveState();
       closeUnifiedAuthModal();
+      closeGoogleAuthModal();
       renderAll();
-      showToast('👑 Família Oficial de Davi & Marina conectada!', '✨', 4000);
+      showToast('👑 Acesso de Administrador confirmado com PIN!', '✨', 4000);
     }
 
     // 5. RESTAURAR PARA EXEMPLOS DIDÁTICOS
@@ -7490,7 +7448,9 @@
     // Login com Conta Google
     function loginWithGoogleAccount(email, name, avatar) {
       if (email === 'daviemari@gmail.com' || email.includes('daviemari')) {
-        quickLoadDaviFamily();
+        openAdminPinModal(() => {
+          unlockDaviAdminSession();
+        }, 'Acesso do Administrador', 'Digite o PIN de 4 dígitos para confirmar que é o Davi');
         return;
       }
       currentSessionUser = email;
@@ -9392,7 +9352,7 @@
 
       if (btnWhatsApp) {
         const msg = encodeURIComponent(`Olá Davi! Realizei o PIX para o Plano PRO do Família em Foco no plano ${planoDesc}. Segue o comprovante para liberação da minha chave de ativação!`);
-        btnWhatsApp.href = `https://wa.me/5571981223348?text=${msg}`;
+        btnWhatsApp.href = `https://wa.me/5571996815876?text=${msg}`;
       }
     }
 
@@ -9816,19 +9776,19 @@ Todos os recursos avançados estão disponíveis para você:
 
       if (!titleElem || !badgesContainer) return;
 
-      if (isDaviAdmin) {
-        titleElem.innerHTML = `Família em Foco <span class="text-indigo-400 text-2xl sm:text-3xl font-light block sm:inline">• Davi & Marina</span>`;
-        subtitleElem.innerHTML = `O ecossistema definitivo de crescimento familiar: acompanhe a <strong>faculdade dos pais</strong>, a <strong>escola das crianças</strong>, as <strong>finanças estratégicas</strong> e o <strong>desenvolvimento do Theo</strong>.`;
-        if (badgeElem) badgeElem.innerHTML = `<span>👑</span> Família Oficial de Davi & Marina • Nuvem Ativa`;
+      if (isDaviAdmin && isAdminUnlocked) {
+        titleElem.innerHTML = `Família em Foco <span class="text-indigo-400 text-2xl sm:text-3xl font-light block sm:inline">• Gestão & Estudos</span>`;
+        subtitleElem.innerHTML = `O ecossistema definitivo de crescimento familiar: acompanhe a <strong>faculdade dos pais</strong>, a <strong>escola das crianças</strong>, as <strong>finanças estratégicas</strong> e o desenvolvimento familiar.`;
+        if (badgeElem) badgeElem.innerHTML = `<span>👑</span> Painel do Administrador • Protegido com PIN`;
       } else if (isLogged) {
         const familyName = state.familyName || 'Minha Família';
         titleElem.innerHTML = `Família em Foco <span class="text-indigo-400 text-2xl sm:text-3xl font-light block sm:inline">• ${familyName}</span>`;
         subtitleElem.innerHTML = `Organização completa dos estudos, compras essenciais, finanças com amortização e metas da sua família.`;
         if (badgeElem) badgeElem.innerHTML = `<span>🛡️</span> Sua Conta Familiar Privada • Backup Ativo`;
       } else {
-        titleElem.innerHTML = `Família em Foco <span class="text-indigo-400 text-2xl sm:text-3xl font-light block sm:inline">• Modo Demonstrativo</span>`;
-        subtitleElem.innerHTML = `Exemplos ilustrativos de como organizar faculdade, colégio das crianças, compras essenciais e finanças. Crie sua conta grátis para cadastrar sua própria família!`;
-        if (badgeElem) badgeElem.innerHTML = `<span>💡</span> Exemplos Didáticos • Sem Dados Pessoais`;
+        titleElem.innerHTML = `Família em Foco <span class="text-indigo-400 text-2xl sm:text-3xl font-light block sm:inline">• Gestão & Crescimento</span>`;
+        subtitleElem.innerHTML = `O ecossistema definitivo para organizar a rotina familiar, faculdade dos pais, educação escolar dos filhos e finanças inteligentes.`;
+        if (badgeElem) badgeElem.innerHTML = `<span>✨</span> Família em Foco • Multi-dispositivo`;
       }
 
       badgesContainer.innerHTML = (state.members || []).map(m => `
