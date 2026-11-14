@@ -310,9 +310,17 @@
         </div>
       </button>
 
-      <div class="mt-auto pt-3 border-t border-slate-200 dark:border-slate-800 text-xs text-slate-400">
-        <p class="font-semibold text-slate-700 dark:text-slate-300">Perfil Ativo:</p>
-        <p id="footerMemberName" class="font-bold text-indigo-600 dark:text-indigo-400">Davi (Administrador)</p>
+      <div class="mt-auto pt-3 border-t border-slate-200 dark:border-slate-800 text-xs text-slate-400 space-y-2">
+        <div>
+          <p class="font-semibold text-slate-700 dark:text-slate-300">Perfil Ativo:</p>
+          <p id="footerMemberName" class="font-bold text-indigo-600 dark:text-indigo-400">Davi (Administrador)</p>
+        </div>
+        <a href="https://linktr.ee/daviriann" target="_blank" rel="noopener noreferrer" class="block p-2 rounded-xl bg-slate-100 dark:bg-slate-800/80 hover:bg-indigo-50 dark:hover:bg-indigo-950/40 text-slate-600 dark:text-slate-300 hover:text-indigo-600 dark:hover:text-indigo-400 transition text-[11px] font-bold border border-slate-200 dark:border-slate-700">
+          <span class="flex items-center justify-between">
+            <span class="flex items-center space-x-1.5"><span>💬</span><span>Suporte: Davi Rian</span></span>
+            <span class="text-indigo-500 font-mono">↗</span>
+          </span>
+        </a>
       </div>
     </aside>
 
@@ -846,6 +854,9 @@
             <button onclick="openSupplementModal()" class="px-3.5 py-2 bg-purple-600 hover:bg-purple-700 text-white font-bold text-xs rounded-xl shadow-md flex items-center space-x-1.5">
               <span>💊</span><span>Suplemento</span>
             </button>
+            <button onclick="printFitnessReport()" class="px-3.5 py-2 bg-slate-800 hover:bg-slate-700 text-white font-bold text-xs rounded-xl shadow-md flex items-center space-x-1.5">
+              <span>📄</span><span>Relatório / PDF</span>
+            </button>
           </div>
         </div>
 
@@ -1375,13 +1386,34 @@
             </ol>
           </div>
 
-          <!-- Botão para Avisar no WhatsApp que fez a doação -->
-          <div class="pt-2 text-center">
-            <button onclick="sendDonationConfirmationWhatsApp()" class="inline-flex items-center space-x-2 px-5 py-2.5 rounded-2xl bg-emerald-500 hover:bg-emerald-600 text-white font-bold text-xs shadow-md transition">
-              <span>📲</span>
-              <span>Fiz um PIX! Avisar o Desenvolvedor no WhatsApp</span>
-            </button>
-            <p class="text-[11px] text-slate-400 mt-1.5">Adoraríamos te agradecer pessoalmente pela força!</p>
+          <!-- Card de Suporte Oficial com Davi Rian -->
+          <div class="bg-gradient-to-r from-purple-900/40 via-indigo-900/40 to-slate-900/80 rounded-3xl p-5 sm:p-6 border-2 border-indigo-500/40 shadow-lg space-y-4">
+            <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+              <div class="flex items-center space-x-3.5">
+                <div class="w-14 h-14 rounded-2xl bg-gradient-to-tr from-purple-500 to-indigo-600 text-white text-2xl font-black flex items-center justify-center shadow-md">
+                  👨‍💻
+                </div>
+                <div>
+                  <div class="flex items-center space-x-2">
+                    <h4 class="font-black text-base text-white">Suporte Oficial: Davi Rian</h4>
+                    <span class="px-2 py-0.5 rounded-full bg-emerald-500/20 text-emerald-300 font-bold text-[10px] border border-emerald-500/30">Online</span>
+                  </div>
+                  <p class="text-xs text-indigo-200 mt-0.5">Criador & Desenvolvedor do Aplicativo</p>
+                  <p class="text-[11px] text-slate-300">Tire dúvidas, envie comprovantes de doação ou sugestões diretamente comigo.</p>
+                </div>
+              </div>
+              <a href="https://linktr.ee/daviriann" target="_blank" rel="noopener noreferrer" class="px-5 py-3 rounded-2xl bg-gradient-to-r from-purple-600 via-indigo-600 to-indigo-700 hover:from-purple-500 hover:to-indigo-600 text-white font-black text-xs shadow-lg shadow-indigo-600/30 transition flex items-center justify-center space-x-2 text-center">
+                <span>🔗</span>
+                <span>Falar com Davi Rian (Linktree)</span>
+                <span>↗</span>
+              </a>
+            </div>
+            <div class="pt-2 border-t border-indigo-800/60 flex flex-wrap items-center justify-between text-[11px] text-slate-400 gap-2">
+              <span>🌐 Link oficial de suporte: <strong class="text-indigo-300 select-all">linktr.ee/daviriann</strong></span>
+              <button onclick="sendDonationConfirmationWhatsApp()" class="text-emerald-400 font-bold hover:underline flex items-center gap-1">
+                <span>📲</span><span>Chamar no WhatsApp</span>
+              </button>
+            </div>
           </div>
         </div>
 
@@ -2620,6 +2652,9 @@
       </div>
 
       <div class="mt-5 pt-4 border-t border-slate-100 dark:border-slate-800">
+        <a href="https://linktr.ee/daviriann" target="_blank" rel="noopener noreferrer" class="w-full py-2.5 mb-2 rounded-xl bg-indigo-50 dark:bg-indigo-950/40 text-indigo-600 dark:text-indigo-400 font-bold text-xs hover:bg-indigo-100 transition flex items-center justify-center space-x-2 border border-indigo-200 dark:border-indigo-800">
+          <span>💬</span><span>Falar com Suporte (Davi Rian)</span><span>↗</span>
+        </a>
         <button onclick="handleLogout()" class="w-full py-2.5 text-xs font-bold text-rose-600 hover:bg-rose-50 dark:hover:bg-rose-950/40 rounded-xl transition flex items-center justify-center space-x-1.5">
           <span>🚪</span><span>Sair desta Conta / Trocar de Família</span>
         </button>
@@ -4248,6 +4283,7 @@
     window.resetRestTimer = resetRestTimer;
     window.calculateOneRepMax = calculateOneRepMax;
 
+    window.printFitnessReport = printFitnessReport;
     renderAll();
       showToast('👤 Demonstração de Pessoa Solteira carregada com sucesso!', '🚀', 4000);
     }
@@ -7974,6 +8010,141 @@
         event.target.classList.remove('active');
       }
     });
+
+    
+    // ==========================================
+    // RECURSO PRO: RELATÓRIO DE EVOLUÇÃO FÍSICA E SAÚDE EM PDF / IMPRESSÃO
+    // ==========================================
+    function printFitnessReport() {
+      const measures = state.bodyMeasures || [];
+      const workouts = state.workouts || [];
+      const sups = state.supplements || [];
+      const latest = measures[0] || {};
+      const member = state.members?.find(m => m.id === state.activeMemberId) || state.members?.[0] || { name: 'Membro Ativo' };
+
+      const printWindow = window.open('', '_blank');
+      if (!printWindow) {
+        showToast('Permita popups no navegador para gerar o relatório impresso.', '⚠️');
+        return;
+      }
+
+      printWindow.document.write(`
+        <!DOCTYPE html>
+        <html>
+        <head>
+          <meta charset="utf-8">
+          <title>Relatório de Saúde & Performance - ${member.name}</title>
+          <style>
+            body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; padding: 30px; color: #1e293b; line-height: 1.5; }
+            h1 { color: #4338ca; border-bottom: 2px solid #e2e8f0; padding-bottom: 8px; margin-bottom: 5px; }
+            .header-info { display: flex; justify-content: space-between; margin-bottom: 20px; font-size: 13px; color: #64748b; }
+            .section-title { font-size: 16px; font-weight: bold; color: #0f172a; margin-top: 25px; margin-bottom: 10px; border-left: 4px solid #4f46e5; padding-left: 8px; }
+            table { width: 100%; border-collapse: collapse; margin-top: 8px; font-size: 12px; }
+            th, td { border: 1px solid #cbd5e1; padding: 8px 10px; text-align: left; }
+            th { background: #f8fafc; font-weight: bold; }
+            .badge { display: inline-block; padding: 2px 6px; border-radius: 6px; font-size: 11px; font-weight: bold; background: #e0e7ff; color: #3730a3; }
+            .footer { margin-top: 40px; text-align: center; font-size: 11px; color: #94a3b8; border-top: 1px solid #e2e8f0; padding-top: 15px; }
+            @media print { button { display: none; } }
+          </style>
+        </head>
+        <body>
+          <div style="text-align: right; margin-bottom: 10px;">
+            <button onclick="window.print()" style="padding: 8px 16px; background: #4f46e5; color: white; border: none; border-radius: 8px; cursor: pointer; font-weight: bold;">🖨️ Imprimir / Salvar como PDF</button>
+          </div>
+
+          <h1>Relatório de Saúde & Performance</h1>
+          <div class="header-info">
+            <div>
+              <strong>Atleta / Aluno:</strong> ${member.name} (${member.role || 'Individual'})<br>
+              <strong>Idade:</strong> ${member.age || '-'} anos | <strong>Altura:</strong> ${member.heightCm || '-'} cm | <strong>Peso:</strong> ${latest.weight || member.weightKg || '-'} kg
+            </div>
+            <div style="text-align: right;">
+              <strong>Data de Emissão:</strong> ${new Date().toLocaleDateString('pt-BR')}<br>
+              <strong>Aplicativo:</strong> Família em Foco PRO
+            </div>
+          </div>
+
+          <div class="section-title">1. Medidas Corporais Atuais & Histórico</div>
+          <table>
+            <thead>
+              <tr>
+                <th>Data</th>
+                <th>Bíceps</th>
+                <th>Antebraço</th>
+                <th>Coxa</th>
+                <th>Panturrilha</th>
+                <th>Tórax</th>
+                <th>Peso</th>
+                <th>Observações</th>
+              </tr>
+            </thead>
+            <tbody>
+              ${measures.map(m => `
+                <tr>
+                  <td><strong>${m.date}</strong></td>
+                  <td>${m.biceps} cm</td>
+                  <td>${m.forearm || '-'} cm</td>
+                  <td>${m.thigh} cm</td>
+                  <td>${m.calf} cm</td>
+                  <td>${m.chest || '-'} cm</td>
+                  <td>${m.weight ? m.weight + ' kg' : '-'}</td>
+                  <td>${m.notes || '-'}</td>
+                </tr>
+              `).join('')}
+            </tbody>
+          </table>
+
+          <div class="section-title">2. Fichas de Treino & Exercícios Ativos</div>
+          <table>
+            <thead>
+              <tr>
+                <th>Divisão</th>
+                <th>Exercício</th>
+                <th>Séries x Reps</th>
+                <th>Carga</th>
+              </tr>
+            </thead>
+            <tbody>
+              ${workouts.map(w => `
+                <tr>
+                  <td><span class="badge">Treino ${w.division}</span></td>
+                  <td><strong>${w.name}</strong></td>
+                  <td>${w.sets} séries x ${w.reps} reps</td>
+                  <td>${w.weight || 'Carga Livre'}</td>
+                </tr>
+              `).join('')}
+            </tbody>
+          </table>
+
+          <div class="section-title">3. Protocolo de Suplementação Diária</div>
+          <table>
+            <thead>
+              <tr>
+                <th>Suplemento</th>
+                <th>Dosagem</th>
+                <th>Horário</th>
+              </tr>
+            </thead>
+            <tbody>
+              ${sups.map(s => `
+                <tr>
+                  <td><strong>${s.name}</strong></td>
+                  <td>${s.dose}</td>
+                  <td>${s.time}</td>
+                </tr>
+              `).join('')}
+            </tbody>
+          </table>
+
+          <div class="footer">
+            Relatório gerado pelo aplicativo Família em Foco PRO • Suporte: Davi Rian (linktr.ee/daviriann)
+          </div>
+        </body>
+        </html>
+      `);
+      printWindow.document.close();
+      showToast('Relatório completo gerado! Pronto para impressão ou salvar em PDF.', '📄');
+    }
 
     function renderFitness() {
       updateOverallEvolutionBanner();
