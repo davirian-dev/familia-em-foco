@@ -257,6 +257,14 @@
         </div>
       </button>
 
+      <button onclick="navigate('fitness')" id="nav-fitness" class="nav-btn w-full flex items-center space-x-3 px-3.5 py-2.5 rounded-2xl text-left text-sm transition-all hover:bg-slate-100 dark:hover:bg-slate-800 text-slate-600 dark:text-slate-300">
+        <span>🏋️</span>
+        <div>
+          <div class="font-bold">Treino, Medidas & Fit</div>
+          <div class="text-[11px] text-slate-400">Bíceps, Coxas & Suplementos</div>
+        </div>
+      </button>
+
       <button onclick="navigate('kids')" id="nav-kids" class="nav-btn w-full flex items-center space-x-3 px-3.5 py-2.5 rounded-2xl text-left text-sm transition-all hover:bg-slate-100 dark:hover:bg-slate-800 text-slate-600 dark:text-slate-300">
         <span>⭐</span>
         <div>
@@ -753,6 +761,93 @@
         </div>
       </section>
 
+            <!-- ================= 6.5 ABA FITNESS: TREINO, MEDIDAS & SUPLEMENTAÇÃO ================= -->
+      <section id="tab-fitness" style="display: none;" class="space-y-6">
+        
+        <!-- Cabeçalho da Aba Fitness -->
+        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+          <div>
+            <div class="flex items-center space-x-2">
+              <span class="px-2.5 py-0.5 rounded-full bg-emerald-100 dark:bg-emerald-950 text-emerald-700 dark:text-emerald-300 font-bold text-xs">💪 Saúde & Performance</span>
+            </div>
+            <h3 class="font-bold text-xl sm:text-2xl text-slate-900 dark:text-white mt-1">Treino, Musculação & Medidas Corporais</h3>
+            <p class="text-xs text-slate-500">Acompanhe a evolução física de bíceps, coxa, panturrilha, fichas de treino e suplementos diários</p>
+          </div>
+          <div class="flex flex-wrap gap-2">
+            <button onclick="openMeasureModal()" class="px-3.5 py-2 bg-indigo-600 hover:bg-indigo-700 text-white font-bold text-xs rounded-xl shadow-md flex items-center space-x-1.5">
+              <span>📏</span><span>Nova Medição</span>
+            </button>
+            <button onclick="openWorkoutModal()" class="px-3.5 py-2 bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-xs rounded-xl shadow-md flex items-center space-x-1.5">
+              <span>🏋️</span><span>Novo Exercício</span>
+            </button>
+            <button onclick="openSupplementModal()" class="px-3.5 py-2 bg-purple-600 hover:bg-purple-700 text-white font-bold text-xs rounded-xl shadow-md flex items-center space-x-1.5">
+              <span>💊</span><span>Suplemento</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- Sub-navegação interna Fitness: Medidas, Treinos, Suplementação -->
+        <div class="flex p-1 rounded-2xl bg-slate-100 dark:bg-slate-800 text-xs font-bold max-w-md">
+          <button id="fitSubTabBtn-measures" onclick="switchFitnessSubTab('measures')" class="flex-1 py-2 rounded-xl transition bg-white dark:bg-slate-900 text-indigo-600 dark:text-indigo-400 shadow-xs">
+            📏 Medidas & Histórico
+          </button>
+          <button id="fitSubTabBtn-workouts" onclick="switchFitnessSubTab('workouts')" class="flex-1 py-2 rounded-xl transition text-slate-500 hover:text-slate-900 dark:hover:text-white">
+            🏋️ Fichas de Treino
+          </button>
+          <button id="fitSubTabBtn-supplements" onclick="switchFitnessSubTab('supplements')" class="flex-1 py-2 rounded-xl transition text-slate-500 hover:text-slate-900 dark:hover:text-white">
+            💊 Suplementação
+          </button>
+        </div>
+
+        <!-- PAINEL 1: MEDIDAS CORPORAIS EXATAS & HISTÓRICO -->
+        <div id="fitnessPanel-measures" class="space-y-6">
+          <!-- Cards de Destaque das Medidas Atuais -->
+          <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-3" id="currentMeasuresSummaryGrid">
+            <!-- Renderizado via JS -->
+          </div>
+
+          <!-- Histórico Completo de Medições com Comparativo de Evolução -->
+          <div class="bg-white dark:bg-slate-900 rounded-3xl p-5 sm:p-6 border border-slate-200 dark:border-slate-800 shadow-sm space-y-4">
+            <div class="flex items-center justify-between">
+              <div>
+                <h4 class="font-bold text-base text-slate-900 dark:text-white">Histórico de Medidas & Ganho Muscular</h4>
+                <p class="text-xs text-slate-500">Comparativo das medições com indicação de evolução em cm</p>
+              </div>
+              <button onclick="openMeasureModal()" class="text-xs font-bold text-indigo-600 hover:underline">➕ Registrar</button>
+            </div>
+
+            <div class="space-y-3" id="measuresHistoryList">
+              <!-- Renderizado via JS -->
+            </div>
+          </div>
+        </div>
+
+        <!-- PAINEL 2: FICHAS DE TREINO & MUSCULAÇÃO -->
+        <div id="fitnessPanel-workouts" class="space-y-6" style="display: none;">
+          <div class="grid grid-cols-1 md:grid-cols-3 gap-4" id="workoutsDivisionsList">
+            <!-- Renderizado via JS (Treino A, Treino B, Treino C) -->
+          </div>
+        </div>
+
+        <!-- PAINEL 3: SUPLEMENTAÇÃO DIÁRIA -->
+        <div id="fitnessPanel-supplements" class="space-y-6" style="display: none;">
+          <div class="bg-white dark:bg-slate-900 rounded-3xl p-5 sm:p-6 border border-slate-200 dark:border-slate-800 shadow-sm space-y-4">
+            <div class="flex items-center justify-between">
+              <div>
+                <h4 class="font-bold text-base text-slate-900 dark:text-white">Checklist Diário de Suplementação</h4>
+                <p class="text-xs text-slate-500">Mantenha a constância de Creatina, Whey e Vitaminas</p>
+              </div>
+              <button onclick="openSupplementModal()" class="text-xs font-bold text-purple-600 hover:underline">➕ Novo</button>
+            </div>
+
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-3.5" id="supplementsChecklistGrid">
+              <!-- Renderizado via JS -->
+            </div>
+          </div>
+        </div>
+
+      </section>
+
       <!-- ================= 7. TRILHA DAS CRIANÇAS ================= -->
       <section id="tab-kids" style="display: none;" class="space-y-6">
         <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
@@ -935,7 +1030,154 @@
     <button onclick="openUnifiedAuthModal()" class="flex flex-col items-center text-[10px] text-indigo-600 dark:text-indigo-400 font-bold px-2 py-0.5 rounded-xl bg-indigo-50 dark:bg-indigo-950/50 border border-indigo-200 dark:border-indigo-800"><span>🔐</span><span>Login/Conta</span></button>
   </nav>
 
-  <!-- ================= MODAL DO CENTRO DE ESTUDOS (NOVO!) ================= -->
+    <!-- ================= MODAL DE REGISTRO DE MEDIDAS CORPORAIS ================= -->
+  <div id="measureModal" class="modal-backdrop">
+    <div class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-3xl max-w-lg w-full p-6 shadow-2xl relative max-h-[90vh] overflow-y-auto">
+      <button onclick="closeMeasureModal()" class="absolute top-5 right-5 p-1.5 rounded-xl text-slate-400 hover:text-slate-600">✕</button>
+      
+      <h3 class="font-bold text-lg text-slate-900 dark:text-white mb-1">Registrar Medidas Corporais</h3>
+      <p class="text-xs text-slate-500 mb-4">Acompanhe seu desenvolvimento muscular e queima de gordura.</p>
+
+      <form onsubmit="saveBodyMeasure(event)" class="space-y-3.5">
+        <div class="grid grid-cols-2 gap-3">
+          <div>
+            <label class="block text-xs font-bold text-slate-700 dark:text-slate-300 mb-1">Membro *</label>
+            <select id="mea-member" class="w-full px-3 py-2 rounded-xl border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 text-xs font-bold outline-none">
+              <!-- Populado via JS -->
+            </select>
+          </div>
+          <div>
+            <label class="block text-xs font-bold text-slate-700 dark:text-slate-300 mb-1">Data da Medição *</label>
+            <input type="date" id="mea-date" required class="w-full px-3 py-2 rounded-xl border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 text-xs outline-none">
+          </div>
+        </div>
+
+        <div class="grid grid-cols-2 sm:grid-cols-4 gap-3">
+          <div>
+            <label class="block text-xs font-bold text-slate-700 dark:text-slate-300 mb-1">💪 Bíceps (cm) *</label>
+            <input type="number" step="0.1" id="mea-biceps" required placeholder="Ex: 38.5" class="w-full px-3 py-2 rounded-xl border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 text-xs outline-none">
+          </div>
+          <div>
+            <label class="block text-xs font-bold text-slate-700 dark:text-slate-300 mb-1">🦾 Antebraço (cm)</label>
+            <input type="number" step="0.1" id="mea-forearm" placeholder="Ex: 31.0" class="w-full px-3 py-2 rounded-xl border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 text-xs outline-none">
+          </div>
+          <div>
+            <label class="block text-xs font-bold text-slate-700 dark:text-slate-300 mb-1">🍗 Coxa (cm) *</label>
+            <input type="number" step="0.1" id="mea-thigh" required placeholder="Ex: 58.5" class="w-full px-3 py-2 rounded-xl border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 text-xs outline-none">
+          </div>
+          <div>
+            <label class="block text-xs font-bold text-slate-700 dark:text-slate-300 mb-1">🦵 Panturrilha (cm) *</label>
+            <input type="number" step="0.1" id="mea-calf" required placeholder="Ex: 39.0" class="w-full px-3 py-2 rounded-xl border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 text-xs outline-none">
+          </div>
+        </div>
+
+        <div class="grid grid-cols-3 gap-3">
+          <div>
+            <label class="block text-xs font-bold text-slate-700 dark:text-slate-300 mb-1">🎽 Tórax/Peito (cm)</label>
+            <input type="number" step="0.1" id="mea-chest" placeholder="Ex: 104.0" class="w-full px-3 py-2 rounded-xl border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 text-xs outline-none">
+          </div>
+          <div>
+            <label class="block text-xs font-bold text-slate-700 dark:text-slate-300 mb-1">⚖️ Cintura (cm)</label>
+            <input type="number" step="0.1" id="mea-waist" placeholder="Ex: 80.0" class="w-full px-3 py-2 rounded-xl border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 text-xs outline-none">
+          </div>
+          <div>
+            <label class="block text-xs font-bold text-slate-700 dark:text-slate-300 mb-1">⚖️ Peso (kg)</label>
+            <input type="number" step="0.1" id="mea-weight" placeholder="Ex: 75.4" class="w-full px-3 py-2 rounded-xl border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 text-xs outline-none">
+          </div>
+        </div>
+
+        <div>
+          <label class="block text-xs font-bold text-slate-700 dark:text-slate-300 mb-1">Anotações do Treino / Fase</label>
+          <input type="text" id="mea-notes" placeholder="Ex: Treino forte de hipertrofia, creatina em dia, boa retenção" class="w-full px-3 py-2 rounded-xl border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 text-xs outline-none">
+        </div>
+
+        <div class="flex justify-end space-x-2 pt-3 border-t border-slate-100 dark:border-slate-800">
+          <button type="button" onclick="closeMeasureModal()" class="px-4 py-2 rounded-xl text-xs font-semibold text-slate-500 hover:bg-slate-100">Cancelar</button>
+          <button type="submit" class="px-5 py-2 bg-indigo-600 hover:bg-indigo-700 text-white font-bold text-xs rounded-xl shadow-md">Salvar Medidas</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- ================= MODAL DE EXERCÍCIO / TREINO ================= -->
+  <div id="workoutModal" class="modal-backdrop">
+    <div class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-3xl max-w-md w-full p-6 shadow-2xl relative">
+      <button onclick="closeWorkoutModal()" class="absolute top-5 right-5 p-1.5 rounded-xl text-slate-400 hover:text-slate-600">✕</button>
+      <h3 class="font-bold text-lg text-slate-900 dark:text-white mb-1">Adicionar Exercício de Treino</h3>
+      <p class="text-xs text-slate-500 mb-4">Monte suas fichas de treino A, B, C ou Cardio.</p>
+
+      <form onsubmit="saveWorkoutExercise(event)" class="space-y-3.5">
+        <div>
+          <label class="block text-xs font-bold text-slate-700 dark:text-slate-300 mb-1">Divisão de Treino *</label>
+          <select id="wo-division" class="w-full px-3 py-2 rounded-xl border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 text-xs font-bold outline-none">
+            <option value="A">Treino A (Peito, Tríceps & Ombro)</option>
+            <option value="B">Treino B (Costas, Bíceps & Antebraço)</option>
+            <option value="C">Treino C (Pernas Completas & Panturrilhas)</option>
+            <option value="Cardio">Cardio & Corrida / HIIT</option>
+          </select>
+        </div>
+
+        <div>
+          <label class="block text-xs font-bold text-slate-700 dark:text-slate-300 mb-1">Nome do Exercício *</label>
+          <input type="text" id="wo-name" required placeholder="Ex: Supino Inclinado com Halteres, Rosca Martelo, Leg Press..." class="w-full px-3 py-2 rounded-xl border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 text-xs outline-none">
+        </div>
+
+        <div class="grid grid-cols-3 gap-3">
+          <div>
+            <label class="block text-xs font-bold text-slate-700 dark:text-slate-300 mb-1">Séries</label>
+            <input type="text" id="wo-sets" placeholder="Ex: 4" class="w-full px-3 py-2 rounded-xl border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 text-xs outline-none">
+          </div>
+          <div>
+            <label class="block text-xs font-bold text-slate-700 dark:text-slate-300 mb-1">Reps</label>
+            <input type="text" id="wo-reps" placeholder="Ex: 10-12" class="w-full px-3 py-2 rounded-xl border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 text-xs outline-none">
+          </div>
+          <div>
+            <label class="block text-xs font-bold text-slate-700 dark:text-slate-300 mb-1">Carga (kg)</label>
+            <input type="text" id="wo-weight" placeholder="Ex: 28 kg" class="w-full px-3 py-2 rounded-xl border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 text-xs outline-none">
+          </div>
+        </div>
+
+        <div class="flex justify-end space-x-2 pt-3 border-t border-slate-100 dark:border-slate-800">
+          <button type="button" onclick="closeWorkoutModal()" class="px-4 py-2 rounded-xl text-xs font-semibold text-slate-500 hover:bg-slate-100">Cancelar</button>
+          <button type="submit" class="px-5 py-2 bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-xs rounded-xl shadow-md">Adicionar Exercício</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- ================= MODAL DE SUPLEMENTAÇÃO ================= -->
+  <div id="supplementModal" class="modal-backdrop">
+    <div class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-3xl max-w-md w-full p-6 shadow-2xl relative">
+      <button onclick="closeSupplementModal()" class="absolute top-5 right-5 p-1.5 rounded-xl text-slate-400 hover:text-slate-600">✕</button>
+      <h3 class="font-bold text-lg text-slate-900 dark:text-white mb-1">Cadastrar Suplemento</h3>
+      <p class="text-xs text-slate-500 mb-4">Gerencie Creatina, Whey Protein, Vitaminas e dosagens.</p>
+
+      <form onsubmit="saveSupplement(event)" class="space-y-3.5">
+        <div>
+          <label class="block text-xs font-bold text-slate-700 dark:text-slate-300 mb-1">Nome do Suplemento *</label>
+          <input type="text" id="sup-name" required placeholder="Ex: Creatina Creapure, Whey Protein Isolado, Ômega 3..." class="w-full px-3 py-2 rounded-xl border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 text-xs outline-none">
+        </div>
+
+        <div class="grid grid-cols-2 gap-3">
+          <div>
+            <label class="block text-xs font-bold text-slate-700 dark:text-slate-300 mb-1">Dosagem diária *</label>
+            <input type="text" id="sup-dose" required placeholder="Ex: 5g, 30g, 2 cápsulas..." class="w-full px-3 py-2 rounded-xl border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 text-xs outline-none">
+          </div>
+          <div>
+            <label class="block text-xs font-bold text-slate-700 dark:text-slate-300 mb-1">Melhor Horário</label>
+            <input type="text" id="sup-time" placeholder="Ex: Pós-treino, Manhã, Almoço..." class="w-full px-3 py-2 rounded-xl border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 text-xs outline-none">
+          </div>
+        </div>
+
+        <div class="flex justify-end space-x-2 pt-3 border-t border-slate-100 dark:border-slate-800">
+          <button type="button" onclick="closeSupplementModal()" class="px-4 py-2 rounded-xl text-xs font-semibold text-slate-500 hover:bg-slate-100">Cancelar</button>
+          <button type="submit" class="px-5 py-2 bg-purple-600 hover:bg-purple-700 text-white font-bold text-xs rounded-xl shadow-md">Salvar Suplemento</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+<!-- ================= MODAL DO CENTRO DE ESTUDOS (NOVO!) ================= -->
   <div id="studyModal" class="modal-backdrop">
     <div class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-3xl max-w-lg w-full p-6 shadow-2xl relative max-h-[90vh] overflow-y-auto">
       <button onclick="closeStudyModal()" class="absolute top-5 right-5 p-1.5 rounded-xl text-slate-400 hover:text-slate-600">✕</button>
@@ -1031,9 +1273,11 @@
           </div>
           <div>
             <label class="block text-xs font-bold text-slate-700 dark:text-slate-300 mb-1">Papel</label>
-            <select id="mem-role" class="w-full px-3 py-2 rounded-xl border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 text-xs sm:text-sm outline-none">
-              <option value="child">Filho(a) / Criança</option>
-              <option value="parent">Pai / Mãe (Administrador)</option>
+            <select id="mem-role" class="w-full px-3 py-2 rounded-xl border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 text-xs sm:text-sm outline-none font-bold">
+              <option value="parent">👑 Pai / Mãe (Administrador)</option>
+              <option value="sibling">👦👧 Irmão / Irmã</option>
+              <option value="child">🧒 Filho(a) / Criança</option>
+              <option value="relative">👤 Parente / Outro Membro</option>
             </select>
           </div>
         </div>
@@ -1964,6 +2208,51 @@
       ],
 
       // TIMER POMODORO DE FOCO
+      bodyMeasures: [
+        {
+          id: 'mea-1',
+          memberId: 'davi',
+          date: '2026-11-14',
+          biceps: 38.5,
+          forearm: 31.0,
+          thigh: 58.5,
+          calf: 39.0,
+          chest: 104.0,
+          waist: 80.0,
+          weight: 75.4,
+          notes: 'Medição atual: bíceps cresceu +1.5cm, coxa +2.0cm e cintura reduziu!'
+        },
+        {
+          id: 'mea-0',
+          memberId: 'davi',
+          date: '2026-08-10',
+          biceps: 37.0,
+          forearm: 30.0,
+          thigh: 56.5,
+          calf: 38.0,
+          chest: 101.0,
+          waist: 82.0,
+          weight: 77.2,
+          notes: 'Medição inicial antes do ciclo de hipertrofia e corrida'
+        }
+      ],
+      workouts: [
+        { id: 'wo-1', division: 'A', name: 'Supino Inclinado com Halteres', sets: '4', reps: '10-12', weight: '32 kg cada lado', completedToday: true },
+        { id: 'wo-2', division: 'A', name: 'Desenvolvimento Militar Ombro', sets: '4', reps: '10', weight: '24 kg', completedToday: true },
+        { id: 'wo-3', division: 'A', name: 'Tríceps Corda na Polia', sets: '4', reps: '12-15', weight: '35 kg', completedToday: false },
+        { id: 'wo-4', division: 'B', name: 'Puxada Alta Frontal Aberta', sets: '4', reps: '10', weight: '65 kg', completedToday: false },
+        { id: 'wo-5', division: 'B', name: 'Rosca Direta com Barra W (Bíceps)', sets: '4', reps: '10-12', weight: '16 kg cada lado', completedToday: false },
+        { id: 'wo-6', division: 'B', name: 'Rosca Martelo (Antebraço & Braquial)', sets: '3', reps: '12', weight: '18 kg cada lado', completedToday: false },
+        { id: 'wo-7', division: 'C', name: 'Agachamento Livre no Smith/Livre', sets: '4', reps: '10', weight: '40 kg cada lado', completedToday: false },
+        { id: 'wo-8', division: 'C', name: 'Leg Press 45° (Quadríceps)', sets: '4', reps: '12', weight: '220 kg', completedToday: false },
+        { id: 'wo-9', division: 'C', name: 'Panturrilha em Pé na Máquina', sets: '5', reps: '15', weight: '70 kg', completedToday: false }
+      ],
+      supplements: [
+        { id: 'sup-1', name: 'Creatina Monoidratada Creapure', dose: '5g diárias', time: 'Pós-treino / Almoço', takenToday: true },
+        { id: 'sup-2', name: 'Whey Protein Isolado / 100%', dose: '30g', time: 'Pós-treino ou Lanche', takenToday: true },
+        { id: 'sup-3', name: 'Ômega 3 Ultra Concentrado', dose: '2 cápsulas', time: 'Almoço', takenToday: false },
+        { id: 'sup-4', name: 'Vitamina D3 2000UI + Multivitamínico', dose: '1 cápsula', time: 'Café da manhã', takenToday: true }
+      ],
       pomodoro: {
         studentId: 'davi',
         subject: 'Engenharia de Software / Laboratório Cloud',
@@ -2603,6 +2892,51 @@
           likes: 3
         }
       ],
+      bodyMeasures: [
+        {
+          id: 'mea-1',
+          memberId: 'davi',
+          date: '2026-11-14',
+          biceps: 38.5,
+          forearm: 31.0,
+          thigh: 58.5,
+          calf: 39.0,
+          chest: 104.0,
+          waist: 80.0,
+          weight: 75.4,
+          notes: 'Medição atual: bíceps cresceu +1.5cm, coxa +2.0cm e cintura reduziu!'
+        },
+        {
+          id: 'mea-0',
+          memberId: 'davi',
+          date: '2026-08-10',
+          biceps: 37.0,
+          forearm: 30.0,
+          thigh: 56.5,
+          calf: 38.0,
+          chest: 101.0,
+          waist: 82.0,
+          weight: 77.2,
+          notes: 'Medição inicial antes do ciclo de hipertrofia e corrida'
+        }
+      ],
+      workouts: [
+        { id: 'wo-1', division: 'A', name: 'Supino Inclinado com Halteres', sets: '4', reps: '10-12', weight: '32 kg cada lado', completedToday: true },
+        { id: 'wo-2', division: 'A', name: 'Desenvolvimento Militar Ombro', sets: '4', reps: '10', weight: '24 kg', completedToday: true },
+        { id: 'wo-3', division: 'A', name: 'Tríceps Corda na Polia', sets: '4', reps: '12-15', weight: '35 kg', completedToday: false },
+        { id: 'wo-4', division: 'B', name: 'Puxada Alta Frontal Aberta', sets: '4', reps: '10', weight: '65 kg', completedToday: false },
+        { id: 'wo-5', division: 'B', name: 'Rosca Direta com Barra W (Bíceps)', sets: '4', reps: '10-12', weight: '16 kg cada lado', completedToday: false },
+        { id: 'wo-6', division: 'B', name: 'Rosca Martelo (Antebraço & Braquial)', sets: '3', reps: '12', weight: '18 kg cada lado', completedToday: false },
+        { id: 'wo-7', division: 'C', name: 'Agachamento Livre no Smith/Livre', sets: '4', reps: '10', weight: '40 kg cada lado', completedToday: false },
+        { id: 'wo-8', division: 'C', name: 'Leg Press 45° (Quadríceps)', sets: '4', reps: '12', weight: '220 kg', completedToday: false },
+        { id: 'wo-9', division: 'C', name: 'Panturrilha em Pé na Máquina', sets: '5', reps: '15', weight: '70 kg', completedToday: false }
+      ],
+      supplements: [
+        { id: 'sup-1', name: 'Creatina Monoidratada Creapure', dose: '5g diárias', time: 'Pós-treino / Almoço', takenToday: true },
+        { id: 'sup-2', name: 'Whey Protein Isolado / 100%', dose: '30g', time: 'Pós-treino ou Lanche', takenToday: true },
+        { id: 'sup-3', name: 'Ômega 3 Ultra Concentrado', dose: '2 cápsulas', time: 'Almoço', takenToday: false },
+        { id: 'sup-4', name: 'Vitamina D3 2000UI + Multivitamínico', dose: '1 cápsula', time: 'Café da manhã', takenToday: true }
+      ],
       pomodoro: {
         studentId: 'demo-user-1',
         subject: 'Foco nos Estudos / Leitura',
@@ -2659,6 +2993,51 @@
           text: 'Seja bem-vindo ao seu aplicativo familiar! Cadastre seu cônjuge, filhos e finanças para começar.',
           likes: 1
         }
+      ],
+      bodyMeasures: [
+        {
+          id: 'mea-1',
+          memberId: 'davi',
+          date: '2026-11-14',
+          biceps: 38.5,
+          forearm: 31.0,
+          thigh: 58.5,
+          calf: 39.0,
+          chest: 104.0,
+          waist: 80.0,
+          weight: 75.4,
+          notes: 'Medição atual: bíceps cresceu +1.5cm, coxa +2.0cm e cintura reduziu!'
+        },
+        {
+          id: 'mea-0',
+          memberId: 'davi',
+          date: '2026-08-10',
+          biceps: 37.0,
+          forearm: 30.0,
+          thigh: 56.5,
+          calf: 38.0,
+          chest: 101.0,
+          waist: 82.0,
+          weight: 77.2,
+          notes: 'Medição inicial antes do ciclo de hipertrofia e corrida'
+        }
+      ],
+      workouts: [
+        { id: 'wo-1', division: 'A', name: 'Supino Inclinado com Halteres', sets: '4', reps: '10-12', weight: '32 kg cada lado', completedToday: true },
+        { id: 'wo-2', division: 'A', name: 'Desenvolvimento Militar Ombro', sets: '4', reps: '10', weight: '24 kg', completedToday: true },
+        { id: 'wo-3', division: 'A', name: 'Tríceps Corda na Polia', sets: '4', reps: '12-15', weight: '35 kg', completedToday: false },
+        { id: 'wo-4', division: 'B', name: 'Puxada Alta Frontal Aberta', sets: '4', reps: '10', weight: '65 kg', completedToday: false },
+        { id: 'wo-5', division: 'B', name: 'Rosca Direta com Barra W (Bíceps)', sets: '4', reps: '10-12', weight: '16 kg cada lado', completedToday: false },
+        { id: 'wo-6', division: 'B', name: 'Rosca Martelo (Antebraço & Braquial)', sets: '3', reps: '12', weight: '18 kg cada lado', completedToday: false },
+        { id: 'wo-7', division: 'C', name: 'Agachamento Livre no Smith/Livre', sets: '4', reps: '10', weight: '40 kg cada lado', completedToday: false },
+        { id: 'wo-8', division: 'C', name: 'Leg Press 45° (Quadríceps)', sets: '4', reps: '12', weight: '220 kg', completedToday: false },
+        { id: 'wo-9', division: 'C', name: 'Panturrilha em Pé na Máquina', sets: '5', reps: '15', weight: '70 kg', completedToday: false }
+      ],
+      supplements: [
+        { id: 'sup-1', name: 'Creatina Monoidratada Creapure', dose: '5g diárias', time: 'Pós-treino / Almoço', takenToday: true },
+        { id: 'sup-2', name: 'Whey Protein Isolado / 100%', dose: '30g', time: 'Pós-treino ou Lanche', takenToday: true },
+        { id: 'sup-3', name: 'Ômega 3 Ultra Concentrado', dose: '2 cápsulas', time: 'Almoço', takenToday: false },
+        { id: 'sup-4', name: 'Vitamina D3 2000UI + Multivitamínico', dose: '1 cápsula', time: 'Café da manhã', takenToday: true }
       ],
       pomodoro: {
         studentId: 'user-1',
@@ -2766,7 +3145,7 @@
 
     // NAVEGAÇÃO
     function navigate(tabId) {
-      const tabs = ['dashboard', 'studies', 'members', 'calendar', 'shopping', 'finances', 'pomodoro', 'mural', 'habits-goals', 'kids', 'milestones', 'rewards'];
+      const tabs = ['dashboard', 'studies', 'members', 'calendar', 'shopping', 'finances', 'pomodoro', 'mural', 'habits-goals', 'fitness', 'kids', 'milestones', 'rewards'];
       tabs.forEach(t => {
         const sec = document.getElementById('tab-' + t);
         if (sec) sec.style.display = (t === tabId) ? 'block' : 'none';
@@ -2999,6 +3378,51 @@
           text: '💡 Lembrete da semana: Revisar questões da prova na quinta-feira, fazer feira de hortifruti e amortizar parcela do financiamento.',
           likes: 5
         }
+      ],
+      bodyMeasures: [
+        {
+          id: 'mea-1',
+          memberId: 'davi',
+          date: '2026-11-14',
+          biceps: 38.5,
+          forearm: 31.0,
+          thigh: 58.5,
+          calf: 39.0,
+          chest: 104.0,
+          waist: 80.0,
+          weight: 75.4,
+          notes: 'Medição atual: bíceps cresceu +1.5cm, coxa +2.0cm e cintura reduziu!'
+        },
+        {
+          id: 'mea-0',
+          memberId: 'davi',
+          date: '2026-08-10',
+          biceps: 37.0,
+          forearm: 30.0,
+          thigh: 56.5,
+          calf: 38.0,
+          chest: 101.0,
+          waist: 82.0,
+          weight: 77.2,
+          notes: 'Medição inicial antes do ciclo de hipertrofia e corrida'
+        }
+      ],
+      workouts: [
+        { id: 'wo-1', division: 'A', name: 'Supino Inclinado com Halteres', sets: '4', reps: '10-12', weight: '32 kg cada lado', completedToday: true },
+        { id: 'wo-2', division: 'A', name: 'Desenvolvimento Militar Ombro', sets: '4', reps: '10', weight: '24 kg', completedToday: true },
+        { id: 'wo-3', division: 'A', name: 'Tríceps Corda na Polia', sets: '4', reps: '12-15', weight: '35 kg', completedToday: false },
+        { id: 'wo-4', division: 'B', name: 'Puxada Alta Frontal Aberta', sets: '4', reps: '10', weight: '65 kg', completedToday: false },
+        { id: 'wo-5', division: 'B', name: 'Rosca Direta com Barra W (Bíceps)', sets: '4', reps: '10-12', weight: '16 kg cada lado', completedToday: false },
+        { id: 'wo-6', division: 'B', name: 'Rosca Martelo (Antebraço & Braquial)', sets: '3', reps: '12', weight: '18 kg cada lado', completedToday: false },
+        { id: 'wo-7', division: 'C', name: 'Agachamento Livre no Smith/Livre', sets: '4', reps: '10', weight: '40 kg cada lado', completedToday: false },
+        { id: 'wo-8', division: 'C', name: 'Leg Press 45° (Quadríceps)', sets: '4', reps: '12', weight: '220 kg', completedToday: false },
+        { id: 'wo-9', division: 'C', name: 'Panturrilha em Pé na Máquina', sets: '5', reps: '15', weight: '70 kg', completedToday: false }
+      ],
+      supplements: [
+        { id: 'sup-1', name: 'Creatina Monoidratada Creapure', dose: '5g diárias', time: 'Pós-treino / Almoço', takenToday: true },
+        { id: 'sup-2', name: 'Whey Protein Isolado / 100%', dose: '30g', time: 'Pós-treino ou Lanche', takenToday: true },
+        { id: 'sup-3', name: 'Ômega 3 Ultra Concentrado', dose: '2 cápsulas', time: 'Almoço', takenToday: false },
+        { id: 'sup-4', name: 'Vitamina D3 2000UI + Multivitamínico', dose: '1 cápsula', time: 'Café da manhã', takenToday: true }
       ],
       pomodoro: {
         studentId: 'single-user-1',
@@ -4136,7 +4560,7 @@
                   <div class="flex flex-wrap items-center gap-2">
                     <h4 class="font-bold text-lg text-slate-900 dark:text-white">${m.name}</h4>
                     <span class="text-xs px-2.5 py-0.5 rounded-full font-bold bg-indigo-50 text-indigo-700 dark:bg-indigo-950 dark:text-indigo-300">
-                      ${m.profession || (m.role === 'parent' ? 'Administrador' : 'Estudante')}
+                      ${m.role === 'sibling' ? '👦👧 Irmão/Irmã' : (m.profession || (m.role === 'parent' ? 'Administrador' : 'Estudante'))}
                     </span>
                     <span class="text-xs text-slate-400">• ${m.age} anos</span>
                   </div>
@@ -5776,6 +6200,377 @@
     }
 
     // Função central que re-renderiza todas as telas em tempo real sem recarregar a página!
+
+    // =========================================================================
+    // LÓGICA COMPLETA DE FITNESS, MEDIDAS CORPORAIS, TREINOS & SUPLEMENTAÇÃO
+    // =========================================================================
+    let currentFitnessSubTab = 'measures';
+
+    function switchFitnessSubTab(subTab) {
+      currentFitnessSubTab = subTab;
+      ['measures', 'workouts', 'supplements'].forEach(t => {
+        const panel = document.getElementById('fitnessPanel-' + t);
+        const btn = document.getElementById('fitSubTabBtn-' + t);
+        if (panel) panel.style.display = (t === subTab) ? 'block' : 'none';
+        if (btn) {
+          if (t === subTab) {
+            btn.className = "flex-1 py-2 rounded-xl transition bg-white dark:bg-slate-900 text-indigo-600 dark:text-indigo-400 shadow-xs font-bold";
+          } else {
+            btn.className = "flex-1 py-2 rounded-xl transition text-slate-500 hover:text-slate-900 dark:hover:text-white font-bold";
+          }
+        }
+      });
+    }
+
+    function openMeasureModal() {
+      const select = document.getElementById('mea-member');
+      if (select) {
+        select.innerHTML = (state.members || []).map(m => `
+          <option value="${m.id}" ${m.id === state.activeMemberId ? 'selected' : ''}>${m.name}</option>
+        `).join('');
+      }
+      document.getElementById('mea-date').value = new Date().toISOString().split('T')[0];
+      document.getElementById('measureModal').classList.add('active');
+    }
+
+    function closeMeasureModal() {
+      document.getElementById('measureModal').classList.remove('active');
+    }
+
+    function openWorkoutModal() {
+      document.getElementById('workoutModal').classList.add('active');
+    }
+
+    function closeWorkoutModal() {
+      document.getElementById('workoutModal').classList.remove('active');
+    }
+
+    function openSupplementModal() {
+      document.getElementById('supplementModal').classList.add('active');
+    }
+
+    function closeSupplementModal() {
+      document.getElementById('supplementModal').classList.remove('active');
+    }
+
+    function saveBodyMeasure(e) {
+      if (e) e.preventDefault();
+      const memberId = document.getElementById('mea-member').value;
+      const date = document.getElementById('mea-date').value;
+      const biceps = parseFloat(document.getElementById('mea-biceps').value) || 0;
+      const forearm = parseFloat(document.getElementById('mea-forearm').value) || 0;
+      const thigh = parseFloat(document.getElementById('mea-thigh').value) || 0;
+      const calf = parseFloat(document.getElementById('mea-calf').value) || 0;
+      const chest = parseFloat(document.getElementById('mea-chest').value) || 0;
+      const waist = parseFloat(document.getElementById('mea-waist').value) || 0;
+      const weight = parseFloat(document.getElementById('mea-weight').value) || 0;
+      const notes = (document.getElementById('mea-notes').value || '').trim();
+
+      if (!state.bodyMeasures) state.bodyMeasures = [];
+
+      const newMeasure = {
+        id: 'mea-' + Date.now(),
+        memberId: memberId,
+        date: date,
+        biceps: biceps,
+        forearm: forearm,
+        thigh: thigh,
+        calf: calf,
+        chest: chest,
+        waist: waist,
+        weight: weight,
+        notes: notes
+      };
+
+      state.bodyMeasures.unshift(newMeasure);
+
+      // Também atualiza o peso atual do membro
+      const member = state.members.find(m => m.id === memberId);
+      if (member && weight > 0) {
+        member.weightKg = weight;
+      }
+
+      saveState();
+      closeMeasureModal();
+      renderFitness();
+      showToast('📏 Medidas registradas com sucesso!', '💪', 3500);
+    }
+
+    function saveWorkoutExercise(e) {
+      if (e) e.preventDefault();
+      const division = document.getElementById('wo-division').value;
+      const name = (document.getElementById('wo-name').value || '').trim();
+      const sets = (document.getElementById('wo-sets').value || '4').trim();
+      const reps = (document.getElementById('wo-reps').value || '10-12').trim();
+      const weight = (document.getElementById('wo-weight').value || '').trim();
+
+      if (!name) return;
+      if (!state.workouts) state.workouts = [];
+
+      state.workouts.push({
+        id: 'wo-' + Date.now(),
+        division: division,
+        name: name,
+        sets: sets,
+        reps: reps,
+        weight: weight,
+        completedToday: false
+      });
+
+      saveState();
+      closeWorkoutModal();
+      renderFitness();
+      showToast('🏋️ Exercício adicionado à ficha!', '🔥', 3000);
+    }
+
+    function toggleWorkoutExercise(id) {
+      if (!state.workouts) return;
+      const ex = state.workouts.find(w => w.id === id);
+      if (ex) {
+        ex.completedToday = !ex.completedToday;
+        saveState();
+        renderFitness();
+        showToast(ex.completedToday ? 'Exercício concluído! 💪' : 'Exercício pendente', '🏋️', 2000);
+      }
+    }
+
+    function deleteWorkoutExercise(id) {
+      if (confirm('Deseja excluir este exercício?')) {
+        state.workouts = (state.workouts || []).filter(w => w.id !== id);
+        saveState();
+        renderFitness();
+      }
+    }
+
+    function saveSupplement(e) {
+      if (e) e.preventDefault();
+      const name = (document.getElementById('sup-name').value || '').trim();
+      const dose = (document.getElementById('sup-dose').value || '').trim();
+      const time = (document.getElementById('sup-time').value || 'Diário').trim();
+
+      if (!name || !dose) return;
+      if (!state.supplements) state.supplements = [];
+
+      state.supplements.push({
+        id: 'sup-' + Date.now(),
+        name: name,
+        dose: dose,
+        time: time,
+        takenToday: false
+      });
+
+      saveState();
+      closeSupplementModal();
+      renderFitness();
+      showToast('💊 Suplemento adicionado à rotina!', '✨', 3000);
+    }
+
+    function toggleSupplement(id) {
+      if (!state.supplements) return;
+      const sup = state.supplements.find(s => s.id === id);
+      if (sup) {
+        sup.takenToday = !sup.takenToday;
+        saveState();
+        renderFitness();
+        showToast(sup.takenToday ? 'Suplemento tomado hoje! ✓' : 'Suplemento marcado como pendente', '💊', 2000);
+      }
+    }
+
+    function deleteSupplement(id) {
+      if (confirm('Deseja excluir este suplemento?')) {
+        state.supplements = (state.supplements || []).filter(s => s.id !== id);
+        saveState();
+        renderFitness();
+      }
+    }
+
+    function deleteBodyMeasure(id) {
+      if (confirm('Deseja excluir este registro de medição?')) {
+        state.bodyMeasures = (state.bodyMeasures || []).filter(m => m.id !== id);
+        saveState();
+        renderFitness();
+      }
+    }
+
+    // RENDERIZADOR COMPLETO DA ABA FITNESS
+    function renderFitness() {
+      // 1. Resumo das Medidas Atuais
+      const summaryGrid = document.getElementById('currentMeasuresSummaryGrid');
+      const measures = state.bodyMeasures || [];
+      const latest = measures[0] || null;
+      const previous = measures[1] || null;
+
+      function getDiffText(cur, prev) {
+        if (!cur || !prev) return '';
+        const diff = (cur - prev).toFixed(1);
+        if (diff > 0) return `<span class="text-emerald-500 font-bold text-[10px]">▲ +${diff} cm</span>`;
+        if (diff < 0) return `<span class="text-rose-500 font-bold text-[10px]">▼ ${diff} cm</span>`;
+        return `<span class="text-slate-400 text-[10px]">= estável</span>`;
+      }
+
+      if (summaryGrid) {
+        if (!latest) {
+          summaryGrid.innerHTML = `
+            <div class="col-span-full p-4 rounded-2xl bg-indigo-50 dark:bg-slate-800/60 border border-indigo-200 dark:border-indigo-900/60 text-center">
+              <p class="text-xs text-indigo-700 dark:text-indigo-300 font-bold">Nenhuma medida corporal registrada ainda.</p>
+              <button onclick="openMeasureModal()" class="mt-2 px-3 py-1.5 rounded-xl bg-indigo-600 text-white font-bold text-xs shadow-sm">Registrar Minhas Medidas Agora</button>
+            </div>
+          `;
+        } else {
+          summaryGrid.innerHTML = `
+            <div class="p-3.5 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-xs text-center">
+              <span class="text-2xl block mb-1">💪</span>
+              <span class="text-[10px] font-bold text-slate-400 uppercase block">BÍCEPS</span>
+              <h4 class="text-base font-black text-slate-900 dark:text-white">${latest.biceps} cm</h4>
+              ${getDiffText(latest.biceps, previous?.biceps)}
+            </div>
+
+            <div class="p-3.5 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-xs text-center">
+              <span class="text-2xl block mb-1">🦾</span>
+              <span class="text-[10px] font-bold text-slate-400 uppercase block">ANTEBRAÇO</span>
+              <h4 class="text-base font-black text-slate-900 dark:text-white">${latest.forearm || '-'} cm</h4>
+              ${getDiffText(latest.forearm, previous?.forearm)}
+            </div>
+
+            <div class="p-3.5 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-xs text-center">
+              <span class="text-2xl block mb-1">🍗</span>
+              <span class="text-[10px] font-bold text-slate-400 uppercase block">COXA</span>
+              <h4 class="text-base font-black text-slate-900 dark:text-white">${latest.thigh} cm</h4>
+              ${getDiffText(latest.thigh, previous?.thigh)}
+            </div>
+
+            <div class="p-3.5 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-xs text-center">
+              <span class="text-2xl block mb-1">🦵</span>
+              <span class="text-[10px] font-bold text-slate-400 uppercase block">PANTURRILHA</span>
+              <h4 class="text-base font-black text-slate-900 dark:text-white">${latest.calf} cm</h4>
+              ${getDiffText(latest.calf, previous?.calf)}
+            </div>
+
+            <div class="p-3.5 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-xs text-center">
+              <span class="text-2xl block mb-1">🎽</span>
+              <span class="text-[10px] font-bold text-slate-400 uppercase block">TÓRAX</span>
+              <h4 class="text-base font-black text-slate-900 dark:text-white">${latest.chest || '-'} cm</h4>
+              ${getDiffText(latest.chest, previous?.chest)}
+            </div>
+
+            <div class="p-3.5 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-xs text-center">
+              <span class="text-2xl block mb-1">⚖️</span>
+              <span class="text-[10px] font-bold text-slate-400 uppercase block">PESO / CINTURA</span>
+              <h4 class="text-base font-black text-slate-900 dark:text-white">${latest.weight ? latest.weight + ' kg' : (latest.waist ? latest.waist + ' cm' : '-')}</h4>
+              <span class="text-[10px] text-slate-400">Cintura: ${latest.waist || '-'} cm</span>
+            </div>
+          `;
+        }
+      }
+
+      // 2. Histórico de Medidas
+      const historyList = document.getElementById('measuresHistoryList');
+      if (historyList) {
+        if (measures.length === 0) {
+          historyList.innerHTML = `<p class="text-xs text-slate-400 text-center py-4">Nenhum histórico registrado.</p>`;
+        } else {
+          historyList.innerHTML = measures.map((m, idx) => {
+            const prev = measures[idx + 1] || null;
+            return `
+              <div class="p-4 rounded-2xl bg-slate-50 dark:bg-slate-800/60 border border-slate-200 dark:border-slate-700/60 flex flex-col md:flex-row md:items-center justify-between gap-3">
+                <div>
+                  <div class="flex items-center space-x-2">
+                    <span class="px-2.5 py-0.5 rounded-full bg-indigo-100 dark:bg-indigo-950 text-indigo-700 dark:text-indigo-300 font-black text-[10px]">📅 ${m.date}</span>
+                    <span class="text-xs font-bold text-slate-800 dark:text-slate-200">${m.notes || 'Acompanhamento Físico'}</span>
+                  </div>
+                  <div class="flex flex-wrap gap-x-4 gap-y-1 text-xs mt-2 text-slate-600 dark:text-slate-300">
+                    <span>💪 Bíceps: <strong>${m.biceps} cm</strong> ${getDiffText(m.biceps, prev?.biceps)}</span>
+                    <span>🦾 Antebraço: <strong>${m.forearm || '-'} cm</strong></span>
+                    <span>🍗 Coxa: <strong>${m.thigh} cm</strong> ${getDiffText(m.thigh, prev?.thigh)}</span>
+                    <span>🦵 Panturrilha: <strong>${m.calf} cm</strong> ${getDiffText(m.calf, prev?.calf)}</span>
+                    <span>🎽 Tórax: <strong>${m.chest || '-'} cm</strong></span>
+                    <span>⚖️ Peso: <strong>${m.weight ? m.weight + ' kg' : '-'}</strong></span>
+                  </div>
+                </div>
+                <button onclick="deleteBodyMeasure('${m.id}')" class="text-slate-400 hover:text-rose-500 text-xs self-end md:self-auto" title="Excluir medição">🗑️</button>
+              </div>
+            `;
+          }).join('');
+        }
+      }
+
+      // 3. Fichas de Treino por Divisão (Treino A, B, C, Cardio)
+      const workoutsGrid = document.getElementById('workoutsDivisionsList');
+      if (workoutsGrid) {
+        const workouts = state.workouts || [];
+        const divisions = [
+          { key: 'A', title: 'Treino A', subtitle: 'Peito, Tríceps & Ombro', icon: '💥' },
+          { key: 'B', title: 'Treino B', subtitle: 'Costas, Bíceps & Antebraço', icon: '🦅' },
+          { key: 'C', title: 'Treino C', subtitle: 'Pernas Completas & Panturrilhas', icon: '🦵' }
+        ];
+
+        workoutsGrid.innerHTML = divisions.map(d => {
+          const exercises = workouts.filter(w => w.division === d.key);
+          return `
+            <div class="bg-white dark:bg-slate-900 rounded-3xl p-5 border border-slate-200 dark:border-slate-800 shadow-sm space-y-3">
+              <div class="flex items-center justify-between pb-2 border-b border-slate-100 dark:border-slate-800">
+                <div class="flex items-center space-x-2">
+                  <span class="text-xl p-1.5 rounded-xl bg-indigo-50 dark:bg-indigo-950 text-indigo-600">${d.icon}</span>
+                  <div>
+                    <h4 class="font-bold text-sm text-slate-900 dark:text-white">${d.title}</h4>
+                    <p class="text-[10px] text-slate-400">${d.subtitle}</p>
+                  </div>
+                </div>
+                <span class="text-xs font-bold px-2 py-0.5 rounded-full bg-slate-100 dark:bg-slate-800 text-slate-500">${exercises.length} ex.</span>
+              </div>
+
+              <div class="space-y-2">
+                ${exercises.length === 0 ? '<p class="text-[11px] text-slate-400 py-3 text-center">Nenhum exercício cadastrado nesta divisão.</p>' : ''}
+                ${exercises.map(ex => `
+                  <div class="p-2.5 rounded-xl border ${ex.completedToday ? 'bg-emerald-50/50 dark:bg-emerald-950/30 border-emerald-300 dark:border-emerald-800' : 'bg-slate-50 dark:bg-slate-800/60 border-slate-200 dark:border-slate-700'} flex items-center justify-between transition">
+                    <div class="min-w-0 flex-1">
+                      <div class="flex items-center space-x-2">
+                        <input type="checkbox" ${ex.completedToday ? 'checked' : ''} onchange="toggleWorkoutExercise('${ex.id}')" class="w-4 h-4 rounded text-indigo-600 cursor-pointer">
+                        <span class="text-xs font-bold ${ex.completedToday ? 'line-through text-slate-400' : 'text-slate-800 dark:text-slate-200'} truncate">${ex.name}</span>
+                      </div>
+                      <p class="text-[10px] text-slate-400 pl-6">${ex.sets} séries × ${ex.reps} reps • <strong class="text-indigo-600 dark:text-indigo-400">${ex.weight || 'Carga livre'}</strong></p>
+                    </div>
+                    <button onclick="deleteWorkoutExercise('${ex.id}')" class="text-slate-400 hover:text-rose-500 text-xs p-1">✕</button>
+                  </div>
+                `).join('')}
+              </div>
+
+              <button onclick="openWorkoutModal()" class="w-full py-1.5 rounded-xl border border-dashed border-indigo-300 dark:border-indigo-800 text-indigo-600 dark:text-indigo-400 hover:bg-indigo-50 text-[11px] font-bold transition">
+                ➕ Adicionar Exercício
+              </button>
+            </div>
+          `;
+        }).join('');
+      }
+
+      // 4. Suplementação Diária Checklist
+      const supplementsGrid = document.getElementById('supplementsChecklistGrid');
+      if (supplementsGrid) {
+        const sups = state.supplements || [];
+        if (sups.length === 0) {
+          supplementsGrid.innerHTML = `<p class="col-span-full text-xs text-slate-400 text-center py-4">Nenhum suplemento cadastrado ainda.</p>`;
+        } else {
+          supplementsGrid.innerHTML = sups.map(s => `
+            <div class="p-3.5 rounded-2xl border ${s.takenToday ? 'bg-emerald-50 dark:bg-emerald-950/40 border-emerald-300 dark:border-emerald-800' : 'bg-slate-50 dark:bg-slate-800/70 border-slate-200 dark:border-slate-700'} flex items-center justify-between transition">
+              <div class="flex items-center space-x-3 min-w-0">
+                <span class="text-2xl p-2 rounded-xl ${s.takenToday ? 'bg-emerald-100 dark:bg-emerald-900 text-emerald-600' : 'bg-purple-100 dark:bg-purple-950 text-purple-600'}">💊</span>
+                <div class="min-w-0">
+                  <h5 class="text-xs font-bold ${s.takenToday ? 'line-through text-slate-500' : 'text-slate-900 dark:text-white'} truncate">${s.name}</h5>
+                  <p class="text-[11px] text-slate-500 font-semibold">${s.dose} • <span class="text-indigo-600 dark:text-indigo-400">${s.time}</span></p>
+                </div>
+              </div>
+              <div class="flex items-center space-x-2">
+                <button onclick="toggleSupplement('${s.id}')" class="px-3 py-1.5 rounded-xl text-xs font-bold transition ${s.takenToday ? 'bg-emerald-600 text-white' : 'bg-white dark:bg-slate-900 border border-slate-300 dark:border-slate-600 text-slate-700 dark:text-slate-300'}">
+                  ${s.takenToday ? '✓ Tomado' : 'Tomar'}
+                </button>
+                <button onclick="deleteSupplement('${s.id}')" class="text-slate-400 hover:text-rose-500 text-xs p-1">🗑️</button>
+              </div>
+            </div>
+          `).join('');
+        }
+      }
+    }
+
     function renderAll() {
       updateCounts();
       updateHeaderSelectors();
@@ -6118,6 +6913,7 @@
     renderTasks();
     renderMilestones();
     renderRewards();
+    renderFitness();
     updateCounts();
   </script>
 </body>
