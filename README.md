@@ -45,17 +45,18 @@ Você pode acessar e testar o aplicativo diretamente pelo navegador ou instalá-
 
 ---
 
-## 📲 Download do Aplicativo para Celular Android (.APK)
+## 📲 Como Usar em Tela Cheia no Celular (Sem Barra de Navegador)
 
-Você pode instalar o aplicativo no seu smartphone Android de duas formas:
+Para que o aplicativo funcione **100% em tela cheia** (sem barra de URL do navegador no topo, exatamente como um app nativo do celular):
 
-1. **Baixar o Instalador Direto (.APK)**:
-   * 👉 **[Clique aqui para Baixar o APK (v1.0.0)](https://github.com/davirian-dev/familia-em-foco/releases/download/v1.0.0/familia-em-foco.apk)**
-   * Após baixar, abra o arquivo no celular e toque em **Instalar** (permita a instalação caso o Android solicite).
+### 🌟 Opção 1: Instalação Instantânea em Tela Cheia (Recomendada)
+1. Acesse o link oficial no Chrome do celular: **[davirian-dev.github.io/familia-em-foco/](https://davirian-dev.github.io/familia-em-foco/)**
+2. Toque no botão azul **"Instalar"** que aparece no topo da tela (ou toque nos **3 pontinhos ⋮** do Chrome e selecione **"Instalar aplicativo"** ou **"Adicionar à tela inicial"**).
+3. Pronto! O ícone oficial será adicionado à sua tela de início. Ao abri-lo por esse ícone, ele abrirá **100% em Tela Cheia**, sem nenhuma barra de navegação ou URL!
 
-2. **Instalação via Navegador (PWA Instantâneo)**:
-   * Acesse [davirian-dev.github.io/familia-em-foco/](https://davirian-dev.github.io/familia-em-foco/) no Chrome do celular.
-   * Toque nos 3 pontinhos e escolha **"Instalar aplicativo"**.
+### 📦 Opção 2: Instalador Direto APK (.APK para Android)
+* 👉 **[Clique aqui para Baixar o APK (v1.0.0)](https://github.com/davirian-dev/familia-em-foco/releases/download/v1.0.0/familia-em-foco.apk)**
+* Com a validação oficial do Digital Asset Links configurada no domínio raiz (`davirian-dev.github.io/.well-known/assetlinks.json`), o aplicativo é verificado pelo Android e abre em modo integrado de aplicativo.
 
 ## ✨ Principais Funcionalidades
 
