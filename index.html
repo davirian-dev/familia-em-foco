@@ -29,6 +29,11 @@
   <link rel="apple-touch-icon" href="https://wanted-brokers-symptoms-components.trycloudflare.com/capa_aplicativo.png?v=2">
 
   <script src="https://www.gstatic.com/antigravity/web/dev/tailwindcss.min.js"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class'
+    };
+  </script>
   <style>
     * { box-sizing: border-box; }
     button { cursor: pointer; user-select: none; }
@@ -126,9 +131,9 @@
           <span id="notifBadge" class="absolute top-1 right-1 w-2.5 h-2.5 bg-rose-500 rounded-full border-2 border-white dark:border-slate-900 animate-pulse"></span>
         </button>
 
-        <!-- Botão Dark Mode -->
-        <button onclick="toggleDarkMode()" class="p-2 rounded-xl text-slate-500 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors" title="Alternar Modo Escuro">
-          🌓
+        <!-- Botão Dark Mode Dinâmico (Sol / Lua) -->
+        <button onclick="toggleDarkMode()" id="btnDarkMode" class="p-2 rounded-xl text-slate-500 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors text-base" title="Alternar Modo Escuro / Claro">
+          <span id="darkModeIcon">🌙</span>
         </button>
 
         <!-- CONTA GOOGLE / GMAIL (NOVO!) -->
@@ -904,7 +909,7 @@
     <button onclick="navigate('shopping')" class="flex flex-col items-center text-[10px] text-slate-400 px-2"><span>🛒</span><span>Compras</span></button>
     <button onclick="navigate('finances')" class="flex flex-col items-center text-[10px] text-slate-400 px-2"><span>💰</span><span>Finanças</span></button>
     <button onclick="navigate('calendar')" class="flex flex-col items-center text-[10px] text-slate-400 px-2"><span>📅</span><span>Agenda</span></button>
-    <button onclick="navigate('kids')" class="flex flex-col items-center text-[10px] text-slate-400 px-2"><span>⭐</span><span>Crianças</span></button>
+    <button id="mobileNavKids" onclick="navigate('kids')" class="flex flex-col items-center text-[10px] text-slate-400 px-2"><span>⭐</span><span>Crianças</span></button>
     <button onclick="openUnifiedAuthModal()" class="flex flex-col items-center text-[10px] text-indigo-600 dark:text-indigo-400 font-bold px-2 py-0.5 rounded-xl bg-indigo-50 dark:bg-indigo-950/50 border border-indigo-200 dark:border-indigo-800"><span>🔐</span><span>Login/Conta</span></button>
   </nav>
 
@@ -1439,9 +1444,19 @@
         </div>
 
         <form onsubmit="handleUserRegistration(event)" class="space-y-3">
+          <!-- Seleção de Estrutura Familiar: Solteiro, Casal ou Família com Filhos -->
           <div>
-            <label class="block text-xs font-bold text-slate-700 dark:text-slate-300 mb-1">Nome da sua Família *</label>
-            <input type="text" id="regFamilyName" required placeholder="Ex: Família Silva, Família Santos..." class="w-full px-3.5 py-2.5 rounded-xl border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 text-xs sm:text-sm outline-none focus:border-indigo-500">
+            <label class="block text-xs font-bold text-slate-700 dark:text-slate-300 mb-1">Qual é o seu perfil?</label>
+            <select id="regFamilyType" onchange="handleProfileTypeChange(this.value)" class="w-full px-3.5 py-2.5 rounded-xl border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 text-xs sm:text-sm outline-none font-bold text-indigo-600 dark:text-indigo-400">
+              <option value="single">👤 Pessoa Solteira (Foco em Estudos, Carreira, Finanças & Compras)</option>
+              <option value="couple">👩‍❤️‍👨 Casal sem Filhos (Vida a Dois: Finanças, Estudos & Lar)</option>
+              <option value="family" selected>👨‍👩‍👧‍👦 Família com Filhos (Completo: Pais, Crianças & Escola)</option>
+            </select>
+          </div>
+
+          <div>
+            <label class="block text-xs font-bold text-slate-700 dark:text-slate-300 mb-1" id="regFamilyNameLabel">Nome da sua Família / Perfil *</label>
+            <input type="text" id="regFamilyName" required placeholder="Ex: Meu Espaço Pessoal, Família Silva, Casal Santos..." class="w-full px-3.5 py-2.5 rounded-xl border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 text-xs sm:text-sm outline-none focus:border-indigo-500">
           </div>
 
           <div>
@@ -1586,6 +1601,16 @@
           <input type="file" id="backupFileInputUnified" accept=".json" onchange="importBackupJson(event)" class="hidden">
           <span class="text-slate-400">Abrir</span>
         </label>
+
+        <!-- Alternador Rápido de Estrutura Familiar -->
+        <div class="p-2.5 rounded-xl bg-slate-100 dark:bg-slate-800 text-left">
+          <span class="text-[11px] font-bold text-slate-500 block mb-1">Mudar Estrutura Familiar:</span>
+          <div class="grid grid-cols-3 gap-1.5 text-[11px] font-bold">
+            <button onclick="switchCurrentFamilyType('single')" class="py-1.5 px-1 rounded-lg bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 text-center hover:border-indigo-500 transition">👤 Solteiro</button>
+            <button onclick="switchCurrentFamilyType('couple')" class="py-1.5 px-1 rounded-lg bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 text-center hover:border-indigo-500 transition">👩‍❤️‍👨 Casal</button>
+            <button onclick="switchCurrentFamilyType('family')" class="py-1.5 px-1 rounded-lg bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 text-center hover:border-indigo-500 transition">👨‍👩‍👧‍👦 Filhos</button>
+          </div>
+        </div>
 
         <button onclick="resetToDidaticData()" class="w-full flex items-center justify-between p-2.5 rounded-xl bg-amber-50 dark:bg-amber-950/30 text-amber-800 dark:text-amber-300 text-xs font-bold hover:bg-amber-100 transition">
           <span class="flex items-center space-x-2"><span>💡</span><span>Recarregar Exemplos Didáticos</span></span>
@@ -2688,13 +2713,10 @@
 
       updateCounts();
       updateHeaderSelectors();
+      updateFamilyStructureVisibility();
       updateGoogleAuthHeader();
     }
-    function saveState() {
-      localStorage.setItem('family_app_full_state_v4', JSON.stringify(state));
-      updateCounts();
-      updateHeaderSelectors();
-    }
+
 
     function updateCounts() {
       document.getElementById('stat-members-count').textContent = `${state.members.length} pessoas`;
@@ -4115,9 +4137,137 @@
       `).join('');
     }
 
+    // ================= CONTROLE AVANÇADO DO MODO ESCURO / CLARO =================
     function toggleDarkMode() {
-      document.documentElement.classList.toggle('dark');
+      const isDark = document.documentElement.classList.toggle('dark');
+      localStorage.setItem('family_app_theme', isDark ? 'dark' : 'light');
+      updateThemeIcon(isDark);
+      showToast(isDark ? '🌙 Modo Escuro ativado' : '☀️ Modo Claro ativado', '🌓', 2000);
     }
+
+    function updateThemeIcon(isDark) {
+      const icon = document.getElementById('darkModeIcon');
+      if (icon) {
+        icon.textContent = isDark ? '☀️' : '🌙';
+      }
+      const btn = document.getElementById('btnDarkMode');
+      if (btn) {
+        btn.title = isDark ? 'Alternar para Modo Claro (☀️)' : 'Alternar para Modo Escuro (🌙)';
+      }
+    }
+
+    function initTheme() {
+      const savedTheme = localStorage.getItem('family_app_theme');
+      const prefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+      const isDark = (savedTheme !== null) ? (savedTheme === 'dark') : prefersDark;
+      if (isDark) {
+        document.documentElement.classList.add('dark');
+      } else {
+        document.documentElement.classList.remove('dark');
+      }
+      updateThemeIcon(isDark);
+    }
+
+    // ================= ADAPTAÇÃO DINÂMICA: SOLTEIRO, CASAL & FAMÍLIA COM FILHOS =================
+    function handleProfileTypeChange(type) {
+      const nameInput = document.getElementById('regFamilyName');
+      if (!nameInput) return;
+      if (type === 'single') {
+        nameInput.placeholder = 'Ex: Meu Espaço, Foco do Carlos, Vida de Mariana...';
+      } else if (type === 'couple') {
+        nameInput.placeholder = 'Ex: Casal Lucas & Bia, Nosso Lar...';
+      } else {
+        nameInput.placeholder = 'Ex: Família Silva, Família Santos...';
+      }
+    }
+
+    function switchCurrentFamilyType(newType) {
+      state.familyType = newType;
+      
+      if (newType === 'single') {
+        // Deixa apenas 1 membro principal
+        if (state.members.length > 1) {
+          state.members = [state.members[0]];
+        }
+        state.members[0].name = state.members[0].name.split(' (')[0] || 'Você';
+        state.members[0].role = 'parent';
+        state.members[0].points = 0;
+        state.members[0].bio = 'Foco total em estudos, crescimento pessoal e metas financeiras.';
+        showToast('👤 Perfil adaptado para Pessoa Solteira!', '🎯');
+      } else if (newType === 'couple') {
+        // Se tiver apenas 1 membro, adiciona o parceiro
+        if (state.members.length < 2) {
+          state.members.push({
+            id: 'partner-1',
+            name: 'Cônjuge / Amor',
+            role: 'parent',
+            profession: 'Carreira & Projetos',
+            age: 28,
+            avatar: '👩‍💼',
+            theme: '#10B981',
+            points: 0,
+            bio: 'Alinhamento a dois para compras, finanças e estudos.',
+            heightCm: 165,
+            weightKg: 60.0,
+            growthHistory: []
+          });
+        } else {
+          // Filtra para manter apenas os adultos (sem crianças)
+          state.members = state.members.filter(m => m.role === 'parent').slice(0, 2);
+        }
+        showToast('👩‍❤️‍👨 Perfil adaptado para Casal sem Filhos!', '💍');
+      } else if (newType === 'family') {
+        // Família com filhos: se não tiver criança, adiciona uma de exemplo
+        const hasKids = state.members.some(m => m.role === 'child');
+        if (!hasKids) {
+          state.members.push({
+            id: 'child-' + Date.now(),
+            name: 'Filho(a)',
+            role: 'child',
+            profession: 'Estudante Escolar',
+            age: 7,
+            avatar: '🧒',
+            theme: '#F59E0B',
+            points: 50,
+            bio: 'Acompanhamento escolar, tarefas com moedas e recompensas.',
+            heightCm: 122,
+            weightKg: 24.0,
+            growthHistory: []
+          });
+        }
+        showToast('👨‍👩‍👧‍👦 Perfil adaptado para Família com Filhos!', '🌟');
+      }
+
+      saveState();
+      renderAll();
+      closeAccountManagerModal();
+    }
+
+    function updateFamilyStructureVisibility() {
+      const familyType = state.familyType || (state.members.some(m => m.role === 'child') ? 'family' : (state.members.length === 2 ? 'couple' : 'single'));
+      state.familyType = familyType;
+
+      const hasKids = (familyType === 'family') && state.members.some(m => m.role === 'child');
+
+      // 1. Visibilidade dos menus de crianças no Menu Lateral Desktop
+      const navKids = document.getElementById('nav-kids');
+      const navMilestones = document.getElementById('nav-milestones');
+      const navRewards = document.getElementById('nav-rewards');
+      if (navKids) navKids.style.display = hasKids ? 'flex' : 'none';
+      if (navMilestones) navMilestones.style.display = hasKids ? 'flex' : 'none';
+      if (navRewards) navRewards.style.display = hasKids ? 'flex' : 'none';
+
+      // 2. Visibilidade do botão de crianças na barra móvel inferior
+      const mobileKids = document.getElementById('mobileNavKids');
+      if (mobileKids) mobileKids.style.display = hasKids ? 'flex' : 'none';
+
+      // 3. Saldo de moedas no cabeçalho
+      const coinsBadge = document.getElementById('coinsBadge');
+      if (coinsBadge && !hasKids) {
+        coinsBadge.style.display = 'none';
+      }
+    }
+
 
 // [Antigo bloco de googleAuth substituído pelo updateAuthUI]
 
@@ -5062,6 +5212,57 @@
         newUserData = JSON.parse(JSON.stringify(didaticTemplateData));
       }
       newUserData.familyName = familyName;
+      newUserData.familyType = familyType;
+
+      if (familyType === 'single') {
+        newUserData.members = [
+          {
+            id: 'user-1',
+            name: familyName,
+            role: 'parent',
+            profession: 'Estudante & Profissional',
+            age: 26,
+            avatar: '👤',
+            theme: '#4F46E5',
+            points: 0,
+            bio: 'Foco em estudos, produtividade, compras e finanças pessoais.',
+            heightCm: 175,
+            weightKg: 72.0,
+            growthHistory: []
+          }
+        ];
+      } else if (familyType === 'couple') {
+        newUserData.members = [
+          {
+            id: 'user-1',
+            name: 'Você',
+            role: 'parent',
+            profession: 'Profissional / Concurseiro(a)',
+            age: 28,
+            avatar: '👤',
+            theme: '#4F46E5',
+            points: 0,
+            bio: 'Parceria a dois em compras, casa e finanças.',
+            heightCm: 175,
+            weightKg: 72.0,
+            growthHistory: []
+          },
+          {
+            id: 'user-2',
+            name: 'Cônjuge / Amor',
+            role: 'parent',
+            profession: 'Profissional / Pós-Graduando(a)',
+            age: 27,
+            avatar: '👩‍💼',
+            theme: '#10B981',
+            points: 0,
+            bio: 'Alinhamento da vida a dois, estudos e metas do lar.',
+            heightCm: 165,
+            weightKg: 58.0,
+            growthHistory: []
+          }
+        ];
+      }
       if (newUserData.members && newUserData.members[0]) {
         newUserData.members[0].name = `Você (${familyName})`;
       }
@@ -5223,6 +5424,7 @@
     function renderAll() {
       updateCounts();
       updateHeaderSelectors();
+      updateFamilyStructureVisibility();
       updateAuthUI();
       renderAppCover();
       renderTodayHighlights();
@@ -5541,6 +5743,7 @@
     }
 
     // Inicialização Completa
+    initTheme();
     checkFirstTimeUser();
     updateHeaderSelectors();
     updateGoogleAuthHeader();
