@@ -8469,15 +8469,7 @@
           <div class="footer">
             Relatório gerado pelo aplicativo Família em Foco PRO • Suporte: Davi Rian (linktr.ee/daviriann)
           </div>
-          <!-- Registro de Service Worker para PWA Offline e Instalação Nativa -->
-  <script>
-    if ('serviceWorker' in navigator) {
-      window.addEventListener('load', () => {
-        navigator.serviceWorker.register('./sw.js').catch(() => {});
-      });
-    }
-  </script>
-</body>
+        </body>
         </html>
       `);
       printWindow.document.close();
@@ -9650,7 +9642,17 @@ Todos os recursos avançados estão desbloqueados para você:
     renderMilestones();
     renderRewards();
     renderFitness();
+    renderTodayDashboardCheckboxes();
+    renderEvolutionChart();
+    if (typeof renderStreaks === 'function') renderStreaks();
     updateCounts();
+
+    // Registro de Service Worker para PWA Offline e Instalação Nativa
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', () => {
+        navigator.serviceWorker.register('./sw.js').catch(() => {});
+      });
+    }
   </script>
 </body>
 </html>
