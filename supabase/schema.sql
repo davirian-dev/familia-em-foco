@@ -257,3 +257,15 @@ CREATE POLICY "Permitir leitura de dívidas" ON public.family_debts FOR SELECT U
 CREATE POLICY "Permitir gestão de dívidas" ON public.family_debts FOR ALL USING (true);
 CREATE POLICY "Permitir leitura de investimentos" ON public.family_investments FOR SELECT USING (true);
 CREATE POLICY "Permitir gestão de investimentos" ON public.family_investments FOR ALL USING (true);
+
+-- 10. Tabela de Sincronização em Nuvem em Tempo Real (Estado Completo PWA & Android)
+CREATE TABLE IF NOT EXISTS public.family_sync (
+    family_email TEXT PRIMARY KEY,
+    data JSONB NOT NULL,
+    updated_at TIMESTAMP WITH TIME ZONE DEFAULT timezone('utc'::text, now()) NOT NULL
+);
+
+ALTER TABLE public.family_sync ENABLE ROW LEVEL SECURITY;
+CREATE POLICY "Permitir leitura sync" ON public.family_sync FOR SELECT USING (true);
+CREATE POLICY "Permitir salvar sync" ON public.family_sync FOR ALL USING (true);
+

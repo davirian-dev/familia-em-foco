@@ -2440,10 +2440,34 @@
       </div>
 
       <div class="space-y-2 text-left">
-        <button onclick="syncWithCloudNow()" class="w-full flex items-center justify-between p-2.5 rounded-xl bg-slate-100 dark:bg-slate-800 text-xs font-bold text-slate-700 dark:text-slate-200 hover:bg-slate-200 transition">
-          <span class="flex items-center space-x-2"><span>🔄</span><span>Sincronizar Agora com a Nuvem</span></span>
-          <span class="text-indigo-600">OK</span>
+        <button onclick="syncWithCloudNow()" class="w-full flex items-center justify-between p-2.5 rounded-xl bg-indigo-50 dark:bg-indigo-950/40 text-xs font-bold text-indigo-700 dark:text-indigo-300 hover:bg-indigo-100 transition border border-indigo-200 dark:border-indigo-800">
+          <span class="flex items-center space-x-2"><span>☁️</span><span>Enviar / Salvar na Nuvem (Sync)</span></span>
+          <span class="text-indigo-600">Subir</span>
         </button>
+
+        <button onclick="pullFromCloudNow()" class="w-full flex items-center justify-between p-2.5 rounded-xl bg-emerald-50 dark:bg-emerald-950/40 text-xs font-bold text-emerald-700 dark:text-emerald-300 hover:bg-emerald-100 transition border border-emerald-200 dark:border-emerald-800">
+          <span class="flex items-center space-x-2"><span>⬇️</span><span>Baixar da Nuvem (Atualizar Dados)</span></span>
+          <span class="text-emerald-600">Puxar</span>
+        </button>
+
+        <!-- Configuração de Conexão com Supabase -->
+        <div class="mt-2 p-3 rounded-2xl bg-slate-50 dark:bg-slate-800/60 border border-slate-200 dark:border-slate-700 text-xs space-y-2">
+          <div class="flex items-center justify-between">
+            <span class="font-bold text-slate-800 dark:text-slate-200 flex items-center gap-1.5">⚡ <span>Conexão Nuvem (Supabase)</span></span>
+            <span id="supabaseStatusBadge" class="text-[10px] px-2 py-0.5 rounded-full font-bold bg-amber-100 text-amber-800 dark:bg-amber-900/60 dark:text-amber-300">Pendente</span>
+          </div>
+          <div>
+            <label class="block text-[10px] text-slate-500 mb-0.5">Project URL (ex: https://xyz.supabase.co)</label>
+            <input type="text" id="supabaseUrlInput" placeholder="https://seu-projeto.supabase.co" class="w-full px-2.5 py-1.5 rounded-lg border border-slate-300 dark:border-slate-600 bg-white dark:bg-slate-900 text-xs text-slate-900 dark:text-white">
+          </div>
+          <div>
+            <label class="block text-[10px] text-slate-500 mb-0.5">Anon Public Key</label>
+            <input type="password" id="supabaseKeyInput" placeholder="eyJhbGciOiJIUzI1NiIsIn..." class="w-full px-2.5 py-1.5 rounded-lg border border-slate-300 dark:border-slate-600 bg-white dark:bg-slate-900 text-xs text-slate-900 dark:text-white">
+          </div>
+          <button onclick="saveSupabaseConfig()" class="w-full py-1.5 rounded-lg bg-indigo-600 hover:bg-indigo-700 text-white font-bold text-xs transition">
+            Salvar Conexão Nuvem
+          </button>
+        </div>
 
         <button onclick="exportBackupJson()" class="w-full flex items-center justify-between p-2.5 rounded-xl bg-slate-100 dark:bg-slate-800 text-xs font-bold text-slate-700 dark:text-slate-200 hover:bg-slate-200 transition">
           <span class="flex items-center space-x-2"><span>💾</span><span>Baixar Arquivo de Backup (JSON)</span></span>
@@ -6481,6 +6505,7 @@
       const lastSyncDate = new Date(auth.lastSync || Date.now());
       document.getElementById('googleModalLastSync').textContent = `Última sincronização: ${lastSyncDate.toLocaleDateString('pt-BR')} às ${lastSyncDate.toLocaleTimeString('pt-BR', {hour: '2-digit', minute: '2-digit'})}`;
       document.getElementById('googleAccountModal').classList.add('active');
+      initSupabaseModalFields();
     }
 
     function closeGoogleAccountModal() {
@@ -6497,12 +6522,132 @@
       }
     }
 
-    function syncWithCloudNow() {
-      state.googleAuth.lastSync = new Date().toISOString();
-      saveState();
+    function getSupabaseConfig() {
+      try {
+        const saved = localStorage.getItem('family_supabase_config');
+        return saved ? JSON.parse(saved) : null;
+      } catch {
+        return null;
+      }
+    }
+
+    function initSupabaseModalFields() {
+      const config = getSupabaseConfig();
+      const urlInput = document.getElementById('supabaseUrlInput');
+      const keyInput = document.getElementById('supabaseKeyInput');
+      const badge = document.getElementById('supabaseStatusBadge');
+      if (config && config.url && config.key) {
+        if (urlInput) urlInput.value = config.url;
+        if (keyInput) keyInput.value = config.key;
+        if (badge) {
+          badge.className = "text-[10px] px-2 py-0.5 rounded-full font-bold bg-emerald-100 text-emerald-800 dark:bg-emerald-900/60 dark:text-emerald-300";
+          badge.textContent = "Conectado";
+        }
+      } else {
+        if (badge) {
+          badge.className = "text-[10px] px-2 py-0.5 rounded-full font-bold bg-amber-100 text-amber-800 dark:bg-amber-900/60 dark:text-amber-300";
+          badge.textContent = "Pendente";
+        }
+      }
+    }
+
+    function saveSupabaseConfig() {
+      const url = document.getElementById('supabaseUrlInput').value.trim();
+      const key = document.getElementById('supabaseKeyInput').value.trim();
+      if (!url || !key) {
+        alert('Por favor, informe a URL e a Anon Key do seu projeto Supabase.');
+        return;
+      }
+      localStorage.setItem('family_supabase_config', JSON.stringify({ url, key }));
+      initSupabaseModalFields();
+      showToast('Configuração do Supabase salva com sucesso!', '⚡');
+    }
+
+    async function syncWithCloudNow() {
+      const config = getSupabaseConfig();
       const lastSyncDate = new Date();
-      document.getElementById('googleModalLastSync').textContent = `Última sincronização: ${lastSyncDate.toLocaleDateString('pt-BR')} às ${lastSyncDate.toLocaleTimeString('pt-BR', {hour: '2-digit', minute: '2-digit'})}`;
-      alert('☁️ Sincronização em Nuvem Concluída!\nTodos os hábitos, estudos, metas e dados biométricos foram salvos na sua conta Google.');
+      state.googleAuth.lastSync = lastSyncDate.toISOString();
+      saveState();
+
+      if (!config || !config.url || !config.key) {
+        document.getElementById('googleModalLastSync').textContent = `Última sincronização local: ${lastSyncDate.toLocaleDateString('pt-BR')} às ${lastSyncDate.toLocaleTimeString('pt-BR', {hour: '2-digit', minute: '2-digit'})}`;
+        alert('⚠️ Conexão Nuvem Pendente!\n\nOs dados foram salvos no celular/computador local.\nPara sincronizar com outros celulares, preencha a URL e a Chave do Supabase na caixinha abaixo!');
+        return;
+      }
+
+      showToast('Enviando dados para a nuvem...', '☁️');
+      const familyEmail = state.currentAccountEmail || 'daviemari@gmail.com';
+
+      try {
+        const cleanUrl = config.url.replace(/\/+$/, '');
+        const res = await fetch(`${cleanUrl}/rest/v1/family_sync`, {
+          method: 'POST',
+          headers: {
+            'apikey': config.key,
+            'Authorization': `Bearer ${config.key}`,
+            'Content-Type': 'application/json',
+            'Prefer': 'resolution=merge-duplicates'
+          },
+          body: JSON.stringify({
+            family_email: familyEmail,
+            data: state,
+            updated_at: new Date().toISOString()
+          })
+        });
+
+        if (!res.ok) {
+          const errText = await res.text();
+          throw new Error(errText || 'Falha ao sincronizar com Supabase');
+        }
+
+        document.getElementById('googleModalLastSync').textContent = `Última sincronização em nuvem: Hoje às ${lastSyncDate.toLocaleTimeString('pt-BR', {hour: '2-digit', minute: '2-digit'})}`;
+        showToast('🎉 Dados da Família sincronizados na nuvem com sucesso!', '☁️', 4000);
+      } catch (err) {
+        console.error('Erro no sync Supabase:', err);
+        alert('Falha ao conectar com o Supabase:\n' + err.message + '\n\nVerifique se rodou o script SQL no seu projeto e se a URL/chave estão corretas.');
+      }
+    }
+
+    async function pullFromCloudNow() {
+      const config = getSupabaseConfig();
+      if (!config || !config.url || !config.key) {
+        alert('Por favor, configure primeiro a URL e a Anon Key do Supabase!');
+        return;
+      }
+
+      showToast('Buscando dados mais recentes na nuvem...', '⬇️');
+      const familyEmail = state.currentAccountEmail || 'daviemari@gmail.com';
+
+      try {
+        const cleanUrl = config.url.replace(/\/+$/, '');
+        const res = await fetch(`${cleanUrl}/rest/v1/family_sync?family_email=eq.${encodeURIComponent(familyEmail)}&select=*`, {
+          headers: {
+            'apikey': config.key,
+            'Authorization': `Bearer ${config.key}`
+          }
+        });
+
+        if (!res.ok) {
+          throw new Error('Falha ao buscar dados na nuvem');
+        }
+
+        const rows = await res.json();
+        if (!rows || rows.length === 0 || !rows[0].data) {
+          alert('Nenhum backup em nuvem encontrado para este email (' + familyEmail + '). Faça o primeiro envio clicando em "Enviar / Salvar na Nuvem".');
+          return;
+        }
+
+        const cloudState = rows[0].data;
+        if (confirm('Dados encontrados na nuvem atualizados em: ' + new Date(rows[0].updated_at).toLocaleString('pt-BR') + '.\nDeseja aplicar no aplicativo agora?')) {
+          state = cloudState;
+          saveState();
+          renderAll();
+          showToast('🎉 Aplicativo atualizado com os dados da nuvem!', '✨', 4000);
+        }
+      } catch (err) {
+        console.error('Erro ao baixar do Supabase:', err);
+        alert('Erro ao baixar dados da nuvem: ' + err.message);
+      }
     }
 
     function exportBackupJson() {
