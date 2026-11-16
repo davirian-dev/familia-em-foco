@@ -6525,10 +6525,15 @@
     function getSupabaseConfig() {
       try {
         const saved = localStorage.getItem('family_supabase_config');
-        return saved ? JSON.parse(saved) : null;
-      } catch {
-        return null;
-      }
+        if (saved) {
+          const parsed = JSON.parse(saved);
+          if (parsed && parsed.url && parsed.key) return parsed;
+        }
+      } catch {}
+      return {
+        url: 'https://kpufwjvjtdakusaitsxo.supabase.co',
+        key: 'sb_publishable_7LuuHLoKdwMssSKTSptcqg_EEbu9U9l'
+      };
     }
 
     function initSupabaseModalFields() {
