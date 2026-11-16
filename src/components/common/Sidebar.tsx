@@ -144,7 +144,7 @@ export const Sidebar: React.FC<SidebarProps> = ({ currentTab, setCurrentTab }) =
               </p>
             </div>
             {isParent && (
-              <ShieldCheck className="w-4 h-4 text-indigo-500 shrink-0" title="Acesso Total de Administrador" />
+              <span title="Acesso Total de Administrador"><ShieldCheck className="w-4 h-4 text-indigo-500 shrink-0" /></span>
             )}
           </div>
         </div>
