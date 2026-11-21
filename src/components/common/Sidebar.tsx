@@ -147,6 +147,14 @@ export const Sidebar: React.FC<SidebarProps> = ({ currentTab, setCurrentTab }) =
               <span title="Acesso Total de Administrador"><ShieldCheck className="w-4 h-4 text-indigo-500 shrink-0" /></span>
             )}
           </div>
+          {/* Links de Conformidade LGPD & Termos */}
+          <div className="mt-4 pt-3 border-t border-slate-200 dark:border-slate-800 flex items-center justify-between text-[11px] text-slate-400 dark:text-slate-500">
+            <a href="/privacidade.html" target="_blank" rel="noopener noreferrer" className="hover:text-emerald-500 transition-colors">Privacidade</a>
+            <span>•</span>
+            <a href="/termos.html" target="_blank" rel="noopener noreferrer" className="hover:text-emerald-500 transition-colors">Termos</a>
+            <span>•</span>
+            <span>v1.0 Pro</span>
+          </div>
         </div>
       </div>
     </aside>

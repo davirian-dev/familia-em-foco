@@ -2,3 +2,9 @@
 android-dist/
 familia-em-foco.apk
 *.zip
+
+node_modules/
+.idea/
+.vercel/
+.vercel
+.env*

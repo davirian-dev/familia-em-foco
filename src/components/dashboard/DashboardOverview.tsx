@@ -53,6 +53,32 @@ export const DashboardOverview: React.FC<DashboardOverviewProps> = ({ onNavigate
         <div className="absolute -right-10 -bottom-10 w-64 h-64 bg-white/10 rounded-full blur-2xl pointer-events-none" />
       </div>
 
+      {/* Card Inspirador: Conexão & Propósito da Família */}
+      <div className="relative overflow-hidden rounded-3xl bg-gradient-to-r from-indigo-900/40 via-purple-900/30 to-slate-900 border border-indigo-500/30 p-5 sm:p-6 shadow-xl">
+        <div className="flex flex-col md:flex-row items-center gap-6">
+          <div className="relative w-full md:w-72 aspect-video rounded-2xl overflow-hidden border border-white/10 shadow-lg shrink-0 group bg-black">
+            <video autoPlay loop muted playsInline preload="metadata" className="w-full h-full object-cover">
+              <source src="/videos/familia_em_foco_apresentacao.mp4" type="video/mp4" />
+            </video>
+            <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-black/20 pointer-events-none" />
+            <div className="absolute top-2.5 left-2.5 px-2 py-0.5 rounded-full bg-indigo-600/80 text-white text-[9px] font-bold uppercase tracking-wider backdrop-blur-md">
+              Conexão Real
+            </div>
+          </div>
+          <div className="flex-1 space-y-2 text-center md:text-left">
+            <div className="inline-flex items-center gap-1.5 px-3 py-0.5 rounded-full bg-indigo-500/10 border border-indigo-500/20 text-indigo-400 text-[10px] font-bold uppercase tracking-wide">
+              <span>❤️</span><span>O Propósito do Família em Foco</span>
+            </div>
+            <h3 className="text-lg sm:text-xl font-black text-slate-900 dark:text-white">
+              Mais Tempo de Qualidade, Menos Estresse na Rotina
+            </h3>
+            <p className="text-xs sm:text-sm text-slate-600 dark:text-slate-300 leading-relaxed font-normal">
+              Organize as tarefas de casa com pontuação lúdica para as crianças, monitore as metas financeiras do casal e reserve momentos para o que realmente importa: <strong>sorrisos e memórias inesquecíveis em família.</strong>
+            </p>
+          </div>
+        </div>
+      </div>
+
       {/* Alerta de Verificação dos Pais (Se houver tarefas para validar) */}
       {isParent && pendingVerificationTasks.length > 0 && (
         <div className="bg-amber-50 dark:bg-amber-950/40 border border-amber-200 dark:border-amber-800 rounded-3xl p-5 shadow-sm">
