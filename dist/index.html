@@ -309,6 +309,12 @@
           </div>
         </div>
 
+        <!-- Botão Dispositivo (PC / Mobile) no Header -->
+        <button id="headerDeviceBtn" onclick="handleHeaderDeviceClick()" class="flex items-center space-x-1.5 px-2.5 sm:px-3 py-1.5 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 text-slate-700 dark:text-slate-200 hover:bg-slate-50 dark:hover:bg-slate-800 transition text-xs font-semibold shadow-xs shrink-0" title="Informações e Instalação do Aplicativo">
+          <span id="headerDeviceIcon">💻</span>
+          <span id="headerDeviceText" class="hidden sm:inline">Modo PC</span>
+        </button>
+
         <!-- Botão Busca Rápida (Ctrl+K) - Neutro com Contorno -->
         <button onclick="openSearchModal()" class="flex items-center space-x-1.5 px-3 py-1.5 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 text-slate-700 dark:text-slate-200 hover:bg-slate-50 dark:hover:bg-slate-800 transition text-xs font-semibold shadow-xs" title="Buscar em todo o app (Ctrl+K)">
           <span>🔍</span>
@@ -478,6 +484,11 @@
           <p class="font-semibold text-slate-500 dark:text-slate-400 text-[10px] uppercase tracking-wider">Perfil Ativo</p>
           <p id="footerMemberName" class="font-bold text-indigo-600 dark:text-indigo-400 text-xs mt-0.5">Davi (Administrador)</p>
         </div>
+        <!-- Opção para abrir no celular a partir do PC -->
+        <button onclick="openDeviceModal('mobile')" class="w-full p-2.5 rounded-2xl bg-indigo-50/50 dark:bg-slate-800/60 hover:bg-indigo-100 dark:hover:bg-slate-800 text-slate-700 dark:text-slate-200 hover:text-indigo-600 dark:hover:text-indigo-300 transition text-xs font-bold border border-slate-200/80 dark:border-slate-700/60 shadow-xs flex items-center justify-between">
+          <span class="flex items-center space-x-2"><span>📲</span><span>Usar no Celular (QR)</span></span>
+          <span class="text-indigo-500 font-mono text-[10px]">Abrir ↗</span>
+        </button>
         <a href="https://linktr.ee/daviriann" target="_blank" rel="noopener noreferrer" class="block p-2.5 rounded-2xl bg-indigo-50/60 dark:bg-indigo-950/40 hover:bg-indigo-100 dark:hover:bg-indigo-900/60 text-slate-700 dark:text-slate-200 hover:text-indigo-600 dark:hover:text-indigo-300 transition text-xs font-bold border border-indigo-200/80 dark:border-indigo-800/60 shadow-xs">
           <span class="flex items-center justify-between">
             <span class="flex items-center space-x-2"><span>💬</span><span>Suporte Direto: Davi Rian</span></span>
@@ -490,22 +501,25 @@
     <!-- ÁREA DE CONTEÚDO DAS TELAS -->
     <main class="flex-1 p-3.5 sm:p-6 lg:p-8 max-w-5xl pb-24 md:pb-8 min-w-0 w-full max-w-full overflow-x-hidden">
 
-      <!-- ================= BANNER PWA: TELA CHEIA NATIVA NO CELULAR ================= -->
-      <div id="pwaInstallBanner" class="p-3.5 sm:p-4 rounded-3xl bg-gradient-to-r from-indigo-900/90 via-purple-900/90 to-slate-900 border border-indigo-400/40 text-white shadow-xl flex items-center justify-between gap-3 mb-5 transition-all">
+      <!-- ================= BANNER ADAPTATIVO MULTI-DISPOSITIVO (PC & CELULAR) ================= -->
+      <div id="deviceBanner" class="p-3.5 sm:p-4 rounded-3xl bg-gradient-to-r from-indigo-950/95 via-slate-900/95 to-purple-950/95 border border-indigo-500/30 text-white shadow-xl flex items-center justify-between gap-3 mb-5 transition-all">
         <div class="flex items-center space-x-3 min-w-0">
-          <div class="w-10 h-10 rounded-2xl bg-indigo-600 flex items-center justify-center text-xl shrink-0 shadow-md">
-            📲
+          <div id="deviceBannerIcon" class="w-10 h-10 rounded-2xl bg-indigo-600 flex items-center justify-center text-xl shrink-0 shadow-md">
+            💻
           </div>
           <div class="min-w-0">
-            <h5 class="text-xs sm:text-sm font-black truncate">Usar em Tela Cheia no Celular</h5>
-            <p class="text-[10px] sm:text-xs text-indigo-200 truncate">Remova a barra do navegador e use em tela inteira como app nativo</p>
+            <div class="flex items-center gap-2">
+              <h5 id="deviceBannerTitle" class="text-xs sm:text-sm font-black truncate">Família em Foco no PC</h5>
+              <span id="deviceBannerTag" class="hidden sm:inline px-2 py-0.5 rounded-full bg-emerald-500/30 text-emerald-200 text-[10px] font-bold border border-emerald-400/30">Pronto para PC</span>
+            </div>
+            <p id="deviceBannerDesc" class="text-[10px] sm:text-xs text-indigo-200/90 truncate">Aproveite a tela ampla com atalhos rápidos (Ctrl+K) e sincronização contínua.</p>
           </div>
         </div>
         <div class="flex items-center gap-2 shrink-0">
-          <button onclick="triggerPwaInstall()" class="px-3.5 py-2 rounded-xl bg-gradient-to-r from-indigo-500 to-purple-500 hover:from-indigo-600 hover:to-purple-600 text-white font-black text-xs shadow-md transition">
-            Instalar
-          </button>
-          <button onclick="dismissPwaBanner()" class="p-1.5 text-indigo-300 hover:text-white text-xs font-bold" title="Fechar">
+          <div id="deviceBannerActions" class="flex items-center gap-2">
+            <!-- Populado via JS: Instalar no celular ou dicas no PC -->
+          </div>
+          <button onclick="dismissDeviceBanner()" class="p-1.5 text-indigo-300 hover:text-white text-xs font-bold rounded-lg hover:bg-white/10 transition" title="Fechar aviso">
             ✕
           </button>
         </div>
@@ -524,7 +538,7 @@
                 <span id="appCoverEditionBadge" class="px-3 py-1 rounded-full bg-indigo-100 dark:bg-indigo-950/80 border border-indigo-200 dark:border-indigo-800 text-indigo-700 dark:text-indigo-300 font-black text-[11px] tracking-wide uppercase flex items-center gap-1.5 shadow-xs">
                   <span>✨</span> Família em Foco • Versão 2.5
                 </span>
-                <span class="px-2.5 py-0.5 rounded-full bg-emerald-100 dark:bg-emerald-950/80 border border-emerald-200 dark:border-emerald-800 text-emerald-800 dark:text-emerald-300 font-bold text-[10px] shadow-xs">
+                <span id="appCoverDeviceBadge" class="px-2.5 py-0.5 rounded-full bg-emerald-100 dark:bg-emerald-950/80 border border-emerald-200 dark:border-emerald-800 text-emerald-800 dark:text-emerald-300 font-bold text-[10px] shadow-xs">
                   ✓ Multi-dispositivo (Web • Celular • Tablet)
                 </span>
               </div>
@@ -545,6 +559,9 @@
 
             <!-- Ações Rápidas da Capa -->
             <div class="flex flex-col sm:flex-row lg:flex-col gap-2.5 shrink-0">
+              <button id="heroDeviceBtn" onclick="handleHeroDeviceClick()" class="px-5 py-3 rounded-2xl bg-gradient-to-r from-indigo-600 via-purple-600 to-indigo-700 hover:from-indigo-500 hover:to-purple-500 text-white font-black text-xs shadow-lg shadow-indigo-600/30 flex items-center justify-center space-x-2 transition transform active:scale-95">
+                <span id="heroDeviceIcon">📲</span><span id="heroDeviceText">Instalar Aplicativo no Celular</span>
+              </button>
               <button onclick="navigate('pomodoro')" class="px-5 py-3 rounded-2xl bg-indigo-600 hover:bg-indigo-500 text-white font-bold text-xs shadow-lg shadow-indigo-600/30 flex items-center justify-center space-x-2 transition transform active:scale-95">
                 <span>⏱️</span><span>Iniciar Sessão de Foco</span>
               </button>
@@ -1802,6 +1819,18 @@
       </div>
 
       <div class="grid grid-cols-2 gap-2.5 text-xs font-bold">
+        <!-- DESTAQUE MOBILE: INSTALAR O APLICATIVO NO CELULAR -->
+        <button onclick="openDeviceModal('mobile'); toggleMobileMoreMenu();" class="col-span-2 p-3.5 rounded-2xl bg-gradient-to-r from-indigo-600/15 via-purple-600/15 to-indigo-600/10 border-2 border-indigo-400/40 dark:border-indigo-600/40 flex items-center justify-between text-left hover:border-indigo-500 transition shadow-sm">
+          <div class="flex items-center space-x-3">
+            <span class="text-2xl">📲</span>
+            <div>
+              <div class="font-black text-indigo-700 dark:text-indigo-300 text-sm">Instalar Aplicativo no Celular</div>
+              <span class="text-[11px] text-slate-500 dark:text-slate-400 font-normal">App em tela cheia (PWA) ou Baixar APK</span>
+            </div>
+          </div>
+          <span class="px-2.5 py-1 rounded-xl bg-indigo-600 text-white text-[11px] font-bold shrink-0 shadow-xs">Instalar ⬇️</span>
+        </button>
+
         <button onclick="navigate('studies'); toggleMobileMoreMenu();" class="p-3 rounded-2xl bg-slate-50 dark:bg-slate-800/70 border border-slate-200 dark:border-slate-700 flex items-center space-x-2.5 text-left hover:border-indigo-500 transition">
           <span class="text-xl">🎓</span>
           <div>
@@ -3389,6 +3418,166 @@
           <button type="submit" class="px-5 py-2 bg-rose-600 hover:bg-rose-700 text-white font-bold text-xs rounded-xl shadow-md">Salvar Dívida</button>
         </div>
       </form>
+    </div>
+  </div>
+
+  <!-- ================= MODAL MULTIPLATAFORMA: PC (WEB COMPLETO) & CELULAR (INSTALAR APP) ================= -->
+  <div id="deviceGuideModal" class="modal-backdrop">
+    <div class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-3xl max-w-lg w-full p-5 sm:p-6 shadow-2xl relative max-h-[90vh] overflow-y-auto space-y-4">
+      <div class="flex items-center justify-between pb-3 border-b border-slate-100 dark:border-slate-800">
+        <div class="flex items-center space-x-2.5">
+          <span class="text-2xl" id="deviceModalIcon">📲</span>
+          <div>
+            <h4 class="font-black text-base text-slate-900 dark:text-white" id="deviceModalTitle">Família em Foco no PC e Celular</h4>
+            <p class="text-[11px] text-slate-500 dark:text-slate-400">Escolha como prefere usar o ecossistema familiar</p>
+          </div>
+        </div>
+        <button onclick="closeDeviceModal()" class="p-1.5 text-slate-400 hover:text-slate-600 dark:hover:text-slate-200 text-lg rounded-xl hover:bg-slate-100 dark:hover:bg-slate-800 transition" title="Fechar">✕</button>
+      </div>
+
+      <!-- Abas Seletoras: Celular (Instalar App) / Computador (PC Web) -->
+      <div class="grid grid-cols-2 p-1 bg-slate-100 dark:bg-slate-800 rounded-2xl gap-1">
+        <button type="button" id="tabBtnDeviceMobile" onclick="switchDeviceModalTab('mobile')" class="py-2 px-3 rounded-xl text-xs font-bold transition flex items-center justify-center space-x-1.5 bg-indigo-600 text-white shadow-sm">
+          <span>📲</span><span>Celular (Instalar App)</span>
+        </button>
+        <button type="button" id="tabBtnDevicePc" onclick="switchDeviceModalTab('pc')" class="py-2 px-3 rounded-xl text-xs font-bold transition flex items-center justify-center space-x-1.5 text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white">
+          <span>💻</span><span>Computador (PC Web)</span>
+        </button>
+      </div>
+
+      <!-- CONTEÚDO 1: CELULAR & TABLET (INSTALAR APP) -->
+      <div id="deviceContentMobile" class="space-y-4">
+        <!-- Cartão 1: Instalação PWA Nativa (1-Click) -->
+        <div class="p-4 rounded-2xl bg-gradient-to-br from-indigo-500/10 via-purple-500/10 to-slate-100/50 dark:to-slate-800/50 border border-indigo-200 dark:border-indigo-800/60 space-y-3">
+          <div class="flex items-start justify-between gap-3">
+            <div>
+              <span class="px-2 py-0.5 rounded-full bg-indigo-100 dark:bg-indigo-950 text-indigo-700 dark:text-indigo-300 font-bold text-[10px] uppercase">
+                Recomendado • Instantâneo
+              </span>
+              <h5 class="text-sm font-black text-slate-900 dark:text-white mt-1">1. Instalar Aplicativo no Celular (PWA)</h5>
+              <p class="text-xs text-slate-600 dark:text-slate-300 mt-0.5 leading-relaxed">
+                Não ocupa espaço na memória do celular, abre 100% em tela cheia sem barras de navegador e atualiza sozinho!
+              </p>
+            </div>
+            <span class="text-3xl shrink-0">⚡</span>
+          </div>
+
+          <button onclick="handleTriggerInstallFromModal()" class="w-full py-3 px-4 rounded-xl bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-700 hover:to-purple-700 text-white font-black text-xs shadow-lg shadow-indigo-600/30 flex items-center justify-center space-x-2 transition transform active:scale-95">
+            <span>📲</span><span>Instalar Aplicativo Agora</span>
+          </button>
+
+          <!-- Guias Rápidos por Sistema Operacional -->
+          <div class="pt-2 border-t border-indigo-100 dark:border-indigo-900/40 space-y-2">
+            <details class="group cursor-pointer">
+              <summary class="text-xs font-bold text-indigo-600 dark:text-indigo-400 flex items-center justify-between list-none">
+                <span>🤖 Como instalar no Android (Google Chrome)</span>
+                <span class="text-[10px] transition group-open:rotate-180">▼</span>
+              </summary>
+              <div class="mt-2 text-xs text-slate-600 dark:text-slate-300 bg-white dark:bg-slate-900/80 p-3 rounded-xl border border-slate-200 dark:border-slate-800 space-y-1.5 leading-relaxed">
+                <div>1. No Google Chrome do celular, toque nos <strong>três pontinhos (⋮)</strong> no canto superior direito.</div>
+                <div>2. Escolha a opção <strong>"Instalar aplicativo"</strong> (ou "Adicionar à tela inicial").</div>
+                <div>3. Toque em <strong>Instalar</strong>. O ícone oficial aparecerá na tela inicial do seu celular!</div>
+              </div>
+            </details>
+
+            <details class="group cursor-pointer">
+              <summary class="text-xs font-bold text-indigo-600 dark:text-indigo-400 flex items-center justify-between list-none">
+                <span>🍎 Como instalar no iPhone / iPad (Safari)</span>
+                <span class="text-[10px] transition group-open:rotate-180">▼</span>
+              </summary>
+              <div class="mt-2 text-xs text-slate-600 dark:text-slate-300 bg-white dark:bg-slate-900/80 p-3 rounded-xl border border-slate-200 dark:border-slate-800 space-y-1.5 leading-relaxed">
+                <div>1. Abra o site no navegador <strong>Safari</strong> do seu iPhone ou iPad.</div>
+                <div>2. Toque no botão de <strong>Compartilhar (⎋)</strong> na barra inferior.</div>
+                <div>3. Role para baixo e selecione <strong>"Adicionar à Tela de Início (➕)"</strong>.</div>
+                <div>4. Toque em <strong>Adicionar</strong> no canto superior direito. Pronto!</div>
+              </div>
+            </details>
+          </div>
+        </div>
+
+        <!-- Cartão 2: Baixar Pacote Android (.APK Oficial) -->
+        <div class="p-4 rounded-2xl bg-slate-50 dark:bg-slate-800/50 border border-slate-200 dark:border-slate-700/60 space-y-3">
+          <div class="flex items-start justify-between gap-3">
+            <div>
+              <span class="px-2 py-0.5 rounded-full bg-emerald-100 dark:bg-emerald-950 text-emerald-800 dark:text-emerald-300 font-bold text-[10px] uppercase">
+                Pacote Oficial Android
+              </span>
+              <h5 class="text-sm font-black text-slate-900 dark:text-white mt-1">2. Baixar Aplicativo Android (.APK)</h5>
+              <p class="text-xs text-slate-600 dark:text-slate-300 mt-0.5 leading-relaxed">
+                Instale o arquivo oficial diretamente no seu smartphone Android (Versão 1.0.0 • 3.1 MB).
+              </p>
+            </div>
+            <span class="text-3xl shrink-0">🤖</span>
+          </div>
+
+          <div class="flex flex-col sm:flex-row gap-2">
+            <a href="./familia-em-foco.apk" download="familia-em-foco.apk" class="flex-1 py-2.5 px-3 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-xs flex items-center justify-center space-x-1.5 shadow-md shadow-emerald-600/25 transition">
+              <span>⬇️</span><span>Baixar APK Direto (3.1 MB)</span>
+            </a>
+            <a href="https://github.com/davirian-dev/familia-em-foco/releases/download/v1.0.0/familia-em-foco.apk" target="_blank" rel="noopener noreferrer" class="py-2.5 px-3 rounded-xl bg-slate-200 dark:bg-slate-700 hover:bg-slate-300 dark:hover:bg-slate-600 text-slate-800 dark:text-slate-100 font-semibold text-xs flex items-center justify-center space-x-1 transition">
+              <span>🌐</span><span>Mirror GitHub</span>
+            </a>
+          </div>
+          <p class="text-[10px] text-slate-400">
+            * Se o Android exibir aviso de fonte externa, toque em "Mais detalhes" e "Instalar assim mesmo". 100% seguro e livre de propagandas.
+          </p>
+        </div>
+      </div>
+
+      <!-- CONTEÚDO 2: COMPUTADOR / PC (USO DIRETO NO PC) -->
+      <div id="deviceContentPc" class="space-y-4 hidden">
+        <div class="p-4 rounded-2xl bg-indigo-50/70 dark:bg-indigo-950/40 border border-indigo-200 dark:border-indigo-800/60 space-y-2.5">
+          <div class="flex items-center space-x-2 text-indigo-700 dark:text-indigo-300">
+            <span class="text-xl">🖥️</span>
+            <h5 class="text-sm font-black">Pronto para uso direto no seu Computador</h5>
+          </div>
+          <p class="text-xs text-slate-600 dark:text-slate-300 leading-relaxed">
+            No computador você não precisa instalar nada! O Família em Foco foi construído para rodar com máxima velocidade e responsividade em qualquer navegador moderno (Google Chrome, Microsoft Edge, Mozilla Firefox, Brave ou Safari).
+          </p>
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 pt-1 text-xs text-slate-700 dark:text-slate-300">
+            <div class="flex items-center space-x-2 p-2.5 rounded-xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-xs">
+              <span class="text-base">⌨️</span>
+              <div><strong class="font-mono text-indigo-600 dark:text-indigo-400">Ctrl + K</strong>: Busca rápida global</div>
+            </div>
+            <div class="flex items-center space-x-2 p-2.5 rounded-xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-xs">
+              <span class="text-base">🔲</span>
+              <div><strong class="font-mono text-indigo-600 dark:text-indigo-400">F11</strong>: Modo tela cheia imersiva</div>
+            </div>
+            <div class="flex items-center space-x-2 p-2.5 rounded-xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-xs">
+              <span class="text-base">📊</span>
+              <div>Painel expandido com tabelas e gráficos</div>
+            </div>
+            <div class="flex items-center space-x-2 p-2.5 rounded-xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-xs">
+              <span class="text-base">☁️</span>
+              <div>Nuvem integrada com banco Supabase</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Seção: Abrir no Celular com QR Code -->
+        <div class="p-4 rounded-2xl bg-slate-50 dark:bg-slate-800/40 border border-slate-200 dark:border-slate-700/60 text-center space-y-3">
+          <h5 class="text-xs font-black uppercase tracking-wider text-slate-500 dark:text-slate-400">
+            📲 Quer abrir e usar no celular agora?
+          </h5>
+          <div class="flex flex-col items-center justify-center">
+            <div class="p-3 bg-white rounded-2xl shadow-md border border-slate-200 inline-block">
+              <img id="qrCodeDeviceImg" src="https://api.qrserver.com/v1/create-qr-code/?size=180x180&data=https%3A%2F%2Ffamily-growth-app-dusky.vercel.app%2F" alt="QR Code Família em Foco" class="w-40 h-40 object-contain">
+            </div>
+            <p class="text-[11px] text-slate-500 dark:text-slate-400 mt-2 max-w-xs">
+              Aponte a câmera do seu smartphone para o QR Code acima para abrir instantaneamente no seu celular.
+            </p>
+          </div>
+
+          <div class="flex items-center justify-center gap-2 pt-1">
+            <button onclick="copyAppUrl()" id="btnCopyAppUrl" class="px-3.5 py-2 rounded-xl bg-indigo-50 dark:bg-indigo-950/70 border border-indigo-200 dark:border-indigo-800 text-indigo-700 dark:text-indigo-300 hover:bg-indigo-100 font-bold text-xs transition flex items-center space-x-1.5">
+              <span>📋</span><span id="txtCopyAppUrl">Copiar Link do App</span>
+            </button>
+            <button onclick="handleTriggerInstallFromModal()" class="px-3.5 py-2 rounded-xl bg-slate-200 dark:bg-slate-700 text-slate-700 dark:text-slate-200 hover:bg-slate-300 font-bold text-xs transition flex items-center space-x-1.5">
+              <span>🖥️</span><span>Instalar Atalho no PC</span>
+            </button>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 
@@ -10575,48 +10764,287 @@ Todos os recursos avançados estão disponíveis para você:
     window.promptChangeAdminPin = promptChangeAdminPin;
 
 
-    // Gerenciador de Instalação PWA (Tela Cheia Nativa)
+    // ==========================================================
+    // SISTEMA MULTI-DISPOSITIVO: PC (WEB COMPLETO) & MOBILE (INSTALAR APP)
+    // ==========================================================
     let deferredPwaPrompt = null;
+
+    function isMobileDevice() {
+      const ua = navigator.userAgent || '';
+      const isMobileUA = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(ua);
+      const isSmallScreen = window.innerWidth < 768;
+      return isMobileUA || isSmallScreen;
+    }
+
+    function isAppInstalled() {
+      return window.matchMedia('(display-mode: standalone)').matches || window.navigator.standalone === true;
+    }
+
     window.addEventListener('beforeinstallprompt', (e) => {
       e.preventDefault();
       deferredPwaPrompt = e;
-      const banner = document.getElementById('pwaInstallBanner');
-      if (banner && !localStorage.getItem('pwa_banner_dismissed')) {
-        banner.classList.remove('hidden');
-      }
+      updateDeviceUI();
     });
 
-    // Detecta se já está rodando em standalone (tela cheia instalada)
     window.addEventListener('DOMContentLoaded', () => {
-      const isStandalone = window.matchMedia('(display-mode: standalone)').matches || window.navigator.standalone === true;
-      const banner = document.getElementById('pwaInstallBanner');
-      if (isStandalone && banner) {
-        banner.style.display = 'none'; // Já está em tela cheia, não precisa mostrar
-      }
+      updateDeviceUI();
     });
 
-    function triggerPwaInstall() {
+    window.addEventListener('resize', () => {
+      updateDeviceUI();
+    });
+
+    function updateDeviceUI() {
+      const isMobile = isMobileDevice();
+      const installed = isAppInstalled();
+
+      // 1. Atualizar Banner Superior Adaptativo
+      const banner = document.getElementById('deviceBanner') || document.getElementById('pwaInstallBanner');
+      const bannerIcon = document.getElementById('deviceBannerIcon');
+      const bannerTitle = document.getElementById('deviceBannerTitle');
+      const bannerTag = document.getElementById('deviceBannerTag');
+      const bannerDesc = document.getElementById('deviceBannerDesc');
+      const bannerActions = document.getElementById('deviceBannerActions');
+
+      if (banner) {
+        if (installed || localStorage.getItem('device_banner_dismissed') === 'true' || localStorage.getItem('pwa_banner_dismissed') === 'true') {
+          banner.classList.add('hidden');
+        } else {
+          banner.classList.remove('hidden');
+          if (isMobile) {
+            if (bannerIcon) bannerIcon.innerText = '📲';
+            if (bannerTitle) bannerTitle.innerText = 'Instalar Aplicativo no Celular';
+            if (bannerTag) {
+              bannerTag.innerText = 'App Mobile';
+              bannerTag.className = 'hidden sm:inline px-2 py-0.5 rounded-full bg-purple-500/30 text-purple-200 text-[10px] font-bold border border-purple-400/30';
+            }
+            if (bannerDesc) bannerDesc.innerText = 'Adicione à tela inicial para usar em tela cheia sem barras de navegador!';
+            if (bannerActions) {
+              bannerActions.innerHTML = `
+                <button onclick="handleInstallAppClick()" class="px-3.5 py-1.5 rounded-xl bg-gradient-to-r from-indigo-500 to-purple-500 hover:from-indigo-600 hover:to-purple-600 text-white font-black text-xs shadow-md transition flex items-center space-x-1.5 shrink-0">
+                  <span>📲</span><span>Instalar App</span>
+                </button>
+                <button onclick="openDeviceModal('apk')" class="hidden sm:flex px-2.5 py-1.5 rounded-xl bg-white/10 hover:bg-white/20 text-white font-bold text-xs border border-white/20 transition items-center space-x-1 shrink-0">
+                  <span>🤖</span><span>APK</span>
+                </button>
+              `;
+            }
+          } else {
+            // Modo Computador / PC
+            if (bannerIcon) bannerIcon.innerText = '💻';
+            if (bannerTitle) bannerTitle.innerText = 'Família em Foco no PC';
+            if (bannerTag) {
+              bannerTag.innerText = 'Pronto para PC';
+              bannerTag.className = 'hidden sm:inline px-2 py-0.5 rounded-full bg-emerald-500/30 text-emerald-200 text-[10px] font-bold border border-emerald-400/30';
+            }
+            if (bannerDesc) bannerDesc.innerText = 'Aproveite a tela ampla com atalhos de teclado (Ctrl+K), foco e sincronização em nuvem.';
+            if (bannerActions) {
+              bannerActions.innerHTML = `
+                <button onclick="openDeviceModal('mobile')" class="px-3.5 py-1.5 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white font-bold text-xs shadow-md transition flex items-center space-x-1.5 shrink-0">
+                  <span>📲</span><span>Abrir no Celular</span>
+                </button>
+                <button onclick="openDeviceModal('pc')" class="px-2.5 py-1.5 rounded-xl bg-white/10 hover:bg-white/20 text-white font-bold text-xs border border-white/20 transition flex items-center space-x-1 shrink-0">
+                  <span>⌨️</span><span>Dicas PC</span>
+                </button>
+              `;
+            }
+          }
+        }
+      }
+
+      // 2. Atualizar Botão do Header (Topo)
+      const headerBtn = document.getElementById('headerDeviceBtn');
+      const headerIcon = document.getElementById('headerDeviceIcon');
+      const headerText = document.getElementById('headerDeviceText');
+      if (headerBtn && headerIcon && headerText) {
+        if (isMobile) {
+          headerBtn.className = 'flex items-center space-x-1.5 px-2.5 sm:px-3 py-1.5 rounded-2xl bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-700 hover:to-purple-700 text-white font-bold text-xs shadow-md shadow-indigo-500/25 transition-all transform active:scale-95 shrink-0';
+          headerIcon.innerText = '📲';
+          headerText.innerText = 'Instalar App';
+          headerText.className = 'font-bold';
+        } else {
+          headerBtn.className = 'flex items-center space-x-1.5 px-2.5 sm:px-3 py-1.5 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 text-slate-700 dark:text-slate-200 hover:bg-slate-50 dark:hover:bg-slate-800 transition text-xs font-semibold shadow-xs shrink-0';
+          headerIcon.innerText = '💻';
+          headerText.innerText = 'Modo PC';
+          headerText.className = 'hidden sm:inline text-slate-600 dark:text-slate-300 font-medium';
+        }
+      }
+
+      // 3. Atualizar Botão e Badges da Capa (Hero)
+      const heroBtn = document.getElementById('heroDeviceBtn');
+      const heroIcon = document.getElementById('heroDeviceIcon');
+      const heroText = document.getElementById('heroDeviceText');
+      if (heroBtn && heroIcon && heroText) {
+        if (isMobile) {
+          heroIcon.innerText = '📲';
+          heroText.innerText = 'Instalar Aplicativo no Celular';
+        } else {
+          heroIcon.innerText = '📲';
+          heroText.innerText = 'Abrir no Celular (QR Code)';
+        }
+      }
+
+      const coverDeviceBadge = document.getElementById('appCoverDeviceBadge');
+      if (coverDeviceBadge) {
+        if (isMobile) {
+          coverDeviceBadge.innerHTML = '<span>📲</span> App Instalável para Celular';
+          coverDeviceBadge.className = 'px-2.5 py-0.5 rounded-full bg-purple-100 dark:bg-purple-950/80 border border-purple-200 dark:border-purple-800 text-purple-800 dark:text-purple-300 font-bold text-[10px] shadow-xs';
+        } else {
+          coverDeviceBadge.innerHTML = '<span>💻</span> Otimizado para PC (Web Completo)';
+          coverDeviceBadge.className = 'px-2.5 py-0.5 rounded-full bg-emerald-100 dark:bg-emerald-950/80 border border-emerald-200 dark:border-emerald-800 text-emerald-800 dark:text-emerald-300 font-bold text-[10px] shadow-xs';
+        }
+      }
+
+      // 4. Atualizar Imagem do QR Code com a URL atual
+      const qrImg = document.getElementById('qrCodeDeviceImg');
+      if (qrImg) {
+        const curUrl = window.location.href || 'https://family-growth-app-dusky.vercel.app/';
+        qrImg.src = `https://api.qrserver.com/v1/create-qr-code/?size=180x180&data=${encodeURIComponent(curUrl)}`;
+      }
+    }
+
+    function dismissDeviceBanner() {
+      const banner = document.getElementById('deviceBanner') || document.getElementById('pwaInstallBanner');
+      if (banner) banner.classList.add('hidden');
+      localStorage.setItem('device_banner_dismissed', 'true');
+      localStorage.setItem('pwa_banner_dismissed', 'true');
+    }
+
+    function handleHeaderDeviceClick() {
+      if (isMobileDevice()) {
+        handleInstallAppClick();
+      } else {
+        openDeviceModal('pc');
+      }
+    }
+
+    function handleHeroDeviceClick() {
+      if (isMobileDevice()) {
+        handleInstallAppClick();
+      } else {
+        openDeviceModal('mobile');
+      }
+    }
+
+    function handleInstallAppClick() {
       if (deferredPwaPrompt) {
         deferredPwaPrompt.prompt();
         deferredPwaPrompt.userChoice.then((choiceResult) => {
           if (choiceResult.outcome === 'accepted') {
-            dismissPwaBanner();
+            dismissDeviceBanner();
+            if (typeof showToast === 'function') {
+              showToast('🎉 Aplicativo adicionado com sucesso!', '📲');
+            }
           }
           deferredPwaPrompt = null;
         });
       } else {
-        alert("📱 COMO USAR EM TELA CHEIA (SEM BARRA DO NAVEGADOR):\n\n1. No Chrome do celular, toque nos 3 pontinhos (⋮) no topo direito.\n2. Escolha \"Instalar aplicativo\" (ou \"Adicionar à tela inicial\").\n3. Abra o app pelo novo ícone criado: ele abrirá 100% em TELA CHEIA, exatamente como qualquer aplicativo nativo!");
+        openDeviceModal('mobile');
       }
     }
 
-    function dismissPwaBanner() {
-      const banner = document.getElementById('pwaInstallBanner');
-      if (banner) banner.classList.add('hidden');
-      localStorage.setItem('pwa_banner_dismissed', 'true');
+    function handleTriggerInstallFromModal() {
+      if (deferredPwaPrompt) {
+        deferredPwaPrompt.prompt();
+        deferredPwaPrompt.userChoice.then((choiceResult) => {
+          if (choiceResult.outcome === 'accepted') {
+            closeDeviceModal();
+            dismissDeviceBanner();
+            if (typeof showToast === 'function') {
+              showToast('🎉 Aplicativo instalado!', '📲');
+            }
+          }
+          deferredPwaPrompt = null;
+        });
+      } else {
+        const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
+        if (isIOS) {
+          alert("🍎 INSTALAR NO IPHONE / IPAD:\n\n1. Toque no botão de Compartilhar (⎋) na barra inferior do Safari.\n2. Role para baixo e selecione 'Adicionar à Tela de Início (➕)'.\n3. Toque em 'Adicionar' no topo direito. O app abrirá 100% em tela cheia!");
+        } else {
+          alert("📱 INSTALAR NO CELULAR (TELA CHEIA):\n\n1. No navegador Chrome do celular, toque nos 3 pontinhos (⋮) no topo direito.\n2. Escolha 'Instalar aplicativo' (ou 'Adicionar à tela inicial').\n3. Confirme em 'Instalar'. O app funcionará exatamente como qualquer aplicativo nativo!");
+        }
+      }
     }
 
-    window.triggerPwaInstall = triggerPwaInstall;
-    window.dismissPwaBanner = dismissPwaBanner;
+    function openDeviceModal(tab = 'mobile') {
+      const modal = document.getElementById('deviceGuideModal');
+      if (!modal) return;
+      modal.classList.add('active');
+      if (tab === 'apk') {
+        switchDeviceModalTab('mobile');
+      } else {
+        switchDeviceModalTab(tab);
+      }
+    }
+
+    function closeDeviceModal() {
+      const modal = document.getElementById('deviceGuideModal');
+      if (modal) modal.classList.remove('active');
+    }
+
+    function switchDeviceModalTab(tab) {
+      const tabMobile = document.getElementById('tabBtnDeviceMobile');
+      const tabPc = document.getElementById('tabBtnDevicePc');
+      const contentMobile = document.getElementById('deviceContentMobile');
+      const contentPc = document.getElementById('deviceContentPc');
+
+      if (!contentMobile || !contentPc) return;
+
+      if (tab === 'mobile') {
+        contentMobile.classList.remove('hidden');
+        contentPc.classList.add('hidden');
+        if (tabMobile) {
+          tabMobile.className = 'py-2 px-3 rounded-xl text-xs font-bold transition flex items-center justify-center space-x-1.5 bg-indigo-600 text-white shadow-sm';
+        }
+        if (tabPc) {
+          tabPc.className = 'py-2 px-3 rounded-xl text-xs font-bold transition flex items-center justify-center space-x-1.5 text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white';
+        }
+      } else {
+        contentMobile.classList.add('hidden');
+        contentPc.classList.remove('hidden');
+        if (tabPc) {
+          tabPc.className = 'py-2 px-3 rounded-xl text-xs font-bold transition flex items-center justify-center space-x-1.5 bg-indigo-600 text-white shadow-sm';
+        }
+        if (tabMobile) {
+          tabMobile.className = 'py-2 px-3 rounded-xl text-xs font-bold transition flex items-center justify-center space-x-1.5 text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white';
+        }
+      }
+    }
+
+    function copyAppUrl() {
+      const url = window.location.href || 'https://family-growth-app-dusky.vercel.app/';
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(url).then(() => {
+          const txt = document.getElementById('txtCopyAppUrl');
+          if (txt) {
+            const original = txt.innerText;
+            txt.innerText = 'Copiado! ✓';
+            setTimeout(() => { txt.innerText = original; }, 2500);
+          }
+          if (typeof showToast === 'function') {
+            showToast('📋 Link do Família em Foco copiado!', '🔗');
+          }
+        }).catch(() => {
+          alert('Link do Família em Foco: ' + url);
+        });
+      } else {
+        alert('Link do Família em Foco: ' + url);
+      }
+    }
+
+    window.isMobileDevice = isMobileDevice;
+    window.updateDeviceUI = updateDeviceUI;
+    window.dismissDeviceBanner = dismissDeviceBanner;
+    window.handleHeaderDeviceClick = handleHeaderDeviceClick;
+    window.handleHeroDeviceClick = handleHeroDeviceClick;
+    window.handleInstallAppClick = handleInstallAppClick;
+    window.handleTriggerInstallFromModal = handleTriggerInstallFromModal;
+    window.openDeviceModal = openDeviceModal;
+    window.closeDeviceModal = closeDeviceModal;
+    window.switchDeviceModalTab = switchDeviceModalTab;
+    window.copyAppUrl = copyAppUrl;
+    window.triggerPwaInstall = handleInstallAppClick;
+    window.dismissPwaBanner = dismissDeviceBanner;
 
     // Inicialização Completa
     initTheme();
@@ -10624,6 +11052,7 @@ Todos os recursos avançados estão disponíveis para você:
     updateHeaderSelectors();
     updateGoogleAuthHeader();
     renderAppCover();
+    updateDeviceUI();
     renderTodayHighlights();
     renderMemberCards();
     renderMembersFull();
