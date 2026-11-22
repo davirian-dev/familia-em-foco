@@ -186,7 +186,7 @@
     }
   }
   </script>
-<link rel="manifest" href="/manifest.webmanifest"><script id="vite-plugin-pwa:register-sw" src="/registerSW.js"></script></head>
+<link rel="manifest" href="/manifest.webmanifest"></head>
 <body class="bg-slate-50 dark:bg-slate-950 text-slate-900 dark:text-slate-100 antialiased min-h-screen flex flex-col font-sans transition-colors duration-200">
   <!-- Toast Notification Flutuante para feedback visual instantâneo -->
   <div id="toastNotification" class="fixed top-5 left-1/2 transform -translate-x-1/2 z-50 pointer-events-none transition-all duration-300 opacity-0 -translate-y-4 max-w-sm w-full px-4">
@@ -11079,25 +11079,22 @@ Todos os recursos avançados estão disponíveis para você:
       
     // Notificações de conectividade Online / Offline
     window.addEventListener('online', () => {
-      showToast('🟢 Conexão restabelecida! Tudo sincronizado.', '🌐');
+      if (typeof showToast === 'function') showToast('🟢 Conexão restabelecida! Tudo sincronizado.', '🌐');
     });
     window.addEventListener('offline', () => {
-      showToast('📡 Você está offline. O Família em Foco continua funcionando normalmente!', '📱', 4000);
+      if (typeof showToast === 'function') showToast('📡 Você está offline. O Família em Foco continua funcionando normalmente!', '📱', 4000);
     });
 
-    window.addEventListener('load', () => {
-        navigator.serviceWorker.register('./sw.js?v=4.1', { updateViaCache: 'none' })
-          .then((reg) => {
-            reg.update();
+    // Registro seguro de Service Worker para PWA (Sem loop de recarregamento)
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', () => {
+        navigator.serviceWorker.register('./sw.js')
+          .then(() => {
+            // Service Worker ativo silenciosamente
           })
           .catch(() => {});
       });
-      navigator.serviceWorker.addEventListener('controllerchange', () => {
-        if (!window._swRefreshing) {
-          window._swRefreshing = true;
-          window.location.reload();
-        }
-      });
+    }
     }
   </script>
 </body>

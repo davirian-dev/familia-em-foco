@@ -11079,25 +11079,22 @@ Todos os recursos avançados estão disponíveis para você:
       
     // Notificações de conectividade Online / Offline
     window.addEventListener('online', () => {
-      showToast('🟢 Conexão restabelecida! Tudo sincronizado.', '🌐');
+      if (typeof showToast === 'function') showToast('🟢 Conexão restabelecida! Tudo sincronizado.', '🌐');
     });
     window.addEventListener('offline', () => {
-      showToast('📡 Você está offline. O Família em Foco continua funcionando normalmente!', '📱', 4000);
+      if (typeof showToast === 'function') showToast('📡 Você está offline. O Família em Foco continua funcionando normalmente!', '📱', 4000);
     });
 
-    window.addEventListener('load', () => {
-        navigator.serviceWorker.register('./sw.js?v=4.1', { updateViaCache: 'none' })
-          .then((reg) => {
-            reg.update();
+    // Registro seguro de Service Worker para PWA (Sem loop de recarregamento)
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', () => {
+        navigator.serviceWorker.register('./sw.js')
+          .then(() => {
+            // Service Worker ativo silenciosamente
           })
           .catch(() => {});
       });
-      navigator.serviceWorker.addEventListener('controllerchange', () => {
-        if (!window._swRefreshing) {
-          window._swRefreshing = true;
-          window.location.reload();
-        }
-      });
+    }
     }
   </script>
 </body>
