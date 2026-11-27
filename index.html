@@ -11097,5 +11097,48 @@ Todos os recursos avançados estão disponíveis para você:
     }
     }
   </script>
+
+  <!-- Banner de Consentimento LGPD -->
+  <div id="lgpd-cookie-banner" style="display:none;position:fixed;bottom:16px;left:16px;right:16px;max-width:420px;z-index:9999;background:rgba(15,23,42,0.95);border:1px solid rgba(255,255,255,0.15);border-radius:16px;padding:16px;box-shadow:0 20px 40px rgba(0,0,0,0.6);backdrop-filter:blur(12px);font-size:12px;color:#cbd5e1;">
+    <p style="margin:0 0 12px 0;line-height:1.5;">
+      Usamos cookies essenciais e métricas para melhorar sua experiência no Família em Foco. Veja nossa <a href="/privacidade.html" style="color:#34d399;text-decoration:underline;font-weight:600;">Política de Privacidade</a>.
+    </p>
+    <div style="display:flex;gap:8px;justify-content:flex-end;">
+      <button id="lgpd-decline" style="padding:6px 12px;border-radius:8px;border:1px solid rgba(255,255,255,0.15);background:transparent;color:#cbd5e1;cursor:pointer;font-size:12px;">Recusar</button>
+      <button id="lgpd-accept" style="padding:6px 12px;border-radius:8px;border:none;background:#10b981;color:#000;font-weight:600;cursor:pointer;font-size:12px;">Aceitar</button>
+    </div>
+  </div>
+
+  <!-- GSAP + LGPD Consent -->
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js" defer></script>
+  <script>
+    (function () {
+      var key = 'familiaemfoco_lgpd_consent';
+      var banner = document.getElementById('lgpd-cookie-banner');
+      if (banner && !localStorage.getItem(key)) {
+        banner.style.display = 'block';
+      }
+      document.getElementById('lgpd-accept')?.addEventListener('click', function () {
+        localStorage.setItem(key, 'accepted');
+        if (banner) banner.style.display = 'none';
+      });
+      document.getElementById('lgpd-decline')?.addEventListener('click', function () {
+        localStorage.setItem(key, 'declined');
+        if (banner) banner.style.display = 'none';
+      });
+      window.addEventListener('DOMContentLoaded', function () {
+        if (window.gsap && !window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+          window.gsap.from('header, main > section:first-child, .hero-section', {
+            opacity: 0,
+            y: 16,
+            duration: 0.6,
+            stagger: 0.1,
+            ease: 'power2.out',
+            clearProps: 'transform,opacity'
+          });
+        }
+      });
+    })();
+  </script>
 </body>
 </html>

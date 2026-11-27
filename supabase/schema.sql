@@ -165,19 +165,26 @@ ALTER TABLE public.reward_redemptions ENABLE ROW LEVEL SECURITY;
 ALTER TABLE public.child_milestones ENABLE ROW LEVEL SECURITY;
 ALTER TABLE public.milestone_notes ENABLE ROW LEVEL SECURITY;
 
--- Políticas públicas para o aplicativo familiar (com permissão de leitura/gravação autenticada ou chave anônima)
-CREATE POLICY "Permitir leitura geral para membros autenticados" ON public.family_members FOR SELECT USING (true);
-CREATE POLICY "Permitir leitura geral de metas" ON public.goals FOR SELECT USING (true);
-CREATE POLICY "Permitir gestão de metas" ON public.goals FOR ALL USING (true);
-CREATE POLICY "Permitir leitura de hábitos" ON public.habits FOR SELECT USING (true);
-CREATE POLICY "Permitir registro de hábitos" ON public.habits FOR ALL USING (true);
-CREATE POLICY "Permitir leitura de tarefas das crianças" ON public.kids_tasks FOR SELECT USING (true);
-CREATE POLICY "Permitir atualização de tarefas" ON public.kids_tasks FOR ALL USING (true);
-CREATE POLICY "Permitir leitura de recompensas" ON public.rewards FOR SELECT USING (true);
-CREATE POLICY "Permitir resgates" ON public.reward_redemptions FOR ALL USING (true);
-CREATE POLICY "Permitir leitura de marcos" ON public.child_milestones FOR SELECT USING (true);
-CREATE POLICY "Permitir gestão de marcos" ON public.child_milestones FOR ALL USING (true);
-CREATE POLICY "Permitir notas do diário" ON public.milestone_notes FOR ALL USING (true);
+ALTER TABLE public.calendar_events ENABLE ROW LEVEL SECURITY;
+ALTER TABLE public.shopping_items ENABLE ROW LEVEL SECURITY;
+ALTER TABLE public.growth_history ENABLE ROW LEVEL SECURITY;
+
+-- Políticas restritas a usuários autenticados
+CREATE POLICY "Permitir leitura geral para membros autenticados" ON public.family_members FOR SELECT USING (auth.role() = 'authenticated');
+CREATE POLICY "Permitir leitura geral de metas" ON public.goals FOR SELECT USING (auth.role() = 'authenticated');
+CREATE POLICY "Permitir gestão de metas" ON public.goals FOR ALL USING (auth.role() = 'authenticated');
+CREATE POLICY "Permitir leitura de hábitos" ON public.habits FOR SELECT USING (auth.role() = 'authenticated');
+CREATE POLICY "Permitir registro de hábitos" ON public.habits FOR ALL USING (auth.role() = 'authenticated');
+CREATE POLICY "Permitir leitura de tarefas das crianças" ON public.kids_tasks FOR SELECT USING (auth.role() = 'authenticated');
+CREATE POLICY "Permitir atualização de tarefas" ON public.kids_tasks FOR ALL USING (auth.role() = 'authenticated');
+CREATE POLICY "Permitir leitura de recompensas" ON public.rewards FOR SELECT USING (auth.role() = 'authenticated');
+CREATE POLICY "Permitir resgates" ON public.reward_redemptions FOR ALL USING (auth.role() = 'authenticated');
+CREATE POLICY "Permitir leitura de marcos" ON public.child_milestones FOR SELECT USING (auth.role() = 'authenticated');
+CREATE POLICY "Permitir gestão de marcos" ON public.child_milestones FOR ALL USING (auth.role() = 'authenticated');
+CREATE POLICY "Permitir notas do diário" ON public.milestone_notes FOR ALL USING (auth.role() = 'authenticated');
+CREATE POLICY "Permitir acesso autenticado agenda" ON public.calendar_events FOR ALL USING (auth.role() = 'authenticated');
+CREATE POLICY "Permitir acesso autenticado compras" ON public.shopping_items FOR ALL USING (auth.role() = 'authenticated');
+CREATE POLICY "Permitir acesso autenticado crescimento" ON public.growth_history FOR ALL USING (auth.role() = 'authenticated');
 
 
 -- ==============================================================================
@@ -211,10 +218,10 @@ CREATE TABLE IF NOT EXISTS public.study_topics (
 ALTER TABLE public.study_subjects ENABLE ROW LEVEL SECURITY;
 ALTER TABLE public.study_topics ENABLE ROW LEVEL SECURITY;
 
-CREATE POLICY "Permitir leitura de matérias" ON public.study_subjects FOR SELECT USING (true);
-CREATE POLICY "Permitir gestão de matérias" ON public.study_subjects FOR ALL USING (true);
-CREATE POLICY "Permitir leitura de tópicos de estudo" ON public.study_topics FOR SELECT USING (true);
-CREATE POLICY "Permitir gestão de tópicos de estudo" ON public.study_topics FOR ALL USING (true);
+CREATE POLICY "Permitir leitura de matérias" ON public.study_subjects FOR SELECT USING (auth.role() = 'authenticated');
+CREATE POLICY "Permitir gestão de matérias" ON public.study_subjects FOR ALL USING (auth.role() = 'authenticated');
+CREATE POLICY "Permitir leitura de tópicos de estudo" ON public.study_topics FOR SELECT USING (auth.role() = 'authenticated');
+CREATE POLICY "Permitir gestão de tópicos de estudo" ON public.study_topics FOR ALL USING (auth.role() = 'authenticated');
 
 
 -- ==============================================================================
@@ -253,10 +260,10 @@ CREATE TABLE IF NOT EXISTS public.family_investments (
 ALTER TABLE public.family_debts ENABLE ROW LEVEL SECURITY;
 ALTER TABLE public.family_investments ENABLE ROW LEVEL SECURITY;
 
-CREATE POLICY "Permitir leitura de dívidas" ON public.family_debts FOR SELECT USING (true);
-CREATE POLICY "Permitir gestão de dívidas" ON public.family_debts FOR ALL USING (true);
-CREATE POLICY "Permitir leitura de investimentos" ON public.family_investments FOR SELECT USING (true);
-CREATE POLICY "Permitir gestão de investimentos" ON public.family_investments FOR ALL USING (true);
+CREATE POLICY "Permitir leitura de dívidas" ON public.family_debts FOR SELECT USING (auth.role() = 'authenticated');
+CREATE POLICY "Permitir gestão de dívidas" ON public.family_debts FOR ALL USING (auth.role() = 'authenticated');
+CREATE POLICY "Permitir leitura de investimentos" ON public.family_investments FOR SELECT USING (auth.role() = 'authenticated');
+CREATE POLICY "Permitir gestão de investimentos" ON public.family_investments FOR ALL USING (auth.role() = 'authenticated');
 
 -- 10. Tabela de Sincronização em Nuvem em Tempo Real (Estado Completo PWA & Android)
 CREATE TABLE IF NOT EXISTS public.family_sync (
@@ -266,6 +273,6 @@ CREATE TABLE IF NOT EXISTS public.family_sync (
 );
 
 ALTER TABLE public.family_sync ENABLE ROW LEVEL SECURITY;
-CREATE POLICY "Permitir leitura sync" ON public.family_sync FOR SELECT USING (true);
-CREATE POLICY "Permitir salvar sync" ON public.family_sync FOR ALL USING (true);
+CREATE POLICY "Permitir leitura sync" ON public.family_sync FOR SELECT USING (auth.jwt() ->> 'email' = family_email);
+CREATE POLICY "Permitir salvar sync" ON public.family_sync FOR ALL USING (auth.jwt() ->> 'email' = family_email);
 
